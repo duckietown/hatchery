@@ -1,0 +1,30 @@
+<idea-plugin>
+    <id>edu.umontreal.hatchery</id>
+    <name>Hatchery</name>
+    <vendor email="breandan.considine@umontreal.ca" url="http://www.umontreal.ca">University of Montreal</vendor>
+
+    <description><![CDATA[
+    ROS Plugin<br>
+    <em>Plugin for ROS</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory implementation="edu.umontreal.hatchery.ROSLaunchFileTypeFactory"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="HatchAction" class="edu.umontreal.hatchery.HatchAction" text="HatchAction"
+                description="HatchAction">
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="ctrl SEMICOLON"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="ctrl SEMICOLON"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl SEMICOLON"/>
+        </action>
+    </actions>
+</idea-plugin>

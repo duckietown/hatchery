@@ -1,0 +1,55 @@
+buildscript {
+    ext.kotlin_version = '1.2.10'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.10'
+    }
+}
+
+plugins {
+    id("org.jetbrains.intellij") version "0.2.17"
+}
+
+group 'edu.umontreal'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+intellij {
+    pluginName = "hatchery"
+    updateSinceUntilBuild = false
+//    alternativeIdePath = '/Users/breandanconsidine/Library/Application Support/JetBrains/Toolbox/apps/PyCharm-P/ch-0/173.3942.36/PyCharm.app'
+    plugins = ['BashSupport:1.6.12.173']
+
+    runIde {
+        // assert(System.getenv().containsKey("DUCKIETOWN_ROOT"))
+        // args System.getenv("DUCKIETOWN_ROOT")
+        args "/Users/breandanconsidine/ClionProjects/software/catkin_ws/src/60-templates/pkg_name/launch"
+    }
+}
+
+patchPluginXml {
+    changeNotes """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}
