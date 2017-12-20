@@ -1,18 +1,9 @@
 <idea-plugin>
     <id>edu.umontreal.hatchery</id>
-    <name>Hatchery</name>
+    <name>hatchery</name>
     <vendor email="breandan.considine@umontreal.ca" url="http://www.umontreal.ca">University of Montreal</vendor>
 
-    <description><![CDATA[
-    ROS Plugin<br>
-    <em>Plugin for ROS</em>
-    ]]></description>
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <description>Plugin for developing applications for the Robot Operating System.</description>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="edu.umontreal.hatchery.ROSLaunchFileTypeFactory"/>
