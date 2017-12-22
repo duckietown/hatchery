@@ -38,13 +38,12 @@ compileTestKotlin {
 intellij {
     pluginName = "hatchery"
     updateSinceUntilBuild = false
-//    alternativeIdePath = '/Users/breandanconsidine/Library/Application Support/JetBrains/Toolbox/apps/PyCharm-P/ch-0/173.3942.36/PyCharm.app'
     plugins = ['BashSupport:1.6.12.173']
 
     runIde {
         // assert(System.getenv().containsKey("DUCKIETOWN_ROOT"))
         // args System.getenv("DUCKIETOWN_ROOT")
-        args "/Users/breandanconsidine/ClionProjects/software/catkin_ws/src/60-templates/pkg_name/launch"
+        args "/Users/breandanconsidine/ClionProjects/software/"
     }
 }
 

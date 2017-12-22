@@ -4,9 +4,15 @@
     <vendor email="breandan.considine@umontreal.ca" url="http://www.umontreal.ca">University of Montreal</vendor>
 
     <description>Plugin for developing applications for the Robot Operating System.</description>
+    <resource-bundle>edu.umontreal.hatchery.HatcheryBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="edu.umontreal.hatchery.ROSLaunchFileTypeFactory"/>
+        <fileTemplateGroup implementation="edu.umontreal.hatchery.ROSFileTemplatesFactory"/>
+        <!--<fileTypeFactory implementation="edu.umontreal.hatchery.ROSLaunchFileFactory"/>-->
+        <!--<fileTypeFactory implementation="edu.umontreal.hatchery.ROSPackageFileFactory"/>-->
+        <psi.fileReferenceHelper implementation="edu.umontreal.hatchery.ROSFileReferenceHelper"/>
+        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.PackageReferenceContributor"/>
+        <completion.contributor language="XML" implementationClass="edu.umontreal.hatchery.RosPackageCompletionContributor"/>
     </extensions>
 
     <actions>
@@ -18,4 +24,5 @@
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl SEMICOLON"/>
         </action>
     </actions>
+
 </idea-plugin>
