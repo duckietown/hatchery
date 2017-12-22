@@ -42,8 +42,8 @@ intellij {
 
     runIde {
         // assert(System.getenv().containsKey("DUCKIETOWN_ROOT"))
-        // args System.getenv("DUCKIETOWN_ROOT")
-        args "/Users/breandanconsidine/ClionProjects/software/"
+        args System.getenv("DUCKIETOWN_ROOT")
+        // args "/Users/breandanconsidine/ClionProjects/software/"
     }
 }
 
