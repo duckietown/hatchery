@@ -5,15 +5,13 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.patterns.XmlPatterns
-import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.util.ProcessingContext
-import com.intellij.util.indexing.FileBasedIndex
-import com.intellij.util.indexing.ID
-import com.sun.javafx.scene.CameraHelper.project
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
+import com.intellij.util.ProcessingContext
+import com.intellij.util.indexing.ID
 
 
 class RosPackageCompletionContributor : CompletionContributor() {
@@ -28,7 +26,6 @@ class RosPackageCompletionContributor : CompletionContributor() {
 
     private fun getAvailablePackages(): List<String> {
         val project = ProjectManager.getInstance().openProjects[0]
-        val psiManager = PsiManager.getInstance(project)
 
         val files = FilenameIndex.getFilesByName(project, "package.xml", GlobalSearchScope.allScope(project))
         val availablePackages = mutableListOf<String>()

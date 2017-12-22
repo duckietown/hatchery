@@ -22,12 +22,19 @@ class ROSLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
         if (isRosLaunchFileSubstitution(element)) {
             val relPath = (element as XmlAttributeValue).value!!.substringAfter("$(find ").replace(")", "")
             if (!relPath.contains("(")) {
-                val builder = NavigationGutterIconBuilder.create(Icons.resource_file).setTooltipText(element.value!!)
+                val builder = NavigationGutterIconBuilder.create(Icons.resource_file)
                 val targets = findFileByRelativePath(project, relPath).map {
                     manager.findFile(it) ?: manager.findDirectory(it)
                 }
-                builder.setTargets(targets)
-                result.add(builder.createLineMarkerInfo(element))
+                if (!targets.isEmpty()) {
+                    builder.setTooltipText(targets.first()?.virtualFile?.path!!)
+                    builder.setTargets(targets)
+                    result.add(builder.createLineMarkerInfo(element))
+                } else {
+                    result.add(NavigationGutterIconBuilder.create(Icons.broken_resource)
+                            .setTooltipText("Broken resource!")
+                            .setTarget(element).createLineMarkerInfo(element))
+                }
             }
         }
     }
