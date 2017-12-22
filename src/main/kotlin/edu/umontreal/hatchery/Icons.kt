@@ -4,6 +4,7 @@ import com.intellij.ui.LayeredIcon
 import com.intellij.icons.AllIcons
 
 object Icons {
-    val file = IconLoader.getIcon("/icons/robot_file_16.png")
-    val package_file = IconLoader.getIcon("/icons/robot_toolwin_13.png")
+    val launch_file = IconLoader.getIcon("/icons/launch_icon.png")
+    val resource_file = IconLoader.getIcon("/icons/resource_icon.png")
+    val package_file = IconLoader.getIcon("/icons/package_icon.png")
 }

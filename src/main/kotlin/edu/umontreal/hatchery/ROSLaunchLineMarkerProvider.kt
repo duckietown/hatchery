@@ -22,7 +22,7 @@ class ROSLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
         if (isRosLaunchFileSubstitution(element)) {
             val relPath = (element as XmlAttributeValue).value!!.substringAfter("$(find ").replace(")", "")
             if (!relPath.contains("(")) {
-                val builder = NavigationGutterIconBuilder.create(Icons.file).setTooltipText(element.value!!)
+                val builder = NavigationGutterIconBuilder.create(Icons.resource_file).setTooltipText(element.value!!)
                 val targets = findFileByRelativePath(project, relPath).map {
                     manager.findFile(it) ?: manager.findDirectory(it)
                 }
