@@ -11,11 +11,10 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.util.xml.DomFileElement
 import com.intellij.psi.PsiFile
 
-
-
 /**
  * Provides resource roots to be used as contexts in FileReferenceSet during the XIncludes resolving.
  */
+
 class ROSFileReferenceHelper: FileReferenceHelper() {
     override fun isMine(project: Project, file: VirtualFile) =
         file.fileType === ROSPackageFileFactory.FileType &&

@@ -5,7 +5,9 @@ import com.intellij.psi.*
 import com.intellij.util.ProcessingContext
 
 class PackageReferenceContributor : PsiReferenceContributor() {
-    private val EXTENSION_TAG_NAMES = arrayOf("build_depend", "run_depend", "test_depend")
+    companion object {
+        val EXTENSION_TAG_NAMES = arrayOf("build_depend", "run_depend", "test_depend")
+    }
 
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
         val bundlePattern = createPattern(EXTENSION_TAG_NAMES)
@@ -19,9 +21,8 @@ class PackageReferenceContributor : PsiReferenceContributor() {
     }
 
     private fun createPattern(tagNames: Array<String>, vararg attributeNames: String) =
-            XmlPatterns.xmlText()
-                    .withSuperParent(2, XmlPatterns.xmlTag().withName(*tagNames)
-                            .withSuperParent(2, XmlPatterns.xmlTag().withName("package")))
+            XmlPatterns.xmlText().withParent(XmlPatterns.xmlTag().withName(*tagNames))
+//                    .withSuperParent(2, XmlPatterns.xmlTag().withName("package"))
 
 
     private object ROSReferenceProvider : PsiReferenceProvider() {

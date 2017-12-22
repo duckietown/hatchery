@@ -38,7 +38,7 @@ compileTestKotlin {
 intellij {
     pluginName = "hatchery"
     updateSinceUntilBuild = false
-    plugins = ['BashSupport:1.6.12.173']
+    plugins = ['Pythonid:2017.3.173.2099.13', 'BashSupport:1.6.12.173']
 
     runIde {
         // assert(System.getenv().containsKey("DUCKIETOWN_ROOT"))

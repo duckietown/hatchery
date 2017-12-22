@@ -7,12 +7,14 @@
     <resource-bundle>edu.umontreal.hatchery.HatcheryBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTemplateGroup implementation="edu.umontreal.hatchery.ROSFileTemplatesFactory"/>
-        <!--<fileTypeFactory implementation="edu.umontreal.hatchery.ROSLaunchFileFactory"/>-->
-        <!--<fileTypeFactory implementation="edu.umontreal.hatchery.ROSPackageFileFactory"/>-->
+        <fileTypeFactory implementation="edu.umontreal.hatchery.ROSLaunchFileFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.ROSPackageFileFactory"/>
         <psi.fileReferenceHelper implementation="edu.umontreal.hatchery.ROSFileReferenceHelper"/>
+
         <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.PackageReferenceContributor"/>
         <completion.contributor language="XML" implementationClass="edu.umontreal.hatchery.RosPackageCompletionContributor"/>
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.ROSPackageLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.ROSLaunchLineMarkerProvider"/>
     </extensions>
 
     <actions>

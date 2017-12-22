@@ -8,9 +8,7 @@ import com.intellij.openapi.fileTypes.LanguageFileType
 class ROSPackageFileFactory : FileTypeFactory() {
     override fun createFileTypes(consumer: FileTypeConsumer) = consumer.consume(FileType, "xml")
 
-    object ROSPackageLang : XMLLanguage("ROSPackageLang", "application/xml", "text/xml")
-
-    object FileType : LanguageFileType(ROSPackageLang) {
+    object FileType : LanguageFileType(XMLLanguage.INSTANCE) {
         override fun getName() = "package manifest file"
         override fun getDescription() = "Manifest for ROS packages"
         override fun getDefaultExtension() = "xml"

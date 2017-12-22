@@ -16,5 +16,5 @@ class RosPackageCompletionContributor : CompletionContributor() {
         })
     }
 
-    private fun getCapture() = psiElement().inside(XmlPatterns.xmlTag().withName("run_depend"))
+    private fun getCapture() = psiElement().inside(XmlPatterns.xmlTag().withName(*PackageReferenceContributor.EXTENSION_TAG_NAMES))
 }
