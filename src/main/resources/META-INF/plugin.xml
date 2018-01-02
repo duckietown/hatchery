@@ -2,6 +2,7 @@
     <id>edu.umontreal.hatchery</id>
     <name>hatchery</name>
     <vendor email="breandan.considine@umontreal.ca" url="http://www.umontreal.ca">University of Montreal</vendor>
+    <idea-version since-build="143.379"/>
 
     <description>Plugin for developing applications for the Robot Operating System.</description>
     <resource-bundle>edu.umontreal.hatchery.HatcheryBundle</resource-bundle>
