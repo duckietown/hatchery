@@ -1,6 +1,6 @@
 ## Hatchery
 
-An IDE for the Robot Operating System (runs on Mac OS X, Linux, Windows). Language support and code assistance for ROS applications. 
+An IDE for the [Robot Operating System](http://www.ros.org/). Language support and code assistance for developing ROS applications. 
 
 ### Running
 
