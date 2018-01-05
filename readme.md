@@ -1,4 +1,4 @@
-## hatchery
+## Hatchery
 
 An IDE for ROS development. Language support and code assistance for ROS files. 
 
@@ -14,23 +14,22 @@ To open an existing ROS project inside the IDE, you can provide an absolute path
 
 ### Features 
 
-Currently, `hatchery` supports the following types of files:
+Currently, Hatchery supports the following types of files:
 
-* .launch
-* package.xml
-* .py
-* .yaml
+* XML
+* Python
+* YAML
 * CMake
 * Bash
 
-It also supports refactoring and navigation from references in:
+It also supports refactoring and navigation in XML files:
 
-* roslaunch
-* rospackage
+* roslaunch (`*.launch`, `*.test`)
+* rospackage (`package.xml`)
 
 ### Planning
 
-- [x] Implement preliminary project structure, XML. How is code compiled and run?
+- [x] Implement preliminary project structure and XML support
 - [x] Write an MVP/POC app that supports file renaming and refactoring.
 - [ ] Add support for project templates and skeleton project creation.
 - [x] Add support for deploying a project from the local machine to the remote.
