@@ -1,4 +1,4 @@
-package edu.umontreal.hatchery
+package edu.umontreal.hatchery.references
 
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
@@ -12,6 +12,7 @@ import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.util.indexing.FileBasedIndex
+import edu.umontreal.hatchery.filesystem.Icons
 import java.util.*
 
 
@@ -52,12 +53,13 @@ class ROSLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
         val relativePath = if (fileRelativePath.startsWith("/")) fileRelativePath else "/" + fileRelativePath
         val fileTypes = Collections.singleton(FileTypeManager.getInstance().getFileTypeByFileName(relativePath))
         val fileList = ArrayList<VirtualFile>()
-        FileBasedIndex.getInstance().processFilesContainingAllKeys(FileTypeIndex.NAME, fileTypes, GlobalSearchScope.projectScope(project), null) { virtualFile ->
-            if (virtualFile.path.endsWith(relativePath)) {
-                fileList.add(virtualFile)
-            }
-            true
-        }
+        FileBasedIndex.getInstance().processFilesContainingAllKeys(FileTypeIndex.NAME, fileTypes, GlobalSearchScope.projectScope(project), null)
+                { virtualFile ->
+                    if (virtualFile.path.endsWith(relativePath)) {
+                        fileList.add(virtualFile)
+                    }
+                    true
+                }
 
         return fileList
     }

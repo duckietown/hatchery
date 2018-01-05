@@ -1,31 +1,22 @@
 <idea-plugin>
     <id>edu.umontreal.hatchery</id>
     <name>hatchery</name>
-    <vendor email="breandan.considine@umontreal.ca" url="http://www.umontreal.ca">University of Montreal</vendor>
+    <vendor email="breandan.considine@umontreal.ca" url="http://www.umontreal.ca">Université de Montréal</vendor>
     <idea-version since-build="143.379"/>
 
     <description>Plugin for developing applications for the Robot Operating System.</description>
     <resource-bundle>edu.umontreal.hatchery.HatcheryBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="edu.umontreal.hatchery.ROSLaunchFileFactory"/>
-        <fileTypeFactory implementation="edu.umontreal.hatchery.ROSPackageFileFactory"/>
-        <psi.fileReferenceHelper implementation="edu.umontreal.hatchery.ROSFileReferenceHelper"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.filesystem.ROSAcroFileFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.filesystem.ROSLaunchFileFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.filesystem.ROSPackageFileFactory"/>
+        <psi.fileReferenceHelper implementation="edu.umontreal.hatchery.references.ROSFileReferenceHelper"/>
 
-        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.PackageReferenceContributor"/>
-        <completion.contributor language="XML" implementationClass="edu.umontreal.hatchery.RosPackageCompletionContributor"/>
-        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.ROSPackageLineMarkerProvider"/>
-        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.ROSLaunchLineMarkerProvider"/>
+        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.references.PackageReferenceContributor"/>
+        <completion.contributor language="XML" implementationClass="edu.umontreal.hatchery.completion.ROSPackageCompletionContributor"/>
+
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.references.ROSPackageLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.references.ROSLaunchLineMarkerProvider"/>
     </extensions>
-
-    <actions>
-        <!-- Add your actions here -->
-        <action id="HatchAction" class="edu.umontreal.hatchery.HatchAction" text="HatchAction"
-                description="HatchAction">
-            <keyboard-shortcut keymap="Mac OS X" first-keystroke="ctrl SEMICOLON"/>
-            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="ctrl SEMICOLON"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl SEMICOLON"/>
-        </action>
-    </actions>
-
 </idea-plugin>

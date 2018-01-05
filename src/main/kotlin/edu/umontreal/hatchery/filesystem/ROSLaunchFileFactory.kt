@@ -1,4 +1,4 @@
-package edu.umontreal.hatchery
+package edu.umontreal.hatchery.filesystem
 
 import com.intellij.lang.xml.XMLLanguage
 import com.intellij.openapi.fileTypes.FileTypeConsumer
