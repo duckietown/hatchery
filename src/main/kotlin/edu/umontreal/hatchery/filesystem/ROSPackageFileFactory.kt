@@ -7,11 +7,11 @@ import com.intellij.openapi.fileTypes.FileTypeFactory
 import com.intellij.openapi.fileTypes.LanguageFileType
 
 class ROSPackageFileFactory : FileTypeFactory() {
-    override fun createFileTypes(ftc: FileTypeConsumer) = ftc.consume(FileType, ExactFileNameMatcher("package.xml"))
+    override fun createFileTypes(consumer: FileTypeConsumer) = consumer.consume(ROSPackageFileType, ExactFileNameMatcher("package.xml"))
 
-    object FileType : LanguageFileType(XMLLanguage.INSTANCE) {
-        override fun getName() = "package manifest file"
-        override fun getDescription() = "Manifest for ROS packages"
+    object ROSPackageFileType : LanguageFileType(XMLLanguage.INSTANCE) {
+        override fun getName() = "rospackage"
+        override fun getDescription() = "rospackage"
         override fun getDefaultExtension() = "xml"
         override fun getIcon() = Icons.package_file
     }

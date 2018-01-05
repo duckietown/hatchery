@@ -24,11 +24,11 @@ intellij {
     setPlugins("PythonCore:2017.3.173.4127.35",          // Python support
             "name.kropp.intellij.makefile:1.2.1",        // Makefile support
             "artsiomch.cmake:0.1.0",                     // CMake support
-            "BashSupport:1.6.12.173",                    // Bash scripting support
+            "BashSupport:1.6.12.173",                    // Bash support
+            "nl.rubensten.texifyidea:0.5",               // LaTeX support
             "org.intellij.plugins.markdown:173.2696.26", // Markdown support
-            "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
-            "mobi.hsz.idea.gitignore:2.3.2")             // .ignore support
+            "net.seesharpsoft.intellij.plugins.csv:1.3") // CSV file support
 }
 
-group = "com.johnlindquist"
-version = "3.4.3"
+group = "edu.umontreal"
+version = "1.0-SNAPSHOT"

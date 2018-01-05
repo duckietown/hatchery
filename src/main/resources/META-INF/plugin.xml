@@ -11,10 +11,12 @@
         <fileTypeFactory implementation="edu.umontreal.hatchery.filesystem.ROSAcroFileFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.filesystem.ROSLaunchFileFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.filesystem.ROSPackageFileFactory"/>
+        <!--<fileTypeFactory implementation="edu.umontreal.hatchery.filesystem.RVizFileFactory"/>-->
+
         <psi.fileReferenceHelper implementation="edu.umontreal.hatchery.references.ROSFileReferenceHelper"/>
 
-        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.references.PackageReferenceContributor"/>
-        <completion.contributor language="XML" implementationClass="edu.umontreal.hatchery.completion.ROSPackageCompletionContributor"/>
+        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.references.ROSPackageReferenceContributor"/>
+        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.references.ROSLaunchReferenceContributor"/>
 
         <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.references.ROSPackageLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.references.ROSLaunchLineMarkerProvider"/>
