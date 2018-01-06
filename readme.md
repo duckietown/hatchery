@@ -27,9 +27,9 @@ If not, you should first run `source environment.sh` from inside the Duckietown 
 Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag below. 
 </details>
 
-Hatchery is available as an IntelliJ Platform plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Otherwise, clone this repository and open the project directory using the command line.
-
 #### Running
+
+Hatchery is available as an IntelliJ Platform plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Otherwise, simply this repository and open the project directory using the command line.
 
 To launch the IDE (optionally, you can specify the path to an existing ROS project):
 
