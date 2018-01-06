@@ -31,6 +31,8 @@ Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can
 
 First, clone this repository and open the project directory using the command line.
 
+`git clone https://github.com/breandan/hatchery && cd hatchery`
+
 To launch the IDE (optionally, you can specify the path to an existing ROS project):
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
