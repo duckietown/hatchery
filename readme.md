@@ -37,7 +37,7 @@ To launch the IDE (optionally, you can specify the path to an existing ROS proje
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
 
-On first launch, you may need to setup an SDK. From **File | Project Structure**, edit or create a new *Python SDK*.
+On first launch, you may need to setup an SDK. From **File | Project Structure**, select or create a new *Python SDK*.
 
 Hatchery is also available as a plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. 
 
@@ -52,19 +52,28 @@ Check out the following screencast for demonstration of some features we support
 Currently, Hatchery supports the following [ROS filetypes](https://wiki.wpi.edu/robotics/ROS_File_Types):
 
 - [x] ROS Launch (`*.launch`, `*.test`)
+<!--
     -[x] Syntax highlighting
     -[x] Resource references (`$(find <directory>)...`)
+-->
 - [x] ROS Package (`package.xml`)
+<!--
     -[x] Syntax highlighting
     -[x] Package references (`<build_depend>`, `<test_depend>`, `<run_depend>`)
+-->
 - [x] ROS URDF (`*.urdf.xacro`)
+<!--
     -[x] Syntax highlighting
     -[x] Resource references (`$(find <directory>)...`)
-- [ ] ROS Bag (`*.bag`)
+-->
+- [x] ROS Bag (`*.bag`)
+<!--
     -[ ] Live logfile tracking
 - [x] ROS Message (`*.msg`)
+<!--
     -[x] Syntax highlighting
-- [ ] ROS Service (`*.srv`)
+-->
+- [x] ROS Service (`*.srv`)
 
 It also supports refactoring and navigation in XML files:
 
