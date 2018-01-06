@@ -7,7 +7,7 @@ An open source IDE for the [Robot Operating System](http://www.ros.org/). Provid
 #### Prerequisites
 
 <details> 
-<summary><b>Java</b> must be installed prior to running Hatchery... <em>(Click to expand)</em></summary> 
+<summary><b>Java</b> must be installed prior to running Hatchery...</summary> 
 Hatchery requires a JRE or JDK. First, ensure that you have one installed:
 
 `java -version`
@@ -18,7 +18,7 @@ If not, [JDK 8](http://openjdk.java.net/install/) or higher is sufficient:
 </details>
 
 <details> 
-<summary><b>Duckietown Participants</b> should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>... <em>(Click to expand)</em></summary> 
+<summary><b>Duckietown participants</b> should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>...</summary> 
 
 Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown directory](https://github.com/duckietown/software).
 
@@ -37,7 +37,7 @@ To launch the IDE (optionally, you can specify the path to an existing ROS proje
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
 
-On first launch, you may need to setup an SDK. To do so, open **File | Project Structure** and create or edit a *Python SDK*.
+On first launch, you may need to setup an SDK. From **File | Project Structure**, edit or create a new *Python SDK*.
 
 Hatchery is also available as a plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. 
 
