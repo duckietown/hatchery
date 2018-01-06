@@ -1,6 +1,6 @@
 ## Hatchery
 
-An open source IDE for the [Robot Operating System](http://www.ros.org/) that provides language support and code assistance for developing ROS applications. 
+An open source IDE for the [Robot Operating System](http://www.ros.org/). Provides language support and code assistance for developing ROS applications, with additional tools for deploying and monitoring live applications.
 
 ### Running
 
@@ -13,7 +13,7 @@ If not, [JDK 8](http://openjdk.java.net/install/) or higher is sufficient:
 `sudo apt-get install openjdk-8-jre`
 
 <details> 
-<summary><b>Duckietown Participants</b> <em>(Click to expand)</em>...</summary> 
+<summary><b>Duckietown Participants</b> Should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>... <em>(Click to expand)</em></summary> 
 
 Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown directory](https://github.com/duckietown/software).
 
@@ -22,7 +22,8 @@ If not, you should first run `source environment.sh` from inside the Duckietown 
 Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag in the following step.
 </details>
 
-To run the IDE (optionally, you can provide an existing ROS project path):
+
+To launch the IDE (optionally, you can specify the path to an existing ROS project):
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
 
@@ -76,7 +77,7 @@ It also supports refactoring and navigation in XML files:
 
 ### Roadmap
 
-We are currently workign to expand support for the following features:
+We are currently working to expand support for the following features:
 
 * **Syntax support** - Highlighting, navigation, autocompletion
 * **Program analysis** - Code inspections, intentions, and linting
