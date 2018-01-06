@@ -1,31 +1,55 @@
 ## Hatchery
 
-An IDE for the [Robot Operating System](http://www.ros.org/). Language support and code assistance for developing ROS applications. 
+An open source IDE for the [Robot Operating System](http://www.ros.org/) that provides language support and code assistance for developing ROS applications. 
 
 ### Running
 
-First, install Java (JDK 8 or higher). Then you will need to run:
+Hatchery requires a JRE or JDK. First, ensure that you have one installed:
 
-`./gradlew runIde`
+`java -version`
+ 
+If not, [JDK 8](http://openjdk.java.net/install/) or higher is sufficient:
 
-To open an existing ROS project inside the IDE, you can provide an absolute path to a ROS project like so:
+`sudo apt-get install openjdk-8-jre`
 
-`./gradlew runIde -Project="<absolute path to ROS project>"`
+To run the IDE (optionally, you can provide an existing ROS project path):
+
+`./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
+
+When first running the IDE, you may need to configure your Python SDK. To do so, open **File | Project Structure** and create or edit a *Python SDK*.
+
+### Getting Started
+
+Check out the following screencast for demonstration of some features we support:
+
+(TODO)
 
 ### Features 
 
-Currently, Hatchery supports the following types of files:
+Currently, Hatchery supports the following [ROS filetypes](https://wiki.wpi.edu/robotics/ROS_File_Types):
+
+- [x] ROS Launch (`*.launch`, `*.test`)
+    -[x] Syntax highlighting
+    -[x] Resource references (`$(find <directory>)...`)
+- [x] ROS Package (`package.xml`)
+    -[x] Syntax highlighting
+    -[x] Package references (`<build_depend>`, `<test_depend>`, `<run_depend>`)
+- [x] ROS URDF (`*.urdf.xacro`)
+    -[x] Syntax highlighting
+    -[x] Resource references (`$(find <directory>)...`)
+- [ ] ROS Bag (`*.bag`)
+    -[ ] Live logfile tracking
+- [x] ROS Message (`*.msg`)
+    -[x] Syntax highlighting
+- [ ] ROS Service (`*.srv`)
+
+It also supports refactoring and navigation in XML files:
 
 * XML
 * Python
 * YAML
 * CMake
 * Bash
-
-It also supports refactoring and navigation in XML files:
-
-* roslaunch (`*.launch`, `*.test`)
-* rospackage (`package.xml`)
 
 ### Planning
 
@@ -40,7 +64,9 @@ It also supports refactoring and navigation in XML files:
     - [ ] Link stack traces to source code
     - [ ] Copy environment info and crash dump to clipboard
 
-### Overview
+### Roadmap
+
+We are currently workign to expand support for the following features:
 
 * **Syntax support** - Highlighting, navigation, autocompletion
 * **Program analysis** - Code inspections, intentions, and linting
@@ -52,3 +78,13 @@ It also supports refactoring and navigation in XML files:
 * **Build automation** - Delta rebuilds, cmake magic, code hotswap
 * **ROS integration** - Nodes, topics, services, parameters, graphs
 * **Duckumentation** - Usage instructions and supported features
+
+### Authors
+
+* [Breandan Considine](https://github.com/breandan)
+
+### Special Thanks
+
+* [Duckietown](https://duckietown.org)
+* [Liam Paull](https://github.com/liampaull)
+* [Open Robotics](https://www.openrobotics.org/)

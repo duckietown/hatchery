@@ -1,4 +1,4 @@
-package edu.umontreal.hatchery.references
+package edu.umontreal.hatchery.rospackage
 
 import com.intellij.patterns.XmlPatterns
 import com.intellij.psi.*

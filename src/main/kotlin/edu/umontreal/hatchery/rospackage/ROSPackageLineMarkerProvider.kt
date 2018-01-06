@@ -1,14 +1,13 @@
-package edu.umontreal.hatchery.references
+package edu.umontreal.hatchery.rospackage
 
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
-import com.intellij.openapi.project.ProjectManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlTag
-import edu.umontreal.hatchery.references.ROSPackageReferenceContributor.Companion.EXTENSION_TAG_NAMES
+import edu.umontreal.hatchery.rospackage.ROSPackageReferenceContributor.Companion.EXTENSION_TAG_NAMES
 import edu.umontreal.hatchery.filesystem.Icons
 
 class ROSPackageLineMarkerProvider : RelatedItemLineMarkerProvider() {

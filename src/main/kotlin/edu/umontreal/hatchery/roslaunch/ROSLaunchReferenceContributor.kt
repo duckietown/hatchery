@@ -1,13 +1,9 @@
-package edu.umontreal.hatchery.references
+package edu.umontreal.hatchery.roslaunch
 
-import com.intellij.openapi.project.ProjectManager
 import com.intellij.patterns.StandardPatterns
 import com.intellij.patterns.XmlPatterns
 import com.intellij.psi.*
-import com.intellij.psi.search.FilenameIndex
-import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlAttributeValue
-import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ProcessingContext
 
 class ROSLaunchReferenceContributor : PsiReferenceContributor() {
@@ -15,7 +11,7 @@ class ROSLaunchReferenceContributor : PsiReferenceContributor() {
             registrar.registerReferenceProvider(createPattern(), ReferenceProvider)
 
     private fun createPattern() =
-            XmlPatterns.xmlAttributeValue().withValue(StandardPatterns.string().matches("\\\$\\(find [A-Za-z]*\\)[\\w/\\.]*"))
+            XmlPatterns.xmlAttributeValue().withValue(StandardPatterns.string().matches("\\\$\\(find [\\w]*\\)[\\w/\\.]*"))
 
     private object ReferenceProvider : PsiReferenceProvider() {
         override fun getReferencesByElement(el: PsiElement, ctx: ProcessingContext) = arrayOf(MyBundleReference(el))

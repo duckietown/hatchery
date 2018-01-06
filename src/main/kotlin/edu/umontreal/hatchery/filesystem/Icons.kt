@@ -7,4 +7,5 @@ object Icons {
     val package_file = IconLoader.getIcon("/icons/package_icon.png")
     val broken_resource = IconLoader.getIcon("/icons/broken_resource.png")
     val ros_file = IconLoader.getIcon("/icons/ros_icon.png")
+    val catkin_file = IconLoader.getIcon("/icons/package_folder.png")
 }

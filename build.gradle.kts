@@ -23,11 +23,13 @@ intellij {
 
     setPlugins("PythonCore:2017.3.173.4127.35",          // Python support
             "name.kropp.intellij.makefile:1.2.1",        // Makefile support
-            "artsiomch.cmake:0.1.0",                     // CMake support
-            "BashSupport:1.6.12.173",                    // Bash support
-            "nl.rubensten.texifyidea:0.5",               // LaTeX support
+            "artsiomch.cmake:0.1.0",                     // CMake syntax support
+            "BashSupport:1.6.12.173",                    // Shell syntax support
+            "nl.rubensten.texifyidea:0.5",               // LaTeX syntax support
             "org.intellij.plugins.markdown:173.2696.26", // Markdown support
-            "net.seesharpsoft.intellij.plugins.csv:1.3") // CSV file support
+            "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
+            "com.intellij.ideolog:173.0.5.0",            // Log file support
+            "yaml")
 }
 
 group = "edu.umontreal"

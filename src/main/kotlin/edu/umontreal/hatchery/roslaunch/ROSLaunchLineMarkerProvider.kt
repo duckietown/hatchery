@@ -1,4 +1,4 @@
-package edu.umontreal.hatchery.references
+package edu.umontreal.hatchery.roslaunch
 
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
