@@ -36,6 +36,8 @@ To launch the IDE (optionally, you can specify the path to an existing ROS proje
 
 On first launch, you may need to setup an SDK. From **File | Project Structure**, select or create a new *Python SDK*.
 
+#### Plugin
+
 Hatchery is also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery). If you already use a JetBrains IDE (such as PyCharm or Clion), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. 
 
 ### Getting Started
