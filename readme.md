@@ -4,7 +4,9 @@ An open source IDE for the [Robot Operating System](http://www.ros.org/). Provid
 
 ### Installation
 
-First clone this repository and navigate to the project directory using the command line.
+Hatchery is available as an IntelliJ Platform plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**.
+
+Otherwise, first clone this repository and open the project directory using the command line.
 
 #### Prerequisites
 
