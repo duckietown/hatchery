@@ -4,6 +4,8 @@ An open source IDE for the [Robot Operating System](http://www.ros.org/). Provid
 
 ### Running
 
+<details> 
+<summary><b>Java</b> must be installed prior to running Hatchery... <em>(Click to expand)</em></summary> 
 Hatchery requires a JRE or JDK. First, ensure that you have one installed:
 
 `java -version`
@@ -11,9 +13,10 @@ Hatchery requires a JRE or JDK. First, ensure that you have one installed:
 If not, [JDK 8](http://openjdk.java.net/install/) or higher is sufficient:
 
 `sudo apt-get install openjdk-8-jre`
+</details>
 
 <details> 
-<summary><b>Duckietown Participants</b> Should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>... <em>(Click to expand)</em></summary> 
+<summary><b>Duckietown Participants</b> should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>... <em>(Click to expand)</em></summary> 
 
 Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown directory](https://github.com/duckietown/software).
 
