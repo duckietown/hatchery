@@ -20,6 +20,7 @@ plugins {
 intellij {
     pluginName = "hatchery"
     updateSinceUntilBuild = false
+    if(hasProperty("roject")) downloadSources = false
 
     setPlugins("PythonCore:2017.3.173.4127.35",          // Python support
             "name.kropp.intellij.makefile:1.2.1",        // Makefile support
