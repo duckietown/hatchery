@@ -2,7 +2,11 @@
 
 An open source IDE for the [Robot Operating System](http://www.ros.org/). Provides language support and code assistance for developing ROS applications, with additional tools for deploying and monitoring live applications.
 
-### Running
+### Installation
+
+First clone this repository and navigate to the project directory using the command line.
+
+#### Prerequisites
 
 <details> 
 <summary><b>Java</b> must be installed prior to running Hatchery... <em>(Click to expand)</em></summary> 
@@ -25,12 +29,13 @@ If not, you should first run `source environment.sh` from inside the Duckietown 
 Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag in the following step.
 </details>
 
+#### Running
 
 To launch the IDE (optionally, you can specify the path to an existing ROS project):
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
 
-When first running the IDE, you may need to configure your Python SDK. To do so, open **File | Project Structure** and create or edit a *Python SDK*.
+On first launch, you may need to setup an SDK. To do so, open **File | Project Structure** and create or edit a *Python SDK*.
 
 ### Getting Started
 
