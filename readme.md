@@ -12,6 +12,16 @@ If not, [JDK 8](http://openjdk.java.net/install/) or higher is sufficient:
 
 `sudo apt-get install openjdk-8-jre`
 
+<details> 
+<summary><b>Duckietown Participants</b> <em>(Click to expand)</em>...</summary> 
+
+Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown directory](https://github.com/duckietown/software).
+
+If not, you should first run `source environment.sh` from inside the Duckietown software directory.
+
+Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag in the following step.
+</details>
+
 To run the IDE (optionally, you can provide an existing ROS project path):
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
