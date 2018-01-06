@@ -4,10 +4,6 @@ An open source IDE for the [Robot Operating System](http://www.ros.org/). Provid
 
 ### Installation
 
-Hatchery is available as an IntelliJ Platform plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**.
-
-Otherwise, first clone this repository and open the project directory using the command line.
-
 #### Prerequisites
 
 <details> 
@@ -28,8 +24,10 @@ Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown dire
 
 If not, you should first run `source environment.sh` from inside the Duckietown software directory.
 
-Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag in the following step.
+Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag below. 
 </details>
+
+Hatchery is available as an IntelliJ Platform plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Otherwise, clone this repository and open the project directory using the command line.
 
 #### Running
 
