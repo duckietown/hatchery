@@ -11,7 +11,7 @@ An open source IDE for the [Robot Operating System](http://www.ros.org/). Provid
 
 Hatchery requires a JRE or JDK. First check you have one installed: `java -version`
  
-[JDK 8](http://openjdk.java.net/install/) or higher is sufficient: `sudo apt-get install openjdk-8-jre`
+[JDK 8](http://openjdk.java.net/install/) or higher is sufficient. Ubuntu/Debian: `sudo apt-get install openjdk-8-jdk`
 </details>
 
 <details> 
