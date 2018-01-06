@@ -29,13 +29,15 @@ Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can
 
 #### Running
 
-Hatchery is available as an IntelliJ Platform plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Otherwise, simply this repository and open the project directory using the command line.
+First, clone this repository and open the project directory using the command line.
 
 To launch the IDE (optionally, you can specify the path to an existing ROS project):
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
 
 On first launch, you may need to setup an SDK. To do so, open **File | Project Structure** and create or edit a *Python SDK*.
+
+Hatchery is also available as a plugin. If you already use a JetBrains IDE (such as PyCharm, Clion, or IntelliJ IDEA), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. 
 
 ### Getting Started
 
