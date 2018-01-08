@@ -38,7 +38,7 @@ On first launch, you may need to setup an SDK. From **File | Project Structure**
 
 #### Plugin
 
-Hatchery is also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery). If you already use a JetBrains IDE (such as PyCharm or Clion), it can be installed directly from the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. 
+Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery). 
 
 ### Getting Started
 
@@ -94,6 +94,9 @@ It also supports refactoring and navigation in XML files:
 - [ ] Collect crash dumps and link to the corresponding code points.
     - [ ] Link stack traces to source code
     - [ ] Copy environment info and crash dump to clipboard
+- [ ] Integration with the Robot Operating System (ROS)
+    - [x] ROS 1 support ([Kinetic Kame](http://wiki.ros.org/kinetic) recommended)
+    - [ ] [ROS 2](https://github.com/ros2/ros2/wiki) support
 
 ### Roadmap
 

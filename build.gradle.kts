@@ -8,8 +8,7 @@ import org.jetbrains.intellij.tasks.RunIdeaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 //import org.jetbrains.grammarkit.GrammarKitPluginExtension
-//import de.undercouch.gradle.tasks.download.Download
-
+//
 //buildscript {
 //    repositories {
 //        maven { setUrl("https://jitpack.io") }
@@ -20,52 +19,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 //}
 
 plugins {
-    //idea
+    idea
     kotlin("jvm") version "1.2.0"
     id("org.jetbrains.intellij") version "0.2.17"
-//    id("de.undercouch.download") version "3.2.0"
 }
 
-//idea {
-//    module {
-//        excludeDirs = excludeDirs + file("deps")
-//    }
-//}
-//
-//val clionVersion = "2017.3.1"
-//
-//val setupClion = task<Download>("setupClion") {
-//    download {
-//        onlyIf { !file("${project.projectDir}/deps/clion-$clionVersion.tar.gz").exists() }
-//        src("https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz")
-//        dest(file("${project.projectDir}/deps/clion-$clionVersion.tar.gz"))
-//    }
-//    copy {
-//        onlyIf { !file("${project.projectDir}/deps/clion-$clionVersion").exists() }
-//        from(tarTree("deps/clion-$clionVersion.tar.gz"))
-//        into(file("${project.projectDir}/deps"))
-//    }
-//}
-//
-//val downloadClion = task<Download>("downloadClion") {
-//    onlyIf { !file("${project.projectDir}/.gradle/deps/clion-$clionVersion.tar.gz").exists() }
-//    src("https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz")
-//    dest(file("${project.projectDir}/.gradle/deps/clion-$clionVersion.tar.gz"))
-//}
-//val unpackClion = task<Copy>("unpackClion") {
-//    onlyIf { !file("${project.projectDir}/deps/clion-$clionVersion").exists() }
-//    from(tarTree("deps/clion-$clionVersion.tar.gz"))
-//    into(file("${project.projectDir}/deps"))
-//    dependsOn(downloadClion)
-//}
-
 tasks.withType<RunIdeaTask> {
-    // dependsOn(unpackClion)
     if (hasProperty("roject"))
         args = listOf(getProperty("roject") as String)
     else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
-    //val cmakelists_path = File().walkTopDown().first { it.endsWith("CMakeLists.txt") }.toString()
-        args = listOf(System.getenv("DUCKIETOWN_ROOT") /*+ "/catkin_ws/src/"*/)
+        args = listOf(System.getenv("DUCKIETOWN_ROOT"))
 }
 
 //configure<GrammarKitPluginExtension> {
@@ -75,7 +38,7 @@ tasks.withType<RunIdeaTask> {
 intellij {
     pluginName = "hatchery"
     updateSinceUntilBuild = false
-    if(hasProperty("roject")) downloadSources = false
+    if (hasProperty("roject")) downloadSources = false
 
     setPlugins("PythonCore:2017.3.173.4127.35",          // Python support
             "name.kropp.intellij.makefile:1.2.1",        // Makefile support
@@ -89,4 +52,4 @@ intellij {
 }
 
 group = "edu.umontreal"
-version = "0.2"
+version = "0.2.1"
