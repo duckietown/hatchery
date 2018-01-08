@@ -7,7 +7,6 @@ import com.intellij.psi.PsiFile
 import edu.umontreal.hatchery.filesystem.Icons
 
 class CatkinIconProvider : IconProvider() {
-    // TODO: Figure out why element is never PsiDirectory
     override fun getIcon(element: PsiElement, flags: Int) =
             if (element is PsiDirectory && hasPackageXml(element)) Icons.catkin_file else null
 
