@@ -11,7 +11,7 @@ class CatkinIconProvider : IconProvider() {
     override fun getIcon(element: PsiElement, flags: Int) =
             if (element is PsiDirectory && hasPackageXml(element)) Icons.catkin_file else null
 
-    private fun hasPackageXml(element: PsiDirectory) = element.children.any { (it as PsiFile).name == "package.xml" }
+    private fun hasPackageXml(element: PsiDirectory) = element.files.any { it.name == "package.xml" }
 
 //    override fun getIcon(file: VirtualFile, f: Int, p: Project?) = if (hasPackageXml(file)) Icons.catkin_file else null
 //

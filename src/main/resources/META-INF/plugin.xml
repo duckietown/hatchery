@@ -25,6 +25,6 @@
 
         <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.rospackage.ROSPackageLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.ROSLaunchLineMarkerProvider"/>
-        <iconProvider implementation="edu.umontreal.hatchery.catkin.CatkinIconProvider" order="before directory"/>
+        <iconProvider implementation="edu.umontreal.hatchery.catkin.CatkinIconProvider"/>
     </extensions>
 </idea-plugin>
