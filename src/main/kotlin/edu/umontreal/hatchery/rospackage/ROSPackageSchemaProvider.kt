@@ -9,6 +9,10 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.xml.XmlSchemaProvider
 import org.jetbrains.annotations.NonNls
 
+/*
+ * Schema is taken from: http://www.ros.org/reps/rep-0140.html
+ */
+
 class ROSPackageSchemaProvider : XmlSchemaProvider() {
 
     companion object {

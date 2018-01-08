@@ -9,6 +9,10 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.xml.XmlSchemaProvider
 import org.jetbrains.annotations.NonNls
 
+/*
+ * Schema from: https://github.com/ros/ros_comm/issues/455#issuecomment-355625591
+ */
+
 class ROSLaunchSchemaProvider : XmlSchemaProvider() {
     companion object {
         fun isLaunchFile(name: String) = name.contains(".launch")
@@ -25,7 +29,7 @@ class ROSLaunchSchemaProvider : XmlSchemaProvider() {
     private val LOG = Logger.getInstance(ROSLaunchSchemaProvider::class.java)
 
     private fun getReference(module: Module): XmlFile? {
-        val resource = ROSLaunchSchemaProvider::class.java.getResource("roslaunch.xsd")
+        val resource = this.javaClass.getResource("roslaunch.xsd")
         val fileByURL = VfsUtil.findFileByURL(resource)
         if (fileByURL == null) {
             LOG.error("xsd not found")
