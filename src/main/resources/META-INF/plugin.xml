@@ -20,6 +20,9 @@
         <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.rospackage.ROSPackageReferenceContributor"/>
         <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.roslaunch.ROSLaunchReferenceContributor"/>
 
+        <xml.schemaProvider implementation="edu.umontreal.hatchery.roslaunch.ROSLaunchSchemaProvider"/>
+        <xml.schemaProvider implementation="edu.umontreal.hatchery.rospackage.ROSPackageSchemaProvider"/>
+
         <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.rospackage.ROSPackageLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.ROSLaunchLineMarkerProvider"/>
         <iconProvider implementation="edu.umontreal.hatchery.catkin.CatkinIconProvider" order="before directory"/>
