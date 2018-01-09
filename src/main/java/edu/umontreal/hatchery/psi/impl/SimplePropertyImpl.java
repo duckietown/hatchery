@@ -2,6 +2,8 @@
 package edu.umontreal.hatchery.psi.impl;
 
 import java.util.List;
+
+import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
@@ -25,4 +27,14 @@ public class SimplePropertyImpl extends SimpleNamedElementImpl implements Simple
     else super.accept(visitor);
   }
 
+    @Nullable
+    @Override
+    public PsiElement getNameIdentifier() {
+        return null;
+    }
+
+    @Override
+    public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
+        return null;
+    }
 }
