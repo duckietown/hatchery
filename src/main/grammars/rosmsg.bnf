@@ -1,0 +1,28 @@
+{
+  parserClass="edu.umontreal.hatchery.parser.SimpleParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Simple"
+  psiImplClassSuffix="Impl"
+  psiPackage="edu.umontreal.hatchery.psi"
+  psiImplPackage="edu.umontreal.hatchery.psi.impl"
+
+  elementTypeHolderClass="edu.umontreal.hatchery.psi.SimpleTypes"
+  elementTypeClass="edu.umontreal.hatchery.psi.SimpleElementType"
+  tokenTypeClass="edu.umontreal.hatchery.psi.SimpleTokenType"
+
+  psiImplUtilClass="edu.umontreal.hatchery.psi.impl.SimplePsiImplUtil"
+}
+
+rosmsgFile ::= (property|COMMENT)*
+
+property ::= (TYPE SEPARATOR KEY SEPARATOR VALUE?)|(TYPE KEY) {
+    pin=3
+    recoverWhile="recover_property"
+    mixin="edu.umontreal.hatchery.psi.impl.SimpleNamedElementImpl"
+    implements="edu.umontreal.hatchery.psi.SimpleNamedElement"
+    methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+}
+
+private recover_property ::= !(KEY|SEPARATOR|COMMENT)

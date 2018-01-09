@@ -47,10 +47,7 @@ class ROSLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
             val fileTypes = Collections.singleton(FileTypeManager.getInstance().getFileTypeByFileName(relativePath))
             val fileList = ArrayList<VirtualFile>()
             FileBasedIndex.getInstance().processFilesContainingAllKeys(FileTypeIndex.NAME, fileTypes, GlobalSearchScope.projectScope(project), null)
-                    { virtualFile ->
-                        if (virtualFile.path.endsWith(relativePath)) fileList.add(virtualFile)
-                        true
-                    }
+                    { virtualFile -> if (virtualFile.path.endsWith(relativePath)) fileList.add(virtualFile); true }
 
             return fileList
         }
