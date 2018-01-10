@@ -11,7 +11,7 @@ class ROSAcroFileFactory : FileTypeFactory() {
     override fun createFileTypes(consumer: FileTypeConsumer) = consumer.consume(AcroFileType, "xacro")
 
     object AcroFileType : LanguageFileType(XMLLanguage.INSTANCE) {
-        override fun getName() = "xacro file"
+        override fun getName() = "xacro"
         override fun getDescription() = "xacro"
         override fun getDefaultExtension() = "xacro"
         override fun getIcon() = Icons.ros_file

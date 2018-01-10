@@ -8,4 +8,6 @@ object Icons {
     val broken_resource = IconLoader.getIcon("/icons/broken_resource.png")
     val ros_file = IconLoader.getIcon("/icons/ros_icon.png")
     val catkin_file = IconLoader.getIcon("/icons/package_folder.png")
+    val ros_msg = IconLoader.getIcon("/icons/package_folder.png")
+    val robot = IconLoader.getIcon("/icons/robot_16.png.png")
 }

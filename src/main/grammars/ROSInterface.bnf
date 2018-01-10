@@ -1,0 +1,25 @@
+{
+  parserClass="edu.umontreal.hatchery.parser.ROSInterfaceParser"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiImplClassSuffix="Impl"
+  psiClassPrefix="ROSInterface"
+  psiPackage="edu.umontreal.hatchery.psi"
+  psiImplPackage="edu.umontreal.hatchery.psi.impl"
+
+  elementTypeHolderClass="edu.umontreal.hatchery.psi.ROSInterfaceTypes"
+  elementTypeClass="edu.umontreal.hatchery.psi.ROSInterfaceElementType"
+  tokenTypeClass="edu.umontreal.hatchery.psi.ROSInterfaceTokenType"
+}
+
+rosInterfaceFile ::= (property|COMMENT)*
+
+property ::= (TYPE SEPARATOR KEY SEPARATOR VALUE?)|(TYPE KEY) {
+    pin=3
+    recoverWhile="recover_property"
+    mixin="edu.umontreal.hatchery.psi.impl.ROSInterfaceNamedElementImpl"
+    implements="edu.umontreal.hatchery.psi.ROSInterfaceNamedElement"
+//    methods=[getType getKey getValue getName setName getNameIdentifier]
+}
+
+private recover_property ::= !(KEY|SEPARATOR|COMMENT)

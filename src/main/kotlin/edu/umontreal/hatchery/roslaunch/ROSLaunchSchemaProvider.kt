@@ -18,9 +18,7 @@ class ROSLaunchSchemaProvider : XmlSchemaProvider() {
         fun isLaunchFile(name: String) = name.contains(".launch")
     }
 
-    override fun isAvailable(file: XmlFile): Boolean {
-        return isLaunchFile(file.name)
-    }
+    override fun isAvailable(file: XmlFile) = isLaunchFile(file.name)
 
     override fun getSchema(@NonNls url: String, module: Module?, baseFile: PsiFile): XmlFile? {
         return if (module != null && isLaunchFile(baseFile.name)) module.let { getReference(it) } else null

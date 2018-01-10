@@ -7,21 +7,35 @@ import org.gradle.kotlin.dsl.version
 import org.jetbrains.intellij.tasks.RunIdeaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-//import org.jetbrains.grammarkit.GrammarKitPluginExtension
-//
-//buildscript {
-//    repositories {
-//        maven { setUrl("https://jitpack.io") }
-//    }
-//    dependencies {
-//        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
-//    }
-//}
+import org.jetbrains.grammarkit.GrammarKitPluginExtension
+import org.jetbrains.grammarkit.tasks.GenerateLexer
+import org.jetbrains.grammarkit.tasks.GenerateParser
+
+buildscript {
+    repositories {
+        maven { setUrl("https://jitpack.io") }
+    }
+
+    dependencies {
+        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
+    }
+}
 
 plugins {
     idea
-    kotlin("jvm") version "1.2.0"
+    kotlin("jvm") version "1.2.10"
     id("org.jetbrains.intellij") version "0.2.17"
+}
+
+apply {
+    plugin("idea")
+    plugin("kotlin")
+    plugin("org.jetbrains.grammarkit")
+    plugin("org.jetbrains.intellij")
+}
+
+repositories {
+    mavenCentral()
 }
 
 tasks.withType<RunIdeaTask> {
@@ -31,9 +45,28 @@ tasks.withType<RunIdeaTask> {
         args = listOf(System.getenv("DUCKIETOWN_ROOT"))
 }
 
-//configure<GrammarKitPluginExtension> {
-//    grammarKitRelease = "1.5.2"
-//}
+configure<GrammarKitPluginExtension> {
+    grammarKitRelease = "1.5.2"
+}
+
+val generateROSInterfaceLexer = task<GenerateLexer>("generateROSInterfaceLexer") {
+    source = "src/main/grammars/ROSInterface.flex"
+    targetDir = "src/main/java/edu/umontreal/hatchery/"
+    targetClass = "ROSInterfaceLexer"
+    purgeOldFiles = true
+}
+
+val generateROSInterfaceParser = task<GenerateParser>("generateROSInterfaceParser") {
+    source = "src/main/grammars/ROSInterface.bnf"
+    targetRoot = "src/main/java"
+    pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
+    pathToPsiRoot = "/edu/umontreal/hatchery/psi"
+    purgeOldFiles = true
+}
+
+tasks.withType<KotlinCompile> {
+    dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
+}
 
 intellij {
     pluginName = "hatchery"
