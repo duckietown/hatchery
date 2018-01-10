@@ -51,7 +51,7 @@ configure<GrammarKitPluginExtension> {
 
 val generateROSInterfaceLexer = task<GenerateLexer>("generateROSInterfaceLexer") {
     source = "src/main/grammars/ROSInterface.flex"
-    targetDir = "src/main/java/edu/umontreal/hatchery/"
+    targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
     targetClass = "ROSInterfaceLexer"
     purgeOldFiles = true
 }
@@ -81,6 +81,7 @@ intellij {
             "org.intellij.plugins.markdown:173.2696.26", // Markdown support
             "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
             "com.intellij.ideolog:173.0.5.0",            // Log file support
+            "PsiViewer:3.28.93",                         // PSI view support
             "yaml")
 }
 

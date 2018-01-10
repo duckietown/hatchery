@@ -3,7 +3,6 @@ package edu.umontreal.hatchery.catkin
 import com.intellij.ide.IconProvider
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
 import edu.umontreal.hatchery.filesystem.Icons
 
 class CatkinIconProvider : IconProvider() {

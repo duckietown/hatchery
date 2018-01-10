@@ -15,7 +15,11 @@
         <fileTypeFactory implementation="edu.umontreal.hatchery.roslaunch.ROSLaunchFileFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.rospackage.ROSPackageFileFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.rviz.RVizFileFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.rosinterface.ROSInterfaceFileFactory"/>
         <!--<psi.fileReferenceHelper implementation="edu.umontreal.hatchery.rospackage.ROSFileReferenceHelper"/>-->
+
+        <lang.parserDefinition language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.ROSInterfaceParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.ROSInterfaceSyntaxHighlighterFactory"/>
 
         <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.rospackage.ROSPackageReferenceContributor"/>
         <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.roslaunch.ROSLaunchReferenceContributor"/>
