@@ -14,12 +14,12 @@
 
 rosInterfaceFile ::= (property|COMMENT)*
 
-property ::= (TYPE SEPARATOR KEY SEPARATOR VALUE?)|(TYPE KEY) {
+property ::= (TYPE KEY SEPARATOR VALUE)|(TYPE KEY) {
     pin=3
-//    recoverWhile="recover_property"
+    recoverWhile="recover_property"
     mixin="edu.umontreal.hatchery.psi.impl.ROSInterfaceNamedElementImpl"
     implements="edu.umontreal.hatchery.psi.ROSInterfaceNamedElement"
 //    methods=[getType getKey getValue getName setName getNameIdentifier]
 }
 
-private recover_property ::= !(KEY|SEPARATOR|COMMENT)
+private recover_property ::= !(TYPE|KEY|SEPARATOR|COMMENT)

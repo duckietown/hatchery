@@ -26,9 +26,7 @@ class ROSInterfaceSyntaxHighlighter : SyntaxHighlighterBase() {
     private val COMMENT_KEYS = arrayOf(COMMENT)
     private val EMPTY_KEYS = arrayOf<TextAttributesKey>()
 
-    override fun getHighlightingLexer(): Lexer {
-        return ROSInterfaceLexerAdapter()
-    }
+    override fun getHighlightingLexer() = ROSInterfaceLexerAdapter()
 
     override fun getTokenHighlights(tokenType: IElementType) =
             when (tokenType) {

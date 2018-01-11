@@ -15,32 +15,42 @@ import com.intellij.psi.TokenType;
 %eof{  return;
 %eof}
 
-CRLF=\R
-WHITE_SPACE=[\ \n\t\f]
+CRLF=[\R\n\f]
+WHITE_SPACE=[\ \t]
 VALUE_CHARACTER=[^ \n\f\\] | "\\"{CRLF} | "\\".
 END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
 SEPARATOR=[:=]
 TYPE_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
 KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
 
-%state WAITING_VALUE
+%state WAITING_STATE
+%state KEY_STATE
+%state VALUE_STATE
 
 %%
 
-<YYINITIAL> {END_OF_LINE_COMMENT}                      { yybegin(YYINITIAL); return ROSInterfaceTypes.COMMENT; }
+<YYINITIAL> {END_OF_LINE_COMMENT}               { yybegin(YYINITIAL); return ROSInterfaceTypes.COMMENT; }
 
-<YYINITIAL> {TYPE_CHARACTER}+                          {yybegin(YYINITIAL); return ROSInterfaceTypes.TYPE; }
+<YYINITIAL> {TYPE_CHARACTER}+                   { yybegin(YYINITIAL); return ROSInterfaceTypes.TYPE; }
 
-<YYINITIAL> {SEPARATOR}                                {yybegin(WAITING_VALUE); return ROSInterfaceTypes.SEPARATOR; }
+<YYINITIAL> {WHITE_SPACE}+                      { yybegin(KEY_STATE); return TokenType.WHITE_SPACE; }
 
-<WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+          {yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+<KEY_STATE> {KEY_CHARACTER}+                    { yybegin(KEY_STATE); return ROSInterfaceTypes.KEY; }
 
-<WAITING_VALUE> {WHITE_SPACE}+                         { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
+<KEY_STATE> {WHITE_SPACE}+                      { yybegin(WAITING_STATE); return TokenType.WHITE_SPACE; }
 
-<WAITING_VALUE> {KEY_CHARACTER}+                       { yybegin(YYINITIAL); return ROSInterfaceTypes.KEY; }
+<KEY_STATE> {SEPARATOR}                         { yybegin(VALUE_STATE); return ROSInterfaceTypes.SEPARATOR; }
 
-<WAITING_VALUE> {VALUE_CHARACTER}*                     { yybegin(YYINITIAL); return ROSInterfaceTypes.VALUE; }
+<WAITING_STATE> {CRLF}({CRLF}|{WHITE_SPACE})+   { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
-({CRLF}|{WHITE_SPACE})+                                { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+<WAITING_STATE> {SEPARATOR}*                    { yybegin(VALUE_STATE); return ROSInterfaceTypes.SEPARATOR; }
 
-.                                                      { return TokenType.BAD_CHARACTER; }
+<VALUE_STATE> {WHITE_SPACE}+                    { yybegin(VALUE_STATE); return TokenType.WHITE_SPACE; }
+
+<VALUE_STATE> {VALUE_CHARACTER}*                { yybegin(VALUE_STATE); return ROSInterfaceTypes.VALUE; }
+
+<VALUE_STATE> {CRLF}({CRLF}|{WHITE_SPACE})+     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+
+({CRLF}|{WHITE_SPACE})+                         { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+
+.                                               { return TokenType.BAD_CHARACTER; }

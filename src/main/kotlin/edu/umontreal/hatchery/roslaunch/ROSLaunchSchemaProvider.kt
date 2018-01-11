@@ -14,9 +14,7 @@ import org.jetbrains.annotations.NonNls
  */
 
 class ROSLaunchSchemaProvider : XmlSchemaProvider() {
-    companion object {
-        fun isLaunchFile(name: String) = name.contains(".launch")
-    }
+    private fun isLaunchFile(name: String) = name.contains(".launch")
 
     override fun isAvailable(file: XmlFile) = isLaunchFile(file.name)
 
