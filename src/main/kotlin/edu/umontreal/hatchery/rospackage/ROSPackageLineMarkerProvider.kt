@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlTag
-import edu.umontreal.hatchery.rospackage.ROSPackageReferenceContributor.Companion.EXTENSION_TAG_NAMES
 import edu.umontreal.hatchery.filesystem.Icons
+import edu.umontreal.hatchery.rospackage.ROSPackageReferenceContributor.Companion.EXTENSION_TAG_NAMES
 
 class ROSPackageLineMarkerProvider : RelatedItemLineMarkerProvider() {
     override fun collectNavigationMarkers(element: PsiElement, results: MutableCollection<in RelatedItemLineMarkerInfo<PsiElement>>) {

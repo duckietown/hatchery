@@ -1,13 +1,10 @@
 package edu.umontreal.hatchery.psi
 
 import com.intellij.extapi.psi.PsiFileBase
-import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
 import edu.umontreal.hatchery.filesystem.Icons
 import edu.umontreal.hatchery.rosinterface.ROSInterfaceFileFactory
 import edu.umontreal.hatchery.rosinterface.ROSInterfaceLanguage
-
-import javax.swing.*
 
 class ROSInterfaceFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, ROSInterfaceLanguage) {
     override fun getFileType() = ROSInterfaceFileFactory.ROSInterfaceFileType

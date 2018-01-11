@@ -1,6 +1,5 @@
 package edu.umontreal.hatchery.rosinterface
 
-import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -11,12 +10,12 @@ import com.intellij.psi.tree.IElementType
 import edu.umontreal.hatchery.psi.ROSInterfaceTypes
 
 class ROSInterfaceSyntaxHighlighter : SyntaxHighlighterBase() {
-    val SEPARATOR = createTextAttributesKey("SIMPLE_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN)
-    val TYPE = createTextAttributesKey("SIMPLE_KEY", DefaultLanguageHighlighterColors.KEYWORD)
-    val KEY = createTextAttributesKey("SIMPLE_KEY", DefaultLanguageHighlighterColors.IDENTIFIER)
-    val VALUE = createTextAttributesKey("SIMPLE_VALUE", DefaultLanguageHighlighterColors.STRING)
-    val COMMENT = createTextAttributesKey("SIMPLE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
-    val BAD_CHARACTER = createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
+    val SEPARATOR = createTextAttributesKey("ROS_INTERFACE_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN)
+    val TYPE = createTextAttributesKey("ROS_INTERFACE_TYPE", DefaultLanguageHighlighterColors.KEYWORD)
+    val KEY = createTextAttributesKey("ROS_INTERFACE_KEY", DefaultLanguageHighlighterColors.IDENTIFIER)
+    val VALUE = createTextAttributesKey("ROS_INTERFACE_VALUE", DefaultLanguageHighlighterColors.STRING)
+    val COMMENT = createTextAttributesKey("ROS_INTERFACE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
+    val BAD_CHARACTER = createTextAttributesKey("ROS_INTERFACE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
 
     private val BAD_CHAR_KEYS = arrayOf(BAD_CHARACTER)
     private val SEPARATOR_KEYS = arrayOf(SEPARATOR)

@@ -1,8 +1,8 @@
 package edu.umontreal.hatchery.filesystem
 
+import com.intellij.ide.fileTemplates.FileTemplateDescriptor
 import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptor
 import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptorFactory
-import com.intellij.ide.fileTemplates.FileTemplateDescriptor
 
 class ROSFileTemplatesFactory : FileTemplateGroupDescriptorFactory {
     override fun getFileTemplatesDescriptor() =
