@@ -18,7 +18,7 @@ import com.intellij.psi.TokenType;
 CRLF=[\R\n\f]
 WHITE_SPACE=[\ \t]
 VALUE_CHARACTER=[^ \n\f\\] | "\\"{CRLF} | "\\".
-END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
+END_OF_LINE_COMMENT=("#")[^\R\n]*
 SEPARATOR=[:=]
 TYPE_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
 KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
@@ -43,11 +43,15 @@ KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
 
 <WAITING_STATE> {CRLF}({CRLF}|{WHITE_SPACE})+   { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
+<WAITING_STATE> {END_OF_LINE_COMMENT}           { yybegin(WAITING_STATE); return ROSInterfaceTypes.COMMENT; }
+
 <WAITING_STATE> {SEPARATOR}*                    { yybegin(VALUE_STATE); return ROSInterfaceTypes.SEPARATOR; }
 
 <VALUE_STATE> {WHITE_SPACE}+                    { yybegin(VALUE_STATE); return TokenType.WHITE_SPACE; }
 
 <VALUE_STATE> {VALUE_CHARACTER}*                { yybegin(VALUE_STATE); return ROSInterfaceTypes.VALUE; }
+
+<VALUE_STATE> {END_OF_LINE_COMMENT}             { yybegin(VALUE_STATE); return ROSInterfaceTypes.COMMENT; }
 
 <VALUE_STATE> {CRLF}({CRLF}|{WHITE_SPACE})+     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
