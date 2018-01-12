@@ -11,4 +11,5 @@ object Icons {
     val catkin_file by lazy { IconLoader.getIcon("/icons/package_folder.png") }
     val ros_msg by lazy { IconLoader.getIcon("/icons/ros_message.png") }
     val robot by lazy { IconLoader.getIcon("/icons/robot_16.png") }
+    val python_dir by lazy { IconLoader.getIcon("/icons/variables_16.png") }
 }
