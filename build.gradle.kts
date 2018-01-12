@@ -68,6 +68,13 @@ tasks.withType<KotlinCompile> {
     dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
 }
 
+tasks.withType<RunIdeaTask> {
+    if (project.hasProperty("roject"))
+        args = listOf(project.property("roject") as String)
+    else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
+        args = listOf(System.getenv("DUCKIETOWN_ROOT"))
+}
+
 intellij {
     pluginName = "hatchery"
     updateSinceUntilBuild = false
