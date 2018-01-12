@@ -12,8 +12,11 @@ class ROSPackageFileFactory : FileTypeFactory() {
 
     object ROSPackageFileType : LanguageFileType(XMLLanguage.INSTANCE) {
         override fun getName() = "rospackage"
+
         override fun getDescription() = "rospackage"
+
         override fun getDefaultExtension() = "xml"
+
         override fun getIcon() = Icons.package_file
     }
 }

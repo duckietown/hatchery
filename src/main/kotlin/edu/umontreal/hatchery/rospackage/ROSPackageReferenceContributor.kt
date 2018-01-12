@@ -36,8 +36,7 @@ class ROSPackageReferenceContributor : PsiReferenceContributor() {
             files.map { file ->
                 if (file is XmlFile)
                     file.document?.rootTag?.subTags?.forEach {
-                        if (it is XmlTag && it.localName == "name")
-                            availablePackages.add(it.value.text)
+                        if (it is XmlTag && it.localName == "name") availablePackages.add(it.value.text)
                     }
             }
 

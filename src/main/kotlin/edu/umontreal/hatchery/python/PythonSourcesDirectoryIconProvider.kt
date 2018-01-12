@@ -6,8 +6,9 @@ import com.intellij.psi.PsiElement
 import edu.umontreal.hatchery.filesystem.Icons
 
 class PythonSourcesDirectoryIconProvider : IconProvider() {
-    override fun getIcon(element: PsiElement, flags: Int) =
-            if (element is PsiDirectory && hasPythonSources(element)) Icons.python_dir else null
+    override fun getIcon(e: PsiElement, f: Int) = if (isSourceFolder(e) && hasPythonFiles(e)) Icons.python_dir else null
 
-    private fun hasPythonSources(element: PsiDirectory) = element.name =="src" && element.files.any { it.name.endsWith("py") }
+    private fun isSourceFolder(element: PsiElement) = element is PsiDirectory && element.name == "src"
+
+    private fun hasPythonFiles(element: PsiElement) = (element as PsiDirectory).files.any { it.name.endsWith(".py") }
 }
