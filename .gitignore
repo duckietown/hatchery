@@ -4,3 +4,4 @@ build
 out
 src/main/java
 *.iml
+*.DS_Store
