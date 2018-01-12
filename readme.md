@@ -44,7 +44,7 @@ Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can ins
 
 Check out the following screencast for demonstration of some features we support:
 
-(TODO)
+[![Screencast](https://img.youtube.com/vi/OU1_tqZs9EM/0.jpg)](https://www.youtube.com/watch?v=OU1_tqZs9EM)
 
 ### Features 
 
