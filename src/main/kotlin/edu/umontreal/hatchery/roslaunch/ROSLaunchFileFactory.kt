@@ -14,6 +14,6 @@ class ROSLaunchFileFactory : FileTypeFactory() {
         override fun getName() = "roslaunch"
         override fun getDescription() = "roslaunch"
         override fun getDefaultExtension() = "launch"
-        override fun getIcon() = Icons.launch_file
+        override fun getIcon() = Icons.ros_launch
     }
 }

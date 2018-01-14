@@ -3,7 +3,7 @@ package edu.umontreal.hatchery.filesystem
 import com.intellij.openapi.util.IconLoader
 
 object Icons {
-    val launch_file by lazy { IconLoader.getIcon("/icons/launch_icon.png") }
+    val ros_launch by lazy { IconLoader.getIcon("/icons/launch_icon.png") }
     val resource_file by lazy { IconLoader.getIcon("/icons/resource_icon.png") }
     val package_file by lazy { IconLoader.getIcon("/icons/package_icon.png") }
     val broken_resource by lazy { IconLoader.getIcon("/icons/broken_resource.png") }

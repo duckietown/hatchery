@@ -32,5 +32,9 @@
 
         <iconProvider implementation="edu.umontreal.hatchery.catkin.CatkinIconProvider" order="first"/>
         <iconProvider implementation="edu.umontreal.hatchery.python.PythonSourcesDirectoryIconProvider" order="first"/>
+
+        <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.ROSLaunchRunConfigurationType"/>
+        <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.ROSLaunchRunLineMarker"/>
+        <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.ROSLaunchRunConfigurationProducer"/>
     </extensions>
 </idea-plugin>
