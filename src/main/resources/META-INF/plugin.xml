@@ -11,30 +11,32 @@
     <resource-bundle>edu.umontreal.hatchery.HatcheryBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="edu.umontreal.hatchery.xacro.ROSAcroFileFactory"/>
-        <fileTypeFactory implementation="edu.umontreal.hatchery.roslaunch.ROSLaunchFileFactory"/>
-        <fileTypeFactory implementation="edu.umontreal.hatchery.rospackage.ROSPackageFileFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.xacro.XacroFileTypeFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.roslaunch.RosLaunchFileFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.rospackage.RosPackageFileFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.rviz.RVizFileFactory"/>
-        <fileTypeFactory implementation="edu.umontreal.hatchery.rosinterface.ROSInterfaceFileFactory"/>
-        <!--<psi.fileReferenceHelper implementation="edu.umontreal.hatchery.rospackage.ROSFileReferenceHelper"/>-->
+        <fileTypeFactory implementation="edu.umontreal.hatchery.rosinterface.RosInterfaceFileFactory"/>
+        <!--<psi.fileReferenceHelper implementation="edu.umontreal.hatchery.rospackage.RosPackageFileReferenceHelper"/>-->
 
-        <lang.parserDefinition language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.ROSInterfaceParserDefinition"/>
-        <lang.syntaxHighlighterFactory language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.ROSInterfaceSyntaxHighlighterFactory"/>
+        <lang.parserDefinition language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.RosInterfaceParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.RosInterfaceSyntaxHighlighterFactory"/>
 
-        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.rospackage.ROSPackageReferenceContributor"/>
-        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.roslaunch.ROSLaunchReferenceContributor"/>
+        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.rospackage.RosPackageReferenceContributor"/>
+        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.roslaunch.RosLaunchReferenceContributor"/>
 
-        <xml.schemaProvider implementation="edu.umontreal.hatchery.roslaunch.ROSLaunchSchemaProvider"/>
-        <xml.schemaProvider implementation="edu.umontreal.hatchery.rospackage.ROSPackageSchemaProvider"/>
+        <xml.schemaProvider implementation="edu.umontreal.hatchery.roslaunch.RosLaunchSchemaProvider"/>
+        <xml.schemaProvider implementation="edu.umontreal.hatchery.rospackage.RosPackageSchemaProvider"/>
 
-        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.rospackage.ROSPackageLineMarkerProvider"/>
-        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.ROSLaunchLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.rospackage.RosPackageLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.RosLaunchLineMarkerProvider"/>
 
         <iconProvider implementation="edu.umontreal.hatchery.catkin.CatkinIconProvider" order="first"/>
         <iconProvider implementation="edu.umontreal.hatchery.python.PythonSourcesDirectoryIconProvider" order="first"/>
 
-        <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.ROSLaunchRunConfigurationType"/>
-        <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.ROSLaunchRunLineMarker"/>
-        <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.ROSLaunchRunConfigurationProducer"/>
+        <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigurationType"/>
+        <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.RosLaunchRunLineMarker"/>
+        <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigurationProducer"/>
+
+        <moduleType id="DEMO_MODULE_TYPE" implementationClass="edu.umontreal.hatchery.modules.DemoModuleType"/>
     </extensions>
 </idea-plugin>

@@ -8,12 +8,12 @@ import edu.umontreal.hatchery.filesystem.Icons
 import org.jetbrains.yaml.YAMLLanguage
 
 class RVizFileFactory : FileTypeFactory() {
-    override fun createFileTypes(consumer: FileTypeConsumer) = consumer.consume(FileType, "rviz")
+  override fun createFileTypes(consumer: FileTypeConsumer) = consumer.consume(RVizFileType, "rviz")
 
-    object FileType : LanguageFileType(YAMLLanguage.INSTANCE) {
-        override fun getName() = "rviz"
-        override fun getDescription() = "rviz"
-        override fun getDefaultExtension() = "rviz"
-        override fun getIcon() = Icons.ros_file
-    }
+  object RVizFileType : LanguageFileType(YAMLLanguage.INSTANCE) {
+    override fun getName() = "rviz_file_name"
+    override fun getDescription() = "rviz_file_description"
+    override fun getDefaultExtension() = "rviz"
+    override fun getIcon() = Icons.ros_file
+  }
 }

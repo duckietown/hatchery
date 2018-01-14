@@ -4,6 +4,7 @@ import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.getting
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.version
+import org.gradle.language.base.internal.plugins.CleanRule
 import org.jetbrains.intellij.tasks.RunIdeaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
