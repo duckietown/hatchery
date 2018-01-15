@@ -2,12 +2,12 @@ package edu.umontreal.hatchery.rosinterface;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import edu.umontreal.hatchery.psi.ROSInterfaceTypes;
+import edu.umontreal.hatchery.psi.RosInterfaceTypes;
 import com.intellij.psi.TokenType;
 
 %%
 
-%class ROSInterfaceLexer
+%class RosInterfaceLexer
 %implements FlexLexer
 %unicode
 %function advance
@@ -30,25 +30,25 @@ KEY_CHARACTER=[^:=#\ \n\t\f\\]
 
 %%
 
-<YYINITIAL> {END_OF_LINE_COMMENT}               { yybegin(YYINITIAL); return ROSInterfaceTypes.COMMENT; }
+<YYINITIAL> {END_OF_LINE_COMMENT}               { yybegin(YYINITIAL); return RosInterfaceTypes.COMMENT; }
 
-<YYINITIAL> {TYPE_CHARACTER}+                   { yybegin(TYPE_STATE); return ROSInterfaceTypes.TYPE; }
+<YYINITIAL> {TYPE_CHARACTER}+                   { yybegin(TYPE_STATE); return RosInterfaceTypes.TYPE; }
 
 <TYPE_STATE> {WHITE_SPACE}+                     { yybegin(KEY_STATE); return TokenType.WHITE_SPACE; }
 
-<KEY_STATE> {KEY_CHARACTER}+                    { yybegin(WAITING_STATE); return ROSInterfaceTypes.KEY; }
+<KEY_STATE> {KEY_CHARACTER}+                    { yybegin(WAITING_STATE); return RosInterfaceTypes.KEY; }
 
 <WAITING_STATE> {WHITE_SPACE}+                  { yybegin(WAITING_STATE); return TokenType.WHITE_SPACE; }
 
 <WAITING_STATE> {CRLF}({CRLF}|{WHITE_SPACE})+   { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
-<WAITING_STATE> {END_OF_LINE_COMMENT}           { yybegin(YYINITIAL); return ROSInterfaceTypes.COMMENT; }
+<WAITING_STATE> {END_OF_LINE_COMMENT}           { yybegin(YYINITIAL); return RosInterfaceTypes.COMMENT; }
 
-<WAITING_STATE> {SEPARATOR}                     { yybegin(VALUE_STATE); return ROSInterfaceTypes.SEPARATOR; }
+<WAITING_STATE> {SEPARATOR}                     { yybegin(VALUE_STATE); return RosInterfaceTypes.SEPARATOR; }
 
-<VALUE_STATE> {VALUE_CHARACTER}+                { yybegin(VALUE_STATE); return ROSInterfaceTypes.VALUE; }
+<VALUE_STATE> {VALUE_CHARACTER}+                { yybegin(VALUE_STATE); return RosInterfaceTypes.VALUE; }
 
-<VALUE_STATE> {END_OF_LINE_COMMENT}             { yybegin(VALUE_STATE); return ROSInterfaceTypes.COMMENT; }
+<VALUE_STATE> {END_OF_LINE_COMMENT}             { yybegin(VALUE_STATE); return RosInterfaceTypes.COMMENT; }
 
 <VALUE_STATE> {CRLF}({CRLF}|{WHITE_SPACE})+     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 

@@ -1,13 +1,13 @@
 {
-  parserClass="edu.umontreal.hatchery.parser.ROSInterfaceParser"
+  parserClass="edu.umontreal.hatchery.rosinterface.RosInterfaceParser"
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiImplClassSuffix="Impl"
-  psiClassPrefix="ROSInterface"
+  psiClassPrefix="RosInterface"
   psiPackage="edu.umontreal.hatchery.psi"
   psiImplPackage="edu.umontreal.hatchery.psi.impl"
 
-  elementTypeHolderClass="edu.umontreal.hatchery.psi.ROSInterfaceTypes"
+  elementTypeHolderClass="edu.umontreal.hatchery.psi.RosInterfaceTypes"
   elementTypeClass="edu.umontreal.hatchery.psi.RosInterfaceElementType"
   tokenTypeClass="edu.umontreal.hatchery.psi.RosInterfaceTokenType"
 }

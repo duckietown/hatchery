@@ -7,7 +7,7 @@ import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributes
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
-import edu.umontreal.hatchery.psi.ROSInterfaceTypes
+import edu.umontreal.hatchery.psi.RosInterfaceTypes
 
 class RosInterfaceSyntaxHighlighter : SyntaxHighlighterBase() {
   val SEPARATOR = createTextAttributesKey("ROS_INTERFACE_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN)
@@ -25,15 +25,15 @@ class RosInterfaceSyntaxHighlighter : SyntaxHighlighterBase() {
   private val COMMENT_KEYS = arrayOf(COMMENT)
   private val EMPTY_KEYS = arrayOf<TextAttributesKey>()
 
-  override fun getHighlightingLexer() = RosInterfaceLexerAdapter()
+  override fun getHighlightingLexer() = RosInterfaceLexerAdapter
 
   override fun getTokenHighlights(tokenType: IElementType) =
       when (tokenType) {
-        ROSInterfaceTypes.TYPE -> TYPE_KEYS
-        ROSInterfaceTypes.SEPARATOR -> SEPARATOR_KEYS
-        ROSInterfaceTypes.KEY -> KEY_KEYS
-        ROSInterfaceTypes.VALUE -> VALUE_KEYS
-        ROSInterfaceTypes.COMMENT -> COMMENT_KEYS
+        RosInterfaceTypes.TYPE -> TYPE_KEYS
+        RosInterfaceTypes.SEPARATOR -> SEPARATOR_KEYS
+        RosInterfaceTypes.KEY -> KEY_KEYS
+        RosInterfaceTypes.VALUE -> VALUE_KEYS
+        RosInterfaceTypes.COMMENT -> COMMENT_KEYS
         TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
         else -> EMPTY_KEYS
       }

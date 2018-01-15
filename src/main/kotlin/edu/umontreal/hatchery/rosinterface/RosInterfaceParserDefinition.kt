@@ -10,16 +10,15 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
-import edu.umontreal.hatchery.parser.ROSInterfaceParser
 import edu.umontreal.hatchery.psi.RosInterfaceFile
-import edu.umontreal.hatchery.psi.ROSInterfaceTypes
+import edu.umontreal.hatchery.psi.RosInterfaceTypes
 
 class RosInterfaceParserDefinition : ParserDefinition {
     val WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE)
-    val COMMENTS = TokenSet.create(ROSInterfaceTypes.COMMENT)
+    val COMMENTS = TokenSet.create(RosInterfaceTypes.COMMENT)
     val FILE = IFileElementType(RosInterfaceLanguage)
 
-    override fun createLexer(project: Project) = RosInterfaceLexerAdapter()
+    override fun createLexer(project: Project) = RosInterfaceLexerAdapter
 
     override fun getWhitespaceTokens(): TokenSet = WHITE_SPACES
 
@@ -27,7 +26,7 @@ class RosInterfaceParserDefinition : ParserDefinition {
 
     override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
 
-    override fun createParser(project: Project) = ROSInterfaceParser()
+    override fun createParser(project: Project) = RosInterfaceParser()
 
     override fun getFileNodeType(): IFileElementType = FILE
 
@@ -35,5 +34,5 @@ class RosInterfaceParserDefinition : ParserDefinition {
 
     override fun spaceExistanceTypeBetweenTokens(left: ASTNode, right: ASTNode) = SpaceRequirements.MAY
 
-    override fun createElement(node: ASTNode): PsiElement = ROSInterfaceTypes.Factory.createElement(node)
+    override fun createElement(node: ASTNode): PsiElement = RosInterfaceTypes.Factory.createElement(node)
 }

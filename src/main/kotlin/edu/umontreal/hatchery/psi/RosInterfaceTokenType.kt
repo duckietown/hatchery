@@ -5,5 +5,5 @@ import edu.umontreal.hatchery.rosinterface.RosInterfaceLanguage
 import org.jetbrains.annotations.NonNls
 
 class RosInterfaceTokenType(@NonNls debugName: String) : IElementType(debugName, RosInterfaceLanguage) {
-  override fun toString() = "ROSInterfaceTokenType." + super.toString()
+  override fun toString() = "RosInterfaceTokenType." + super.toString()
 }

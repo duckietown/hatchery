@@ -3,17 +3,17 @@ package edu.umontreal.hatchery.psi
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
-import edu.umontreal.hatchery.rosinterface.RosInterfaceFileFactory
+import edu.umontreal.hatchery.rosinterface.RosInterfaceFileType
 
 object RosInterfaceElementFactory {
-  fun createProperty(project: Project, name: String, value: String): ROSInterfaceProperty {
+  fun createProperty(project: Project, name: String, value: String): RosInterfaceProperty {
     val file = createFile(project, name + " = " + value)
-    return file.firstChild as ROSInterfaceProperty
+    return file.firstChild as RosInterfaceProperty
   }
 
-  fun createProperty(project: Project, name: String): ROSInterfaceProperty {
+  fun createProperty(project: Project, name: String): RosInterfaceProperty {
     val file = createFile(project, name)
-    return file.firstChild as ROSInterfaceProperty
+    return file.firstChild as RosInterfaceProperty
   }
 
   fun createCRLF(project: Project): PsiElement {
@@ -22,7 +22,7 @@ object RosInterfaceElementFactory {
   }
 
   fun createFile(project: Project, text: String): RosInterfaceFile {
-    val name = "dummy.ROSInterface"
-    return PsiFileFactory.getInstance(project).createFileFromText(name, RosInterfaceFileFactory.ROSInterfaceFileType, text) as RosInterfaceFile
+    val name = "dummy.RosInterface"
+    return PsiFileFactory.getInstance(project).createFileFromText(name, RosInterfaceFileType, text) as RosInterfaceFile
   }
 }
