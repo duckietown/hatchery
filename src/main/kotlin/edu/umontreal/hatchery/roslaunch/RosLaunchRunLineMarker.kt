@@ -5,7 +5,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlTag
 
-class RosLaunchRunLineMarker : RunLineMarkerContributor() {
+object RosLaunchRunLineMarker : RunLineMarkerContributor() {
   override fun getInfo(element: PsiElement): Info? {
     val filename = element.containingFile.name
     if (filename.endsWith(".launch") && element is XmlTag && element.name == "launch")

@@ -4,7 +4,7 @@ import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import javax.swing.JLabel
 
 
-class DemoModuleWizardStep : ModuleWizardStep() {
+object DemoModuleWizardStep : ModuleWizardStep() {
   override fun getComponent() = JLabel("Provide some setting here")
 
   override fun updateDataModel() {

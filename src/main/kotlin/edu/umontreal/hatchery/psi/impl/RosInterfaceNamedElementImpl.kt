@@ -3,9 +3,7 @@ package edu.umontreal.hatchery.psi.impl
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
-import edu.umontreal.hatchery.psi.RosInterfaceElementFactory
-import edu.umontreal.hatchery.psi.RosInterfaceNamedElement
-import edu.umontreal.hatchery.psi.RosInterfaceTypes
+import edu.umontreal.hatchery.psi.*
 
 open class RosInterfaceNamedElementImpl(node: ASTNode) : ASTWrapperPsiElement(node), RosInterfaceNamedElement {
   override fun getType() = node.findChildByType(RosInterfaceTypes.TYPE)?.text

@@ -9,7 +9,7 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 import edu.umontreal.hatchery.psi.RosInterfaceTypes
 
-class RosInterfaceSyntaxHighlighter : SyntaxHighlighterBase() {
+object RosInterfaceSyntaxHighlighter : SyntaxHighlighterBase() {
   val SEPARATOR = createTextAttributesKey("ROS_INTERFACE_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN)
   val TYPE = createTextAttributesKey("ROS_INTERFACE_TYPE", DefaultLanguageHighlighterColors.KEYWORD)
   val KEY = createTextAttributesKey("ROS_INTERFACE_KEY", DefaultLanguageHighlighterColors.IDENTIFIER)

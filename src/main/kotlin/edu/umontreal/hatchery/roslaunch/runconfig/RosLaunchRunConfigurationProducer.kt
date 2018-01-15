@@ -5,7 +5,7 @@ import com.intellij.execution.actions.RunConfigurationProducer
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
 
-class RosLaunchRunConfigurationProducer : RunConfigurationProducer<RosLaunchRunConfiguration>(RosLaunchRunConfigurationType()) {
+object RosLaunchRunConfigurationProducer : RunConfigurationProducer<RosLaunchRunConfiguration>(RosLaunchRunConfigurationType) {
   override fun isConfigurationFromContext(configuration: RosLaunchRunConfiguration?, context: ConfigurationContext?): Boolean {
     TODO("not yet implemented") //To change body of created functions use File | Settings | File Templates.
   }
@@ -14,4 +14,3 @@ class RosLaunchRunConfigurationProducer : RunConfigurationProducer<RosLaunchRunC
     TODO("not yet implemented") //To change body of created functions use File | Settings | File Templates.
   }
 }
-

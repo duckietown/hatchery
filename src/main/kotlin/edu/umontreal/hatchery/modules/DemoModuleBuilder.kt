@@ -13,5 +13,5 @@ class DemoModuleBuilder : ModuleBuilder() {
 
   override fun getModuleType() = DemoModuleType
 
-  override fun getCustomOptionsStep(context: WizardContext, parentDisposable: Disposable) = DemoModuleWizardStep()
+  override fun getCustomOptionsStep(context: WizardContext, parentDisposable: Disposable) = DemoModuleWizardStep
 }

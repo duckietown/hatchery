@@ -3,7 +3,7 @@ package edu.umontreal.hatchery.roslaunch.runconfig
 import com.intellij.execution.configurations.ConfigurationType
 import edu.umontreal.hatchery.filesystem.Icons
 
-class RosLaunchRunConfigurationType : ConfigurationType {
+object RosLaunchRunConfigurationType : ConfigurationType {
   override fun getIcon() = Icons.ros_launch
 
   override fun getConfigurationTypeDescription() = "roslaunch_description"

@@ -19,6 +19,8 @@ class RosPackageReference(private val psiElement: PsiElement) : PsiReferenceBase
       }.toTypedArray()
 
   private fun getAllROSPackages() =
-      FilenameIndex.getFilesByName(psiElement.project, "package.xml", GlobalSearchScope.allScope(psiElement.project))
-          .filterIsInstance<XmlFile>()
+      FilenameIndex.getFilesByName(psiElement.project,
+          RosPackageFileType.filename,
+          GlobalSearchScope.allScope(psiElement.project)
+      ).filterIsInstance<XmlFile>()
 }

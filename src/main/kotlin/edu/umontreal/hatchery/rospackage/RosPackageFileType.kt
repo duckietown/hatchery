@@ -4,8 +4,14 @@ import com.intellij.lang.xml.XMLLanguage
 import com.intellij.openapi.fileTypes.LanguageFileType
 import edu.umontreal.hatchery.filesystem.Icons
 
+/*
+ * http://wiki.ros.org/Manifest
+ */
+
 object RosPackageFileType : LanguageFileType(XMLLanguage.INSTANCE) {
-  override fun getName() = "rospackage"
+  const val filename = "package.xml"
+
+  override fun getName() = filename
 
   override fun getDescription() = "rospackage"
 

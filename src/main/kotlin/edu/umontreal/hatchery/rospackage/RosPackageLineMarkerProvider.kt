@@ -10,15 +10,24 @@ import com.intellij.psi.xml.XmlTag
 import edu.umontreal.hatchery.filesystem.Icons
 import edu.umontreal.hatchery.rospackage.RosPackagePsiReferenceProvider.DEPEND_TAG_NAMES
 
-class RosPackageLineMarkerProvider : RelatedItemLineMarkerProvider() {
-  override fun collectNavigationMarkers(element: PsiElement, results: MutableCollection<in RelatedItemLineMarkerInfo<PsiElement>>) {
-    if (element is XmlTag && element.name in DEPEND_TAG_NAMES) {
-      val files = FilenameIndex.getFilesByName(element.project, "package.xml", GlobalSearchScope.allScope(element.project))
-      val directories = files.filter { it.containingDirectory.name == element.value.text }.map { it.containingDirectory }
+object RosPackageLineMarkerProvider : RelatedItemLineMarkerProvider() {
+  private const val TOOLTIP_TEXT = "ROS Package Dependency"
 
-      if (directories.isEmpty()) return
-      val builder = NavigationGutterIconBuilder.create(Icons.package_file).setTargets(directories).setTooltipText("ROS Package Dependency")
-      results.add(builder.createLineMarkerInfo(element))
-    }
+  override fun collectNavigationMarkers(element: PsiElement, results: MutableCollection<in RelatedItemLineMarkerInfo<PsiElement>>) {
+    if (element !is XmlTag || element.name in DEPEND_TAG_NAMES) return
+
+    val scope = GlobalSearchScope.allScope(element.project)
+    val files = FilenameIndex.getFilesByName(element.project, RosPackageFileType.filename, scope)
+    val directories = files.filter { it.containingDirectory.name == element.value.text }.map { it.containingDirectory }
+
+    if (directories.isEmpty()) return
+
+    val lineMarkerInfo = NavigationGutterIconBuilder
+        .create(Icons.package_file)
+        .setTargets(directories)
+        .setTooltipText(TOOLTIP_TEXT)
+        .createLineMarkerInfo(element)
+
+    results.add(lineMarkerInfo)
   }
 }

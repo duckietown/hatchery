@@ -7,7 +7,7 @@ import com.intellij.psi.PsiFileSystemItem
 import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceHelper
 
-class RosPackageFileReferenceHelper : FileReferenceHelper() {
+object RosPackageFileReferenceHelper : FileReferenceHelper() {
   override fun isMine(project: Project, file: VirtualFile) = file.fileType === RosPackageFileType
 
   override fun getContexts(project: Project, file: VirtualFile) = getRoots(project)
