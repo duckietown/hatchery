@@ -1,4 +1,5 @@
 import com.sun.org.glassfish.external.amx.AMXUtil.prop
+import de.undercouch.gradle.tasks.download.Download
 import org.gradle.api.tasks.JavaExec
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.getting
@@ -13,84 +14,102 @@ import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 
 buildscript {
-    repositories {
-        maven { setUrl("https://jitpack.io") }
-    }
+  repositories {
+    maven { setUrl("https://jitpack.io") }
+  }
 
-    dependencies {
-        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
-    }
+  dependencies {
+    classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
+  }
 }
 
 plugins {
-    idea
-    kotlin("jvm") version "1.2.10"
-    id("org.jetbrains.intellij") version "0.2.17"
+  idea
+  kotlin("jvm") version "1.2.10"
+  id("org.jetbrains.intellij") version "0.2.17"
+  id("de.undercouch.download") version "3.2.0"
 }
 
 apply {
-    plugin("idea")
-    plugin("kotlin")
-    plugin("org.jetbrains.grammarkit")
-    plugin("org.jetbrains.intellij")
+  idea
+  kotlin
+  plugin("org.jetbrains.grammarkit")
+  plugin("org.jetbrains.intellij")
+  plugin("de.undercouch.download")
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
+}
+
+val clionVersion = "2017.3.1"
+
+val downloadClion = task<Download>("downloadClion") {
+  onlyIf { !file("${project.projectDir}/build/clion/clion-$clionVersion.tar.gz").exists() }
+  src("https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz")
+  dest(file("${project.projectDir}/build/clion/clion-$clionVersion.tar.gz"))
+}
+
+val unpackClion = task<Copy>("unpackClion") {
+  onlyIf { !file("${project.projectDir}/build/clion/build/clion/clion-$clionVersion").exists() }
+  from(tarTree("build/clion/clion-$clionVersion.tar.gz"))
+  into(file("${project.projectDir}/build/clion"))
+  dependsOn(downloadClion)
 }
 
 tasks.withType<RunIdeaTask> {
-    if (hasProperty("roject"))
-        args = listOf(getProperty("roject") as String)
-    else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
-        args = listOf(System.getenv("DUCKIETOWN_ROOT"))
+  dependsOn(unpackClion)
+
+  if (hasProperty("roject"))
+    args = listOf(getProperty("roject") as String)
+  else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
+    args = listOf(System.getenv("DUCKIETOWN_ROOT"))
 }
 
-configure<GrammarKitPluginExtension> {
-    grammarKitRelease = "1.5.2"
-}
+configure<GrammarKitPluginExtension> { grammarKitRelease = "1.5.2" }
 
 val generateROSInterfaceLexer = task<GenerateLexer>("generateROSInterfaceLexer") {
-    source = "src/main/grammars/ROSInterface.flex"
-    targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
-    targetClass = "ROSInterfaceLexer"
-    purgeOldFiles = true
+  source = "src/main/grammars/ROSInterface.flex"
+  targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
+  targetClass = "ROSInterfaceLexer"
+  purgeOldFiles = true
 }
 
 val generateROSInterfaceParser = task<GenerateParser>("generateROSInterfaceParser") {
-    source = "src/main/grammars/ROSInterface.bnf"
-    targetRoot = "src/main/java"
-    pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
-    pathToPsiRoot = "/edu/umontreal/hatchery/psi"
-    purgeOldFiles = true
+  source = "src/main/grammars/ROSInterface.bnf"
+  targetRoot = "src/main/java"
+  pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
+  pathToPsiRoot = "/edu/umontreal/hatchery/psi"
+  purgeOldFiles = true
 }
 
 tasks.withType<KotlinCompile> {
-    dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
+  dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
 }
 
 tasks.withType<RunIdeaTask> {
-    if (project.hasProperty("roject"))
-        args = listOf(project.property("roject") as String)
-    else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
-        args = listOf(System.getenv("DUCKIETOWN_ROOT"))
+  if (project.hasProperty("roject"))
+    args = listOf(project.property("roject") as String)
+  else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
+    args = listOf(System.getenv("DUCKIETOWN_ROOT"))
 }
 
 intellij {
-    pluginName = "hatchery"
-    updateSinceUntilBuild = false
-    if (hasProperty("roject")) downloadSources = false
+  pluginName = "hatchery"
+  updateSinceUntilBuild = false
+  if (hasProperty("roject")) downloadSources = false
+  alternativeIdePath = "build/clion/clion-$clionVersion"
 
-    setPlugins("PythonCore:2017.3.173.4127.35",          // Python support
-            "name.kropp.intellij.makefile:1.2.2",        // Makefile support
-            "artsiomch.cmake:0.1.0",                     // CMake syntax support
-            "BashSupport:1.6.12.173",                    // Shell syntax support
-            "nl.rubensten.texifyidea:0.5",               // LaTeX syntax support
-            "org.intellij.plugins.markdown:173.2696.26", // Markdown support
-            "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
-            "com.intellij.ideolog:173.0.6.0",            // Log file support
-            "PsiViewer:3.28.93",                         // PSI view support
-            "yaml")
+  setPlugins( //"PythonCore:2017.3.173.4127.35",      // Python support
+      "name.kropp.intellij.makefile:1.2.2",        // Makefile support
+      "artsiomch.cmake:0.1.0",                     // CMake syntax support
+      "BashSupport:1.6.12.173",                    // Shell syntax support
+      "nl.rubensten.texifyidea:0.5",               // LaTeX syntax support
+      "org.intellij.plugins.markdown:173.2696.26", // Markdown support
+      "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
+      "com.intellij.ideolog:173.0.6.0",            // Log file support
+      "PsiViewer:3.28.93",                         // PSI view support
+      "yaml")
 }
 
 group = "edu.umontreal"
