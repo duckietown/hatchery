@@ -25,7 +25,7 @@ buildscript {
 
 plugins {
   idea
-  kotlin("jvm") version "1.2.10"
+  kotlin("jvm") version "1.2.20"
   id("org.jetbrains.intellij") version "0.2.17"
   id("de.undercouch.download") version "3.2.0"
 }
@@ -102,7 +102,7 @@ intellij {
 
   setPlugins( //"PythonCore:2017.3.173.4127.35",      // Python support
       "name.kropp.intellij.makefile:1.2.2",        // Makefile support
-      "artsiomch.cmake:0.1.0",                     // CMake syntax support
+//      "artsiomch.cmake:0.1.0",                     // CMake syntax support
       "BashSupport:1.6.12.173",                    // Shell syntax support
       "nl.rubensten.texifyidea:0.5",               // LaTeX syntax support
       "org.intellij.plugins.markdown:173.2696.26", // Markdown support
