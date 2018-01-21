@@ -42,7 +42,7 @@ repositories {
   mavenCentral()
 }
 
-val clionVersion = "2017.3.1"
+val clionVersion = "2017.3.2"
 
 val downloadClion = task<Download>("downloadClion") {
   onlyIf { !file("${project.projectDir}/build/clion/clion-$clionVersion.tar.gz").exists() }
@@ -96,20 +96,19 @@ tasks.withType<RunIdeaTask> {
 
 intellij {
   pluginName = "hatchery"
+  version = clionVersion
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
   alternativeIdePath = "build/clion/clion-$clionVersion"
 
-  setPlugins( //"PythonCore:2017.3.173.4127.35",      // Python support
-      "name.kropp.intellij.makefile:1.2.2",        // Makefile support
-//      "artsiomch.cmake:0.1.0",                     // CMake syntax support
+  setPlugins("name.kropp.intellij.makefile:1.2.2", // Makefile support
       "BashSupport:1.6.12.173",                    // Shell syntax support
       "nl.rubensten.texifyidea:0.5",               // LaTeX syntax support
       "org.intellij.plugins.markdown:173.2696.26", // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
       "com.intellij.ideolog:173.0.6.0",            // Log file support
       "PsiViewer:3.28.93",                         // PSI view support
-      "yaml")
+      "yaml")                                      // YML file support
 }
 
 group = "edu.umontreal"
