@@ -60,10 +60,17 @@ val unpackClion = task<Copy>("unpackClion") {
 tasks.withType<RunIdeaTask> {
   dependsOn(unpackClion)
 
+  var projectRoot = ""
   if (hasProperty("roject"))
-    args = listOf(getProperty("roject") as String)
+    projectRoot = getProperty("roject") as String
   else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
-    args = listOf(System.getenv("DUCKIETOWN_ROOT"))
+    projectRoot = System.getenv("DUCKIETOWN_ROOT")
+
+  if(projectRoot.isNotEmpty()){
+    projectRoot += "/catkin_ws/src/CMakeLists.txt"
+    println("Project root directory: $projectRoot")
+    args = listOf(projectRoot)
+  }
 }
 
 configure<GrammarKitPluginExtension> { grammarKitRelease = "1.5.2" }
@@ -85,13 +92,6 @@ val generateROSInterfaceParser = task<GenerateParser>("generateROSInterfaceParse
 
 tasks.withType<KotlinCompile> {
   dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
-}
-
-tasks.withType<RunIdeaTask> {
-  if (project.hasProperty("roject"))
-    args = listOf(project.property("roject") as String)
-  else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
-    args = listOf(System.getenv("DUCKIETOWN_ROOT"))
 }
 
 intellij {

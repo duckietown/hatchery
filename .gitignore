@@ -2,6 +2,7 @@ build
 .idea
 .gradle
 out
+deps
 src/main/java
 *.iml
 *.DS_Store
