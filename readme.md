@@ -104,11 +104,12 @@ It also supports refactoring and navigation in XML files:
     - [x] Broken dependency
     - [ ] Python/msg/srv compatibility
     - [ ] ROS nodes and graph analysis
-- [ ] rqt plugins
-    - [ ] [rqt_img_view](http://wiki.ros.org/rqt_image_view)
-    - [ ] [rqt_plot](http://wiki.ros.org/rqt_plot)
-    - [ ] [rqt_graph](http://wiki.ros.org/rqt_graph)
-    - [ ] [rqt_dep](http://wiki.ros.org/rqt_dep)
+- [ ] rqt plugin support
+    - [ ] [rqt_img_view](http://wiki.ros.org/rqt_image_view) - View images
+    - [ ] [rqt_plot](http://wiki.ros.org/rqt_plot) - Plot data visually
+    - [ ] [rqt_graph](http://wiki.ros.org/rqt_graph) - Graph messages
+    - [ ] [rqt_dep](http://wiki.ros.org/rqt_dep) - Visualize dependecies
+    - [ ] [rqt_bag](http://wiki.ros.org/rqt_bag) - Replay bag files
 
 ### Roadmap
 
