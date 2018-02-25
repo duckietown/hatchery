@@ -97,6 +97,19 @@ It also supports refactoring and navigation in XML files:
 - [ ] Integration with the Robot Operating System (ROS)
     - [x] ROS 1 support ([Kinetic Kame](http://wiki.ros.org/kinetic) recommended)
     - [ ] [ROS 2](https://github.com/ros2/ros2/wiki) support
+- [ ] Gazebo simulator integration
+- [ ] C/C++ support with build automation
+- [ ] Remote debugging and testing support
+- [ ] Static analysis
+    - [x] Broken dependency
+    - [ ] Python/msg/srv compatibility
+    - [ ] ROS nodes and graph analysis
+- [ ] rqt plugin support
+    - [ ] [rqt_img_view](http://wiki.ros.org/rqt_image_view) - View images
+    - [ ] [rqt_plot](http://wiki.ros.org/rqt_plot) - Plot data visually
+    - [ ] [rqt_graph](http://wiki.ros.org/rqt_graph) - Graph messages
+    - [ ] [rqt_dep](http://wiki.ros.org/rqt_dep) - Visualize dependecies
+    - [ ] [rqt_bag](http://wiki.ros.org/rqt_bag) - Replay bag files
 
 ### Roadmap
 
