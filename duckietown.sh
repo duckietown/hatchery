@@ -15,7 +15,10 @@ echo "Configuring project root: $project_root"
 
 cd $project_root
 
-[ -z "$HOSTNAME"        ] && { echo "Need to set HOSTNAME.";        }
+if [ -z "$HOSTNAME" ]; then
+    echo "Need to set HOSTNAME."
+    exit 1
+fi
 
 # Do not compile Lisp messages
 # XXX: not sure if this is the place to put this.
@@ -34,10 +37,6 @@ echo "Set DUCKIETOWN_ROOT to: $DUCKIETOWN_ROOT"
 
 export PYTHONPATH=$DUCKIETOWN_ROOT/catkin_ws/src:$PYTHONPATH
 echo "Set PYTHONPATH to: $PYTHONPATH"
-
-# Cannot make machines before building
-# echo "Building machines file..."
-# make -C $DUCKIETOWN_ROOT machines
 
 echo "Activating development environment..."
 source $DUCKIETOWN_ROOT/catkin_ws/devel/setup.$shell

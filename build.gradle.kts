@@ -25,8 +25,8 @@ buildscript {
 
 plugins {
   idea
-  kotlin("jvm") version "1.2.20"
-  id("org.jetbrains.intellij") version "0.2.17"
+  kotlin("jvm") version "1.2.21"
+  id("org.jetbrains.intellij") version "0.2.18"
   id("de.undercouch.download") version "3.2.0"
 }
 
