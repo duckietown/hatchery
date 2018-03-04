@@ -18,14 +18,14 @@ buildscript {
   }
 
   dependencies {
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.21")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.30")
     classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
   }
 }
 
 plugins {
   idea
-  kotlin("jvm") version "1.2.21"
+  kotlin("jvm") version "1.2.30"
   id("org.jetbrains.intellij") version "0.2.18"
   id("de.undercouch.download") version "3.2.0"
 }
@@ -42,7 +42,7 @@ repositories {
   mavenCentral()
 }
 
-val clionVersion = "2017.3.2"
+val clionVersion = "2017.3.3"
 
 val downloadClion = task<Download>("downloadClion") {
   onlyIf { !file("${project.projectDir}/build/clion/clion-$clionVersion.tar.gz").exists() }
@@ -108,7 +108,7 @@ intellij {
   setPlugins("name.kropp.intellij.makefile:1.2.2", // Makefile support
       "org.intellij.plugins.markdown:173.2696.26", // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
-      "com.intellij.ideolog:181.0.7.0",            // Log file support
+      "com.intellij.ideolog:173.0.7.0",            // Log file support
       "BashSupport:1.6.12.181",                    // Shell syntax support
       "PsiViewer:3.28.93",                         // PSI view support
       "yaml")                                      // YML file support
