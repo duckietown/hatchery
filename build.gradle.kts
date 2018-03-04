@@ -109,7 +109,7 @@ intellij {
       "org.intellij.plugins.markdown:173.2696.26", // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
       "com.intellij.ideolog:173.0.7.0",            // Log file support
-      "BashSupport:1.6.12.181",                    // Shell syntax support
+      "BashSupport:1.6.12.173",                    // Shell syntax support
       "PsiViewer:3.28.93",                         // PSI view support
       "yaml")                                      // YML file support
 }
