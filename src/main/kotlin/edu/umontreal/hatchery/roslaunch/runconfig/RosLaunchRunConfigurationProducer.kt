@@ -6,11 +6,12 @@ import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
 
 object RosLaunchRunConfigurationProducer : RunConfigurationProducer<RosLaunchRunConfiguration>(RosLaunchRunConfigurationType) {
-  override fun isConfigurationFromContext(configuration: RosLaunchRunConfiguration?, context: ConfigurationContext?): Boolean {
-    TODO("not yet implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+  override fun isConfigurationFromContext(configuration: RosLaunchRunConfiguration, context: ConfigurationContext) =
+    context.location?.virtualFile?.extension == ".launch"
 
-  override fun setupConfigurationFromContext(configuration: RosLaunchRunConfiguration?, context: ConfigurationContext?, sourceElement: Ref<PsiElement>?): Boolean {
-    TODO("not yet implemented") //To change body of created functions use File | Settings | File Templates.
+  override fun setupConfigurationFromContext(configuration: RosLaunchRunConfiguration, context: ConfigurationContext, sourceElement: Ref<PsiElement>): Boolean {
+    configuration.name = context.location?.virtualFile?.name ?: return false
+
+    return true
   }
 }

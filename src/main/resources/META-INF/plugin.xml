@@ -34,7 +34,7 @@
         <iconProvider implementation="edu.umontreal.hatchery.python.PythonSourcesDirectoryIconProvider" order="first"/>
 
         <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigurationType"/>
-        <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.RosLaunchRunLineMarker"/>
+        <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunLineMarkerContributor"/>
         <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigurationProducer"/>
 
         <moduleType id="DEMO_MODULE_TYPE" implementationClass="edu.umontreal.hatchery.modules.DemoModuleType"/>

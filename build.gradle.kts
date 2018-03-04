@@ -1,4 +1,3 @@
-import com.sun.org.glassfish.external.amx.AMXUtil.prop
 import de.undercouch.gradle.tasks.download.Download
 import org.gradle.api.tasks.JavaExec
 import org.gradle.kotlin.dsl.getValue
@@ -67,7 +66,7 @@ tasks.withType<RunIdeaTask> {
   else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
     projectRoot = System.getenv("DUCKIETOWN_ROOT")
 
-  if(projectRoot.isNotEmpty()){
+  if (projectRoot.isNotEmpty()) {
     projectRoot += "/catkin_ws/src/CMakeLists.txt"
     println("Project root directory: $projectRoot")
     args = listOf(projectRoot)
@@ -92,6 +91,10 @@ val generateROSInterfaceParser = task<GenerateParser>("generateROSInterfaceParse
 }
 
 tasks.withType<KotlinCompile> {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
   dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
 }
 
@@ -103,10 +106,10 @@ intellij {
   alternativeIdePath = "build/clion/clion-$clionVersion"
 
   setPlugins("name.kropp.intellij.makefile:1.2.2", // Makefile support
-      "BashSupport:1.6.12.173",                    // Shell syntax support
       "org.intellij.plugins.markdown:173.2696.26", // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
-      "com.intellij.ideolog:173.0.6.0",            // Log file support
+      "com.intellij.ideolog:181.0.7.0",            // Log file support
+      "BashSupport:1.6.12.181",                    // Shell syntax support
       "PsiViewer:3.28.93",                         // PSI view support
       "yaml")                                      // YML file support
 }
