@@ -5,7 +5,7 @@ import org.gradle.kotlin.dsl.getting
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.version
 import org.gradle.language.base.internal.plugins.CleanRule
-import org.jetbrains.intellij.tasks.RunIdeaTask
+import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
@@ -57,7 +57,7 @@ val unpackClion = task<Copy>("unpackClion") {
   dependsOn(downloadClion)
 }
 
-tasks.withType<RunIdeaTask> {
+tasks.withType<RunIdeTask> {
   dependsOn(unpackClion)
 
   var projectRoot = ""
