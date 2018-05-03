@@ -34,7 +34,7 @@ To launch the IDE (optionally, you can specify the path to an existing ROS proje
 
 `./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
 
-On first launch, you may need to setup an SDK. From **File | Project Structure**, select or create a new *Python SDK*.
+On first launch, you may need to setup a Python SDK. From **File | Project Structure** (or alternately **Preferences | 🔍 Python Interpreter | Project Interpreter**), then select or create a new *Python SDK* to receive coding assistance in Python files.
 
 #### Plugin
 
