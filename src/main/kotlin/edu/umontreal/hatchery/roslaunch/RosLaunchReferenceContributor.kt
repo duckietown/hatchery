@@ -7,8 +7,8 @@ import com.intellij.psi.PsiReferenceRegistrar
 
 object RosLaunchReferenceContributor : PsiReferenceContributor() {
   // http://wiki.ros.org/roslaunch/XML#substitution_args
-  val findSubstitution = "\\\$\\(find [\\w]*\\)[\\w/\\.]*"
-  val referencePattern = XmlPatterns.xmlAttributeValue().withValue(StandardPatterns.string().matches(findSubstitution))
+  const val findSubstitution = "\\\$\\(find [\\w]*\\)[\\w/\\.]*"
+  val referencePattern = XmlPatterns.xmlAttributeValue().withValue(StandardPatterns.string().matches(findSubstitution))!!
 
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) =
       registrar.registerReferenceProvider(referencePattern, RosLaunchReferenceProvider)

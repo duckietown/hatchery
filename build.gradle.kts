@@ -18,8 +18,8 @@ buildscript {
   }
 
   dependencies {
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.30")
-    classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41")
+    classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.2")
   }
 }
 
@@ -42,7 +42,7 @@ repositories {
   mavenCentral()
 }
 
-val clionVersion = "2017.3.3"
+val clionVersion = "2018.1.2"
 
 val downloadClion = task<Download>("downloadClion") {
   onlyIf { !file("${project.projectDir}/build/clion/clion-$clionVersion.tar.gz").exists() }

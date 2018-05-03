@@ -6,7 +6,9 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.openapi.fileTypes.FileTypeManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.*
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFileSystemItem
+import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlAttributeValue
@@ -33,11 +35,11 @@ object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
     }
   }
 
-  fun isRosLaunchFileSubstitution(element: PsiElement): Boolean =
+  private fun isRosLaunchFileSubstitution(element: PsiElement): Boolean =
       element is XmlAttributeValue && element.value?.startsWith("$(find ") ?: false
 
   fun findFilesByRelativePath(project: Project, fileRelativePath: String): List<PsiFileSystemItem?> {
-    val relativePath = if (fileRelativePath.startsWith("/")) fileRelativePath else "/" + fileRelativePath
+    val relativePath = if (fileRelativePath.startsWith("/")) fileRelativePath else "/$fileRelativePath"
     val fileTypes = Collections.singleton(FileTypeManager.getInstance().getFileTypeByFileName(relativePath))
     val fileList = ArrayList<VirtualFile>()
     val manager = PsiManager.getInstance(project)
