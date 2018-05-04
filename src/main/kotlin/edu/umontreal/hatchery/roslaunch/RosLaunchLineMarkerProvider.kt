@@ -36,7 +36,7 @@ object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
   }
 
   private fun isRosLaunchFileSubstitution(element: PsiElement): Boolean =
-      element is XmlAttributeValue && element.value?.startsWith("$(find ") ?: false
+      (element as? XmlAttributeValue)?.value?.startsWith("$(find ") ?: false
 
   fun findFilesByRelativePath(project: Project, fileRelativePath: String): List<PsiFileSystemItem?> {
     val relativePath = if (fileRelativePath.startsWith("/")) fileRelativePath else "/$fileRelativePath"

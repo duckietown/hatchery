@@ -1,6 +1,5 @@
 package edu.umontreal.hatchery.roslaunch.runconfig
 
-import com.intellij.execution.application.ApplicationRunLineMarkerProvider
 import com.intellij.execution.lineMarker.ExecutorAction
 import com.intellij.execution.lineMarker.RunLineMarkerContributor
 import com.intellij.icons.AllIcons
@@ -18,7 +17,8 @@ object RosLaunchRunLineMarkerContributor : RunLineMarkerContributor() {
     else null
 
   fun isIdentifier(element: PsiElement?): Boolean {
-    val filename = element?.containingFile?.name
-    return filename != null && filename.endsWith(".launch") && element is XmlTag && element.name == "launch"
+    val isLaunchFile = element?.containingFile?.name?.endsWith(".launch") ?: false
+    val isTopmostTag = (element as? XmlTag)?.name == "launch"
+    return isLaunchFile && isTopmostTag
   }
 }
