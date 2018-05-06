@@ -51,7 +51,7 @@ val downloadClion = task<Download>("downloadClion") {
 }
 
 val unpackClion = task<Copy>("unpackClion") {
-  onlyIf { !file("${project.projectDir}/build/clion/build/clion/clion-$clionVersion").exists() }
+  onlyIf { !file("${project.projectDir}/build/clion/clion-$clionVersion").exists() }
   from(tarTree("build/clion/clion-$clionVersion.tar.gz"))
   into(file("${project.projectDir}/build/clion"))
   dependsOn(downloadClion)
