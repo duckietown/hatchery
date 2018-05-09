@@ -110,6 +110,7 @@ intellij {
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
       "com.intellij.ideolog:181.0.7.0",            // Log file support
       "BashSupport:1.6.13.181",                    // Shell syntax support
+      "Docker:181.4668.68",                        // Docker support
       "PsiViewer:2018.1",                          // PSI view support
       "yaml")                                      // YML file support
 }

@@ -100,6 +100,8 @@ It also supports refactoring and navigation in XML files:
 - [ ] Gazebo simulator integration
 - [ ] C/C++ support with build automation
 - [ ] Remote debugging and testing support
+- [ ] Docker integration
+    - [x] Basic Docker support
 - [ ] Static analysis
     - [x] Broken dependency
     - [ ] Python/msg/srv compatibility
