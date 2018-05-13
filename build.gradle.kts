@@ -18,16 +18,15 @@ buildscript {
   }
 
   dependencies {
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41")
     classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.2")
   }
 }
 
 plugins {
   idea
-  kotlin("jvm") version "1.2.40"
+  kotlin("jvm") version "1.2.41"
   id("org.jetbrains.intellij") version "0.3.1"
-  id("de.undercouch.download") version "3.2.0"
+  id("de.undercouch.download") version "3.4.3"
 }
 
 apply {
@@ -72,8 +71,6 @@ tasks.withType<RunIdeTask> {
     args = listOf(projectRoot)
   }
 }
-
-configure<GrammarKitPluginExtension> { grammarKitRelease = "1.5.2" }
 
 val generateROSInterfaceLexer = task<GenerateLexer>("generateROSInterfaceLexer") {
   source = "src/main/grammars/ROSInterface.flex"
