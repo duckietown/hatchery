@@ -5,37 +5,28 @@ import org.gradle.kotlin.dsl.getting
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.version
 import org.gradle.language.base.internal.plugins.CleanRule
+import org.jetbrains.grammarkit.GrammarKit
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.grammarkit.tasks.*
 import org.jetbrains.kotlin.backend.common.onlyIf
 
 buildscript {
-  repositories {
-    maven { setUrl("https://jitpack.io") }
-  }
-
-  dependencies {
-    classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.2")
-  }
+  repositories.maven("https://jitpack.io")
+  dependencies.classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.2")
 }
 
 plugins {
   idea apply true
   kotlin("jvm") version "1.2.41" apply true
-  id("org.jetbrains.intellij") version "0.3.1" apply true
+  id("org.jetbrains.intellij") version "0.3.2" apply true
   id("de.undercouch.download") version "3.4.3" apply true
 }
 
-apply {
-  plugin("org.jetbrains.grammarkit")
-}
-
-repositories {
-  mavenCentral()
-}
+// If GK is hosted on plugins.gradle.org we can move this line into plugins {...}
+apply<GrammarKit>()
+repositories.mavenCentral()
 
 val clionVersion = "2018.1.3"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
