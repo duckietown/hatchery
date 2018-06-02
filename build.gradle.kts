@@ -20,6 +20,7 @@ buildscript {
 plugins {
   idea apply true
   kotlin("jvm") version "1.2.41" apply true
+  id("com.jetbrains.python.envs") version "0.0.25"
   id("org.jetbrains.intellij") version "0.3.2" apply true
   id("de.undercouch.download") version "3.4.3" apply true
 }
@@ -47,6 +48,7 @@ tasks {
   }
 
   withType<RunIdeTask> {
+    dependsOn("build_envs")
     dependsOn(unpackClion)
     var projectRoot = ""
     if (hasProperty("roject"))
@@ -97,6 +99,14 @@ intellij {
       "Docker:181.4668.68",                        // Docker support
       "PsiViewer:2018.1",                          // PSI view support
       "yaml")                                      // YML file support
+}
+
+envs {
+  bootstrapDirectory = File(buildDir, "pythons")
+  envsDirectory = File(buildDir, "envs")
+
+  conda("Miniconda2", "Miniconda2-latest", listOf("numpy", "pillow"))
+  // TODO: figure out how to setup conda inside the project structure
 }
 
 group = "edu.umontreal"
