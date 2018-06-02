@@ -7,7 +7,6 @@ import org.gradle.kotlin.dsl.version
 import org.gradle.language.base.internal.plugins.CleanRule
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
@@ -38,7 +37,7 @@ repositories {
   mavenCentral()
 }
 
-val clionVersion = "2018.1.2"
+val clionVersion = "2018.1.3"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
 
