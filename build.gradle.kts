@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.kotlin.backend.common.onlyIf
 
 buildscript {
   repositories {
@@ -23,18 +24,14 @@ buildscript {
 }
 
 plugins {
-  idea
-  kotlin("jvm") version "1.2.41"
-  id("org.jetbrains.intellij") version "0.3.1"
-  id("de.undercouch.download") version "3.4.3"
+  idea apply true
+  kotlin("jvm") version "1.2.41" apply true
+  id("org.jetbrains.intellij") version "0.3.1" apply true
+  id("de.undercouch.download") version "3.4.3" apply true
 }
 
 apply {
-  idea
-  kotlin
   plugin("org.jetbrains.grammarkit")
-  plugin("org.jetbrains.intellij")
-  plugin("de.undercouch.download")
 }
 
 repositories {
@@ -42,57 +39,57 @@ repositories {
 }
 
 val clionVersion = "2018.1.2"
+val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
+val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
 
-val downloadClion = task<Download>("downloadClion") {
-  onlyIf { !file("${project.projectDir}/build/clion/clion-$clionVersion.tar.gz").exists() }
-  src("https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz")
-  dest(file("${project.projectDir}/build/clion/clion-$clionVersion.tar.gz"))
-}
-
-val unpackClion = task<Copy>("unpackClion") {
-  onlyIf { !file("${project.projectDir}/build/clion/clion-$clionVersion").exists() }
-  from(tarTree("build/clion/clion-$clionVersion.tar.gz"))
-  into(file("${project.projectDir}/build/clion"))
-  dependsOn(downloadClion)
-}
-
-tasks.withType<RunIdeTask> {
-  dependsOn(unpackClion)
-
-  var projectRoot = ""
-  if (hasProperty("roject"))
-    projectRoot = getProperty("roject") as String
-  else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
-    projectRoot = System.getenv("DUCKIETOWN_ROOT")
-
-  if (projectRoot.isNotEmpty()) {
-    projectRoot += "/catkin_ws/src/CMakeLists.txt"
-    println("Project root directory: $projectRoot")
-    args = listOf(projectRoot)
-  }
-}
-
-val generateROSInterfaceLexer = task<GenerateLexer>("generateROSInterfaceLexer") {
-  source = "src/main/grammars/ROSInterface.flex"
-  targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
-  targetClass = "ROSInterfaceLexer"
-  purgeOldFiles = true
-}
-
-val generateROSInterfaceParser = task<GenerateParser>("generateROSInterfaceParser") {
-  source = "src/main/grammars/ROSInterface.bnf"
-  targetRoot = "src/main/java"
-  pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
-  pathToPsiRoot = "/edu/umontreal/hatchery/psi"
-  purgeOldFiles = true
-}
-
-tasks.withType<KotlinCompile> {
-  kotlinOptions {
-    jvmTarget = "1.8"
+tasks {
+  val downloadClion = "downloadClion"(Download::class) {
+    onlyIf { !file("$installPath.tar.gz").exists() }
+    src(downloadURL)
+    dest(file("$installPath.tar.gz"))
   }
 
-  dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
+  val unpackClion = "unpackClion"(Copy::class) {
+    onlyIf { !file(installPath).exists() }
+    from(tarTree("build/clion/clion-$clionVersion.tar.gz"))
+    into(file("${project.projectDir}/build/clion"))
+    dependsOn(downloadClion)
+  }
+
+  withType<RunIdeTask> {
+    dependsOn(unpackClion)
+    var projectRoot = ""
+    if (hasProperty("roject"))
+      projectRoot = getProperty("roject") as String
+    else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
+      projectRoot = System.getenv("DUCKIETOWN_ROOT")
+
+    if (projectRoot.isNotEmpty()) {
+      projectRoot += "/catkin_ws/src/CMakeLists.txt"
+      println("Project root directory: $projectRoot")
+      args = listOf(projectRoot)
+    }
+  }
+
+  val generateROSInterfaceLexer = "generateLexer"(GenerateLexer::class) {
+    source = "src/main/grammars/ROSInterface.flex"
+    targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
+    targetClass = "ROSInterfaceLexer"
+    purgeOldFiles = true
+  }
+
+  val generateROSInterfaceParser = "generateParser"(GenerateParser::class) {
+    source = "src/main/grammars/ROSInterface.bnf"
+    targetRoot = "src/main/java"
+    pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
+    pathToPsiRoot = "/edu/umontreal/hatchery/psi"
+    purgeOldFiles = true
+  }
+
+  withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+    dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
+  }
 }
 
 intellij {
