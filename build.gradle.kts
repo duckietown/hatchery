@@ -48,7 +48,7 @@ tasks {
   }
 
   withType<RunIdeTask> {
-    dependsOn("build_envs")
+//    dependsOn("build_envs")
     dependsOn(unpackClion)
     var projectRoot = ""
     if (hasProperty("roject"))
@@ -95,9 +95,10 @@ intellij {
       "org.intellij.plugins.markdown:181.4668.12", // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
       "com.intellij.ideolog:181.0.7.0",            // Log file support
+      "Pythonid:2018.1.181.4668.68",               // Python   support
       "BashSupport:1.6.13.181",                    // Shell syntax support
       "Docker:181.4668.68",                        // Docker support
-      "PsiViewer:2018.1",                          // PSI view support
+      "PsiViewer:2018.1.2",                        // PSI view support
       "yaml")                                      // YML file support
 }
 
