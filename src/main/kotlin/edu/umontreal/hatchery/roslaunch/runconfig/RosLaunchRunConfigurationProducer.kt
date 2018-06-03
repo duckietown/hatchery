@@ -1,4 +1,4 @@
-package edu.umontreal.hatchery.roslaunch.runconfig;
+package edu.umontreal.hatchery.roslaunch.runconfig
 
 import com.intellij.execution.actions.ConfigurationContext
 import com.intellij.execution.actions.RunConfigurationProducer

@@ -7,7 +7,7 @@ import edu.umontreal.hatchery.rosinterface.RosInterfaceFileType
 
 object RosInterfaceElementFactory {
   fun createProperty(project: Project, name: String, value: String): RosInterfaceProperty {
-    val file = createFile(project, name + " = " + value)
+    val file = createFile(project, "$name = $value")
     return file.firstChild as RosInterfaceProperty
   }
 
