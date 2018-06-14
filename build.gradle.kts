@@ -19,9 +19,9 @@ buildscript {
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.41" apply true
+  kotlin("jvm") version "1.2.50" apply true
   id("com.jetbrains.python.envs") version "0.0.25"
-  id("org.jetbrains.intellij") version "0.3.2" apply true
+  id("org.jetbrains.intellij") version "0.3.3" apply true
   id("de.undercouch.download") version "3.4.3" apply true
 }
 
