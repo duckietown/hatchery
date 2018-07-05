@@ -1,6 +1,7 @@
 ## Hatchery
 
-An open source IDE for the [Robot Operating System](http://www.ros.org/). Provides language support and code assistance for developing ROS applications, with additional tools for deploying and monitoring live applications.
+An open source IDE for the [Robot Operating System](http://www.ros.org/).
+Provides language support and code assistance for developing ROS applications, with additional tools for deploying and monitoring live applications.
 
 ### Installation
 
@@ -42,7 +43,7 @@ Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can ins
 
 ### Getting Started
 
-Check out the following screencast for demonstration of some features we support:
+Watch the following screencast for a demonstration of some features:
 
 [![Screencast](https://img.youtube.com/vi/OU1_tqZs9EM/0.jpg)](https://www.youtube.com/watch?v=OU1_tqZs9EM)
 
@@ -74,7 +75,7 @@ Currently, Hatchery supports the following [ROS filetypes](https://wiki.wpi.edu/
 -->
 - [x] ROS Service (`*.srv`)
 
-It also supports refactoring and navigation in XML files:
+It also supports refactoring and navigation in the following file types:
 
 * XML
 * Python
@@ -85,13 +86,13 @@ It also supports refactoring and navigation in XML files:
 ### Planning
 
 - [x] Implement preliminary project structure and XML support
-- [x] Write an MVP/POC app that supports file renaming and refactoring.
-- [ ] Add support for project templates and skeleton project creation.
-- [x] Add support for deploying a project from the local machine to the remote.
-- [ ] Add support for monitoring and tracking running code, viewing logs.
+- [x] Write an MVP/POC app that supports file renaming and refactoring
+- [ ] Add support for project templates and skeleton project creation
+- [x] Add support for deploying a project from the local machine to the remote
+- [ ] Add support for monitoring and tracking running code, viewing logs
     - [ ] Save to local disk
     - [ ] Searching the log
-- [ ] Collect crash dumps and link to the corresponding code points.
+- [ ] Collect crash dumps and link to the corresponding code points
     - [ ] Link stack traces to source code
     - [ ] Copy environment info and crash dump to clipboard
 - [ ] Integration with the Robot Operating System (ROS)
@@ -102,10 +103,14 @@ It also supports refactoring and navigation in XML files:
 - [ ] Remote debugging and testing support
 - [ ] Docker integration
     - [x] Basic Docker support
+    - [ ] Remote host and script support
+    - [ ] Docker hub namespace awareness
+    - [ ] Support for platformio tooling
+    - [ ] X11 forwarding and rqt support
 - [ ] Static analysis
     - [x] Broken dependency
-    - [ ] Python/msg/srv compatibility
-    - [ ] ROS nodes and graph analysis
+    - [ ] Validate Python/msg/srv compatibility
+    - [ ] ROS nodes and graph analysis via `rosdep`/`rqt_dep`
 - [ ] rqt plugin support
     - [ ] [rqt_img_view](http://wiki.ros.org/rqt_image_view) - View images
     - [ ] [rqt_plot](http://wiki.ros.org/rqt_plot) - Plot data visually
