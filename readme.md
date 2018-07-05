@@ -108,15 +108,15 @@ It also supports refactoring and navigation in the following file types:
     - [ ] Support for platformio tooling
     - [ ] X11 forwarding and rqt support
 - [ ] Static analysis
-    - [x] Broken dependency
+    - [x] Invalid dependency detection
     - [ ] Validate Python/msg/srv compatibility
     - [ ] ROS nodes and graph analysis via `rosdep`/`rqt_dep`
-- [ ] rqt plugin support
-    - [ ] [rqt_img_view](http://wiki.ros.org/rqt_image_view) - View images
-    - [ ] [rqt_plot](http://wiki.ros.org/rqt_plot) - Plot data visually
-    - [ ] [rqt_graph](http://wiki.ros.org/rqt_graph) - Graph messages
-    - [ ] [rqt_dep](http://wiki.ros.org/rqt_dep) - Visualize dependecies
-    - [ ] [rqt_bag](http://wiki.ros.org/rqt_bag) - Replay bag files
+- [ ] [rqt](http://wiki.ros.org/rqt) plugin support
+    - [ ] [`rqt_img_view`](http://wiki.ros.org/rqt_image_view) - View images
+    - [ ] [`rqt_plot`](http://wiki.ros.org/rqt_plot) - Plot data visually
+    - [ ] [`rqt_graph`](http://wiki.ros.org/rqt_graph) - Graph messages
+    - [ ] [`rqt_dep`](http://wiki.ros.org/rqt_dep) - Visualize dependecies
+    - [ ] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay bag files
 
 ### Roadmap
 
