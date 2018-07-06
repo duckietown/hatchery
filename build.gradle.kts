@@ -14,12 +14,12 @@ import org.jetbrains.kotlin.backend.common.onlyIf
 
 buildscript {
   repositories.maven("https://jitpack.io")
-  dependencies.classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.2")
+  dependencies.classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.3")
 }
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.50" apply true
+  kotlin("jvm") version "1.2.51" apply true
   id("com.jetbrains.python.envs") version "0.0.25"
   id("org.jetbrains.intellij") version "0.3.4" apply true
   id("de.undercouch.download") version "3.4.3" apply true
