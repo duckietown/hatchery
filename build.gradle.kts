@@ -22,10 +22,6 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
 }
 
-// If GK is hosted on plugins.gradle.org we can move this line into plugins {...}
-apply<GrammarKit>()
-repositories.mavenCentral()
-
 val clionVersion = "2018.1.3"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
@@ -96,6 +92,8 @@ intellij {
       "BashSupport:1.6.13.181",                    // Shell syntax support
       "Docker:181.4668.68",                        // Docker support
       "PsiViewer:2018.1.2",                        // PSI view support
+//      "IdeaVIM:0.49",
+//      "AceJump:3.5.0",
       "yaml")                                      // YML file support
 }
 
