@@ -89,8 +89,8 @@ intellij {
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
       "com.intellij.ideolog:181.0.7.0",            // Log file support
       "Pythonid:2018.1.181.4668.68",               // Python   support
-      "BashSupport:1.6.13.181",                    // Shell syntax support
-      "Docker:181.4668.68",                        // Docker support
+      "BashSupport:1.6.13.181",                    // [Ba]sh   support
+      "Docker:181.4668.68",                        // Docker   support
       "PsiViewer:2018.1.2",                        // PSI view support
 //      "IdeaVIM:0.49",
 //      "AceJump:3.5.0",

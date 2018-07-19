@@ -17,7 +17,7 @@ fi
 echo "Setting up ROS environment..."
 
 echo "Activating ROS $ros_distro with shell: $SHELL"
-if [ ! -d "$setup_script" ]; then
+if [ ! -f "$setup_script" ]; then
     >&2 echo "ROS setup script $setup_script does not exist! Unable to configure."
     exit 1
 fi

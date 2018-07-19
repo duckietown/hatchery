@@ -7,22 +7,22 @@ Provides language support and code assistance for developing ROS applications, w
 
 #### Prerequisites
 
-<details> 
-<summary><b>Java</b> must be installed prior to running Hatchery...</summary> 
+<details>
+<summary><b>Java</b> must be installed prior to running Hatchery...</summary>
 
 Hatchery requires a JRE or JDK. First check you have one installed: `java -version`
  
 [JDK 8](http://openjdk.java.net/install/) or higher is sufficient. Ubuntu/Debian: `sudo apt-get install openjdk-8-jdk`
 </details>
 
-<details> 
-<summary><b>Duckietown participants</b> should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>...</summary> 
+<details>
+<summary><b>Duckietown participants</b> should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>...</summary>
 
 Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown directory](https://github.com/duckietown/software).
 
 If not, you should first run `source environment.sh` from inside the Duckietown software directory.
 
-Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag below. 
+Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag below.
 </details>
 
 #### Running
@@ -39,7 +39,7 @@ On first launch, you may need to setup a Python SDK. From **File | Project Struc
 
 #### Plugin
 
-Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery). 
+Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery).
 
 ### Getting Started
 
@@ -47,7 +47,7 @@ Watch the following screencast for a demonstration of some features:
 
 [![Screencast](https://img.youtube.com/vi/OU1_tqZs9EM/0.jpg)](https://www.youtube.com/watch?v=OU1_tqZs9EM)
 
-### Features 
+### Features
 
 Currently, Hatchery supports the following [ROS filetypes](https://wiki.wpi.edu/robotics/ROS_File_Types):
 
