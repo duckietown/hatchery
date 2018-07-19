@@ -6,7 +6,7 @@
 ##
 ##############################################################################
 
-source duckietown.sh
+source ros_environment_setup.sh
 
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
