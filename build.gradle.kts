@@ -41,16 +41,13 @@ tasks {
   }
 
   withType<RunIdeTask> {
+    var projectRoot = properties["roject"]?.let { it as String } ?: System.getenv()["DUCKIETOWN_ROOT"] ?: ""
+
     exec {
-      commandLine("bash", "ros_environment_setup.sh")
+      commandLine("bash", "./ros_environment_setup.sh", projectRoot)
     }
 
     dependsOn(unpackClion)
-    var projectRoot = ""
-    if (hasProperty("roject"))
-      projectRoot = getProperty("roject") as String
-    else if (System.getenv().containsKey("DUCKIETOWN_ROOT"))
-      projectRoot = System.getenv("DUCKIETOWN_ROOT")
 
     if (projectRoot.isNotEmpty()) {
       projectRoot += "/catkin_ws/src/CMakeLists.txt"

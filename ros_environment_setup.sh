@@ -1,13 +1,9 @@
 #!/bin/bash
 
-ros_distro=kinetic
+ros_distro=melodic
 shell=$(basename $SHELL)
-project_root=$(echo "$@" | grep "\-Project=" | sed 's/^.*-Project=//')
+project_root=$1
 setup_script=/opt/ros/$ros_distro/setup.$shell
-
-if [ -z "$project_root" ]; then
-    project_root="$DUCKIETOWN_ROOT"
-fi
 
 if [ ! -d "$project_root" ]; then
     >&2 echo "Project root $project_root does not exist! Unable to configure."
