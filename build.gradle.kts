@@ -22,7 +22,7 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
 }
 
-val clionVersion = "2018.1.3"
+val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
 
@@ -41,7 +41,10 @@ tasks {
   }
 
   withType<RunIdeTask> {
-//    dependsOn("build_envs")
+    exec {
+      commandLine("bash", "ros_environment_setup.sh")
+    }
+
     dependsOn(unpackClion)
     var projectRoot = ""
     if (hasProperty("roject"))
