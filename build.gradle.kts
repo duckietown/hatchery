@@ -41,7 +41,7 @@ tasks {
   }
 
   withType<RunIdeTask> {
-    var projectRoot = properties["roject"]?.let { it as String } ?: System.getenv()["DUCKIETOWN_ROOT"] ?: ""
+    var projectRoot = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: ""
 
     exec {
       commandLine("bash", "./ros_environment_setup.sh", projectRoot)

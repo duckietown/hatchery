@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ros_distro=melodic
+ros_distro=kinetic
 shell=$(basename $SHELL)
 project_root=$1
 setup_script=/opt/ros/$ros_distro/setup.$shell
