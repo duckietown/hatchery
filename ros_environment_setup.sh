@@ -3,20 +3,26 @@
 ros_distro=kinetic
 shell=$(basename $SHELL)
 project_root=$(echo "$@" | grep "\-Project=" | sed 's/^.*-Project=//')
+setup_script=/opt/ros/$ros_distro/setup.$shell
 
 if [ -z "$project_root" ]; then
     project_root="$DUCKIETOWN_ROOT"
 fi
 
 if [ ! -d "$project_root" ]; then
-    >&2 echo "Project root does not exist! Unable to configure."
+    >&2 echo "Project root $project_root does not exist! Unable to configure."
     exit 1
 fi
 
 echo "Setting up ROS environment..."
 
-echo "Activating ROS with shell: $SHELL"
-source /opt/ros/$ros_distro/setup.$shell
+echo "Activating ROS $ros_distro with shell: $SHELL"
+if [ ! -d "$setup_script" ]; then
+    >&2 echo "ROS setup script $setup_script does not exist! Unable to configure."
+    exit 1
+fi
+
+source $setup_script
 
 echo "Building project: $project_root"
 catkin_make -C $project_root/catkin_ws/
