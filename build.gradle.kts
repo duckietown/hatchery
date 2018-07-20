@@ -22,6 +22,7 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
 }
 
+// TODO: Maybe these should go in settings.gradle.kts?
 val rosDistro = "kinetic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
@@ -51,8 +52,6 @@ tasks {
   }
 
   val setupRosEnv = "setupRosEnv"(Exec::class) {
-    isIgnoreExitValue = true
-
     if (!File(srcRoot).isDirectory)
       throw GradleException("Project source $srcRoot does not exist!")
 
@@ -66,6 +65,7 @@ tasks {
       throw GradleException("ROS development script $rosDevScript not found!")
 
     File(rosDevScript).setExecutable(true)
+    isIgnoreExitValue = true
     commandLine(rosDevScript)
 
     if (!File(cmakeFile).exists())
