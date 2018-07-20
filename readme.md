@@ -1,11 +1,11 @@
 ## Hatchery
 
+[![TeamCity Build Status][teamcity-status-svg]][teamcity-build-status]
+
 An open source IDE for the [Robot Operating System](http://www.ros.org/).
 Provides language support and code assistance for developing ROS applications, with additional tools for deploying and monitoring live applications.
 
-| Build Status |                                                                              |
-|--------------|------------------------------------------------------------------------------|
-| TeamCity     | [![TeamCity Build Status][teamcity-status-svg]][teamcity-build-status]       |
+[Join us on Slack](https://duckietown.slack.com)!
 
 ### Installation
 
