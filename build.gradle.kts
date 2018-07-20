@@ -22,16 +22,19 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
 }
 
-val rosDistro = "melodic"
+val rosDistro = "kinetic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
-val projectRoot = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: ""
+val projectRoot = properties["roject"] as? String
+    ?: System.getenv()["DUCKIETOWN_ROOT"]
+    ?: "~/CLionProjects/Software"
 val catkinRoot = "$projectRoot/catkin_ws"
 val srcRoot = "$catkinRoot/src"
 val cmakeFile = "$srcRoot/CMakeLists.txt"
-val rosEnvScript = "/opt/ros/$rosDistro/setup.bash"
 val rosDevScript = "$catkinRoot/devel/setup.bash"
+val rosEnvScript = "/opt/ros/$rosDistro/setup.bash"
+val rosPython = "/opt/ros/$rosDistro/lib/python2.7/dist-packages"
 
 tasks {
   val downloadClion = "downloadClion"(Download::class) {
@@ -58,8 +61,6 @@ tasks {
 
     executable = "source $rosEnvScript"
     commandLine("catkin_make", "-C", catkinRoot)
-    val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
-    environment = mapOf("PYTHONPATH" to "$srcRoot:$pythonPath")
 
     if (!File(rosDevScript).exists())
       throw GradleException("ROS development script $rosDevScript not found!")
@@ -75,7 +76,13 @@ tasks {
     dependsOn(unpackClion)
     dependsOn(setupRosEnv)
 
+    // Try to set Python SDK default to ROS Python...
+    val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
+    environment = mutableMapOf("PYTHONPATH" to "$rosPython:$pythonPath")
+        .apply { putAll(System.getenv()) } as Map<String, Any>
+    println("Python path: " + environment["PYTHONPATH"])
     println("Project root directory: $projectRoot")
+
     args = listOf(cmakeFile)
   }
 
