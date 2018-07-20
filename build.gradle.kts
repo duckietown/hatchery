@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import org.apache.tools.ant.taskdefs.ExecTask
 import org.gradle.api.tasks.JavaExec
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.getting
@@ -39,20 +40,20 @@ val rosEnvScript = "/opt/ros/$rosDistro/setup.bash"
 val rosPython = "/opt/ros/$rosDistro/lib/python2.7/dist-packages"
 
 tasks {
-  val downloadClion = "downloadClion"(Download::class) {
+  val downloadClion by creating(Download::class) {
     onlyIf { !file("$installPath.tar.gz").exists() }
     src(downloadURL)
     dest(file("$installPath.tar.gz"))
   }
 
-  val unpackClion = "unpackClion"(Copy::class) {
+  val unpackClion by creating(Copy::class) {
     onlyIf { !file(installPath).exists() }
     from(tarTree("build/clion/clion-$clionVersion.tar.gz"))
     into(file("${project.projectDir}/build/clion"))
     dependsOn(downloadClion)
   }
 
-  val setupRosEnv = "setupRosEnv"(Exec::class) {
+  val setupRosEnv by creating(Exec::class) {
     if (!File(srcRoot).isDirectory)
       throw GradleException("Project source $srcRoot does not exist!")
 
@@ -87,14 +88,14 @@ tasks {
     args = listOf(cmakeFile)
   }
 
-  val generateROSInterfaceLexer = "generateLexer"(GenerateLexer::class) {
+  val generateROSInterfaceLexer by creating(GenerateLexer::class) {
     source = "src/main/grammars/ROSInterface.flex"
     targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
     targetClass = "ROSInterfaceLexer"
     purgeOldFiles = true
   }
 
-  val generateROSInterfaceParser = "generateParser"(GenerateParser::class) {
+  val generateROSInterfaceParser by creating(GenerateParser::class) {
     source = "src/main/grammars/ROSInterface.bnf"
     targetRoot = "src/main/java"
     pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
