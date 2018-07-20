@@ -22,7 +22,7 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
 }
 
-val rosDistro = "melodic"
+val rosDistro = "kinetic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
