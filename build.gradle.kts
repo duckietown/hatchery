@@ -22,9 +22,16 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
 }
 
+val rosDistro = "melodic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
+val projectRoot = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: ""
+val catkinRoot = "$projectRoot/catkin_ws"
+val srcRoot = "$catkinRoot/src"
+val cmakeFile = "$srcRoot/CMakeLists.txt"
+val rosEnvScript = "/opt/ros/$rosDistro/setup.bash"
+val rosDevScript = "$catkinRoot/devel/setup.bash"
 
 tasks {
   val downloadClion = "downloadClion"(Download::class) {
@@ -40,20 +47,36 @@ tasks {
     dependsOn(downloadClion)
   }
 
+  val setupRosEnv = "setupRosEnv"(Exec::class) {
+    isIgnoreExitValue = true
+
+    if (!File(srcRoot).isDirectory)
+      throw GradleException("Project source $srcRoot does not exist!")
+
+    if (!File(rosEnvScript).exists())
+      throw GradleException("ROS environment script $rosEnvScript not found!")
+
+    executable = "source $rosEnvScript"
+    commandLine("catkin_make", "-C", catkinRoot)
+    val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
+    environment = mapOf("PYTHONPATH" to "$srcRoot:$pythonPath")
+
+    if (!File(rosDevScript).exists())
+      throw GradleException("ROS development script $rosDevScript not found!")
+
+    File(rosDevScript).setExecutable(true)
+    commandLine(rosDevScript)
+
+    if (!File(cmakeFile).exists())
+      throw GradleException("$cmakeFile was not found. Could not continue.")
+  }
+
   withType<RunIdeTask> {
-    var projectRoot = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: ""
-
-    exec {
-      commandLine("bash", "./ros_environment_setup.sh", projectRoot)
-    }
-
     dependsOn(unpackClion)
+    dependsOn(setupRosEnv)
 
-    if (projectRoot.isNotEmpty()) {
-      projectRoot += "/catkin_ws/src/CMakeLists.txt"
-      println("Project root directory: $projectRoot")
-      args = listOf(projectRoot)
-    }
+    println("Project root directory: $projectRoot")
+    args = listOf(cmakeFile)
   }
 
   val generateROSInterfaceLexer = "generateLexer"(GenerateLexer::class) {
