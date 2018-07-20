@@ -27,9 +27,10 @@ val rosDistro = "kinetic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
+val userHomeDir = System.getProperty("user.home")!!
 val projectRoot = properties["roject"] as? String
     ?: System.getenv()["DUCKIETOWN_ROOT"]
-    ?: "~/CLionProjects/Software"
+    ?: "$userHomeDir/CLionProjects/Software"
 val catkinRoot = "$projectRoot/catkin_ws"
 val srcRoot = "$catkinRoot/src"
 val cmakeFile = "$srcRoot/CMakeLists.txt"
