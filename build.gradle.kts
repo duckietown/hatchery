@@ -22,6 +22,7 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
 }
 
+// TODO: Maybe these should go in settings.gradle.kts?
 val rosDistro = "kinetic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
