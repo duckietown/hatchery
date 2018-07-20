@@ -3,7 +3,8 @@
 [![TeamCity Build Status][teamcity-status-svg]][teamcity-build-status]
 
 An open source IDE for the [Robot Operating System](http://www.ros.org/).
-Provides language support and code assistance for developing ROS applications, with additional tools for deploying and monitoring live applications.
+
+Provides language support and code assistance for developing ROS applications, with tools for deploying and monitoring live applications.
 
 [Join us on Slack](https://duckietown.slack.com)!
 
@@ -143,9 +144,13 @@ We are currently working to expand support for the following features:
 
 ### Special Thanks
 
-* [Duckietown](https://duckietown.org)
-* [Liam Paull](https://github.com/liampaull)
-* [Open Robotics](https://www.openrobotics.org/)
+* [Université de Montréal](https://en.diro.umontreal.ca/home/) - For supplying hardware and research facilities.
+* [Duckietown](https://duckietown.org) - An open, inexpensive and flexible platform for autonomy education and research.
+* [Liam Paull](https://github.com/liampaull) - For academic advice and guidance.
+* [Rusi Hristov](https://github.com/rusi) - For technical advice and guidance.
+* [nuTonomy](https://www.nutonomy.com/) - For sponsoring development on the AI-DO 2018 competition.
+* [JetBrains](https://www.jetbrains.com/) - For [collaboration](https://research.jetbrains.org/duckietown) and [TeamCity](https://www.jetbrains.com/teamcity/) build services.
+* [Open Robotics](https://www.openrobotics.org/) - For [ROS](https://www.ros.org) development and technical support.
 
 <!-- Badges -->
 [teamcity-build-status]: https://teamcity.jetbrains.com/viewType.html?buildTypeId=hatchery_buildplugin&guest=1

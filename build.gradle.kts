@@ -75,8 +75,7 @@ tasks {
   }
 
   withType<RunIdeTask> {
-    dependsOn(unpackClion)
-    dependsOn(setupRosEnv)
+    dependsOn(unpackClion, setupRosEnv)
 
     // Try to set Python SDK default to ROS Python...
     val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
@@ -104,8 +103,8 @@ tasks {
   }
 
   withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
     dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
+    kotlinOptions.jvmTarget = "1.8"
   }
 }
 
