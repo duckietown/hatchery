@@ -48,8 +48,6 @@ tasks {
   }
 
   val setupRosEnv = "setupRosEnv"(Exec::class) {
-    isIgnoreExitValue = true
-
     if (!File(srcRoot).isDirectory)
       throw GradleException("Project source $srcRoot does not exist!")
 
@@ -65,6 +63,7 @@ tasks {
       throw GradleException("ROS development script $rosDevScript not found!")
 
     File(rosDevScript).setExecutable(true)
+    isIgnoreExitValue = true
     commandLine(rosDevScript)
 
     if (!File(cmakeFile).exists())
