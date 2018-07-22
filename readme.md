@@ -1,4 +1,4 @@
-## Hatchery
+## 🐣 Hatchery
 
 [![TeamCity Build Status][teamcity-status-svg]][teamcity-build-status]
 
