@@ -84,7 +84,7 @@ tasks {
     println("Python path: " + environment["PYTHONPATH"])
     println("Project root directory: $projectRoot")
 
-    args = listOf(cmakeFile)
+    args = listOf(projectRoot)
   }
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
