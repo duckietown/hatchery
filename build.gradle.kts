@@ -24,7 +24,7 @@ plugins {
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
-val rosDistro = "kinetic"
+val rosDistro = "melodic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
@@ -84,7 +84,7 @@ tasks {
     println("Python path: " + environment["PYTHONPATH"])
     println("Project root directory: $projectRoot")
 
-    args = listOf(cmakeFile)
+    args = listOf(projectRoot)
   }
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
