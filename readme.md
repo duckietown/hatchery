@@ -1,6 +1,6 @@
 ## 🐣 Hatchery
 
-[![TeamCity Build Status][teamcity-status-svg]][teamcity-build-status]
+[![TeamCity Build Status][teamcity-status-svg]][teamcity-build-status]![JetBrains IntelliJ Plugins](https://img.shields.io/jetbrains/plugin/v/10290-hatchery.svg)
 
 An open source IDE for the [Robot Operating System](http://www.ros.org/).
 
