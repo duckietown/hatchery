@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.*
 import org.jetbrains.kotlin.backend.common.onlyIf
+import org.jetbrains.kotlin.cli.jvm.main
 
 plugins {
   idea apply true
@@ -24,7 +25,7 @@ plugins {
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
-val rosDistro = "melodic"
+val rosDistro = "kinetic"
 val clionVersion = "2018.1.6"
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
@@ -107,6 +108,8 @@ tasks {
     kotlinOptions.jvmTarget = "1.8"
   }
 }
+
+java.sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
 
 intellij {
   pluginName = "hatchery"
