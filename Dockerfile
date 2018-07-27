@@ -1,13 +1,8 @@
-FROM java:8
+FROM gcr.io/distroless/java
 
 WORKDIR /home/IdeaProjects
 
 COPY . hatchery/
-
-ADD https://github.com/duckietown/Software/archive/ipfs-works.zip software.zip 
-
-RUN unzip software.zip 
-RUN rm -rf software.zip 
 
 ENV DUCKIETOWN_ROOT /home/IdeaProjects/software/
 

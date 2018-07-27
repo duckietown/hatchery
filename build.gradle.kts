@@ -22,6 +22,7 @@ plugins {
   id("org.jetbrains.intellij") version "0.3.4" apply true
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.1.6" apply true
+  id("com.google.cloud.tools.jib") version "0.9.7"
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
