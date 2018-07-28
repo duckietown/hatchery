@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import org.ajoberstar.grgit.Grgit
 import org.apache.tools.ant.taskdefs.ExecTask
 import org.gradle.api.tasks.JavaExec
 import org.gradle.kotlin.dsl.getValue
@@ -19,26 +20,35 @@ plugins {
   kotlin("jvm") version "1.2.51" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
-  id("org.jetbrains.intellij") version "0.3.4" apply true
+  id("org.jetbrains.intellij") version "0.3.5" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.1.6" apply true
+  id("org.jetbrains.grammarkit") version "2018.1.7" apply true
   id("com.google.cloud.tools.jib") version "0.9.7"
+  id("org.ajoberstar.grgit") version "3.0.0-beta.1" apply true
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
 val rosDistro = "kinetic"
-val clionVersion = "2018.1.6"
+val clionVersion = "2018.2"
+val userHomeDir = System.getProperty("user.home")!!
+
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
-val userHomeDir = System.getProperty("user.home")!!
-val projectRoot = properties["roject"] as? String
-    ?: System.getenv()["DUCKIETOWN_ROOT"]
-    ?: "$userHomeDir/CLionProjects/Software"
-val catkinRoot = "$projectRoot/catkin_ws"
-val srcRoot = "$catkinRoot/src"
-val cmakeFile = "$srcRoot/CMakeLists.txt"
-val rosDevScript = "$catkinRoot/devel/setup.bash"
-val rosEnvScript = "/opt/ros/$rosDistro/setup.bash"
+val sampleRepo = "https://github.com/duckietown/Software.git"
+val samplePath = "${project.buildDir}/Software"
+
+val defaultProjectPath = samplePath.let { if (File(it).isDirectory) it else sampleRepo }
+var projectPath = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath
+fun cloneProject(url: String) = samplePath.apply { Grgit.clone(mapOf("dir" to this, "uri" to url)) }
+projectPath = projectPath.let { if (it.startsWith("http")) cloneProject(it) else it }
+
+val projectRoot = File(projectPath)/*.walkTopDown()
+    .filter { it.name == "CMakeLists.txt" }
+    // Since FileTreeWalk does not support BFS...
+    .sortedBy { it.absolutePath.length }
+    .firstOrNull()
+    ?.parentFile*/
+
 val rosPython = "/opt/ros/$rosDistro/lib/python2.7/dist-packages"
 
 tasks {
@@ -56,24 +66,33 @@ tasks {
   }
 
   val setupRosEnv by creating(Exec::class) {
-    if (!File(srcRoot).isDirectory)
-      throw GradleException("Project source $srcRoot does not exist!")
+    executable = "echo"
 
-    if (!File(rosEnvScript).exists())
-      throw GradleException("ROS environment script $rosEnvScript not found!")
+    try {
+      var rosSetupFile = File("/opt/ros/$rosDistro/setup.bash")
+      if (rosSetupFile.exists()) {
+        executable = "source $rosSetupFile"
+      } else if (File("/opt/ros/").isDirectory) {
+        rosSetupFile = File("/opt/ros/").walkTopDown().first { it.name == "setup.bash" }
+        executable = "source $rosSetupFile"
+        println("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
+      } else {
+        throw GradleException("Unable to detect a usable setup.bash file in /opt/ros!")
+      }
+    } catch (e: Exception) {
+      throw GradleException("Could not configure ROS environment", e)
+    }
+    val srcRoot = projectRoot.walkTopDown().firstOrNull { it.isDirectory && it.name == "catkin_ws" }?.absolutePath
 
-    executable = "source $rosEnvScript"
-    commandLine("catkin_make", "-C", catkinRoot)
-
-    if (!File(rosDevScript).exists())
-      throw GradleException("ROS development script $rosDevScript not found!")
-
-    File(rosDevScript).setExecutable(true)
-    isIgnoreExitValue = true
-    commandLine(rosDevScript)
-
-    if (!File(cmakeFile).exists())
-      throw GradleException("$cmakeFile was not found. Could not continue.")
+    try {
+      isIgnoreExitValue = true
+//      commandLine("catkin_make", "-C", srcRoot)
+      val rosDevScript = File(srcRoot).resolveSibling("devel").walkTopDown().first { it.name == "setup.bash" }
+      rosDevScript.setExecutable(true)
+//      commandLine(rosDevScript.absolutePath)
+    } catch (e: Exception) {
+      System.err.println("Could not find project setup.bash")
+    }
   }
 
   withType<RunIdeTask> {
@@ -86,7 +105,7 @@ tasks {
     println("Python path: " + environment["PYTHONPATH"])
     println("Project root directory: $projectRoot")
 
-    args = listOf(projectRoot)
+    args = listOf(projectRoot.absolutePath)
   }
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
@@ -120,13 +139,13 @@ intellij {
   alternativeIdePath = "build/clion/clion-$clionVersion"
 
   setPlugins("name.kropp.intellij.makefile:1.2.2", // Makefile support
-      "org.intellij.plugins.markdown:181.4668.12", // Markdown support
+      "org.intellij.plugins.markdown:182.2371",    // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.3", // CSV file support
-      "com.intellij.ideolog:181.0.7.0",            // Log file support
-      "Pythonid:2018.1.181.4668.68",               // Python   support
-      "BashSupport:1.6.13.181",                    // [Ba]sh   support
-      "Docker:181.4668.68",                        // Docker   support
-      "PsiViewer:2018.1.2",                        // PSI view support
+      "com.intellij.ideolog:182.0.7.0",            // Log file support
+      "Pythonid:2018.2.182.3684.101",              // Python   support
+      "BashSupport:1.6.13.182",                    // [Ba]sh   support
+      "Docker:182.3684.90",                        // Docker   support
+      "PsiViewer:182.2757.2",                      // PSI view support
 //      "IdeaVIM:0.49",
 //      "AceJump:3.5.0",
       "yaml")                                      // YML file support

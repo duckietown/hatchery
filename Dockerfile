@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java
+FROM java
 
 WORKDIR /home/IdeaProjects
 
