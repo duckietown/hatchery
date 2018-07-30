@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/brendan/IdeaProjects/hatchery/exampleProject/catkin_ws/devel/setup.sh

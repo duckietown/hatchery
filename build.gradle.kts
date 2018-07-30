@@ -6,6 +6,7 @@ import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.getting
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.version
+import org.jetbrains.intellij.tasks.PublishTask
 import org.gradle.language.base.internal.plugins.CleanRule
 import org.jetbrains.grammarkit.GrammarKit
 import org.jetbrains.intellij.tasks.RunIdeTask
@@ -51,7 +52,18 @@ val projectRoot = File(projectPath)/*.walkTopDown()
 
 val rosPython = "/opt/ros/$rosDistro/lib/python2.7/dist-packages"
 
+fun prop(name: String): String =
+    extra.properties[name] as? String
+        ?: error("Property `$name` is not defined in gradle.properties")
+
 tasks {
+
+  tasks.withType<PublishTask> {
+    username(prop("publishUsername"))
+    password(prop("publishPassword"))
+    channels(prop("publishChannel"))
+  }
+
   val downloadClion by creating(Download::class) {
     onlyIf { !file("$installPath.tar.gz").exists() }
     src(downloadURL)
