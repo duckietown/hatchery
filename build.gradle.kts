@@ -87,7 +87,7 @@ tasks {
 //        executable = "source $rosSetupFile"
         println("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
       } else {
-        throw GradleException("Unable to detect a usable setup.bash file in /opt/ros!")
+        System.err.println("Unable to detect a usable setup.bash file in /opt/ros!")
       }
     } catch (e: Exception) {
       throw GradleException("Could not configure ROS environment", e)
