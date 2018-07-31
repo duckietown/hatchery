@@ -40,10 +40,11 @@ val samplePath = "${project.buildDir}/Software"
 
 val defaultProjectPath = samplePath.let { if (File(it).isDirectory) it else sampleRepo }
 var projectPath = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath
+val isPluginDev = hasProperty("luginDev")
 fun cloneProject(url: String) = samplePath.apply { Grgit.clone(mapOf("dir" to this, "uri" to url)) }
 projectPath = projectPath.let { if (it.startsWith("http")) cloneProject(it) else it }
 
-val projectRoot = File(projectPath)/*.walkTopDown()
+val rosProjectRoot = File(projectPath)/*.walkTopDown()
     .filter { it.name == "CMakeLists.txt" }
     // Since FileTreeWalk does not support BFS...
     .sortedBy { it.absolutePath.length }
@@ -57,7 +58,6 @@ fun prop(name: String): String =
         ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
-
   tasks.withType<PublishTask> {
     username(prop("publishUsername"))
     password(prop("publishPassword"))
@@ -78,8 +78,6 @@ tasks {
   }
 
   val setupRosEnv by creating(Exec::class) {
-    executable = "echo"
-
     try {
       var rosSetupFile = File("/opt/ros/$rosDistro/setup.bash")
       if (rosSetupFile.exists()) {
@@ -94,7 +92,7 @@ tasks {
     } catch (e: Exception) {
       throw GradleException("Could not configure ROS environment", e)
     }
-    val srcRoot = projectRoot.walkTopDown().firstOrNull { it.isDirectory && it.name == "catkin_ws" }?.absolutePath
+    val srcRoot = rosProjectRoot.walkTopDown().firstOrNull { it.isDirectory && it.name == "catkin_ws" }?.absolutePath
 
     try {
       isIgnoreExitValue = true
@@ -108,16 +106,16 @@ tasks {
   }
 
   withType<RunIdeTask> {
-    dependsOn(unpackClion, setupRosEnv)
+    if(!isPluginDev) dependsOn(unpackClion, setupRosEnv)
 
     // Try to set Python SDK default to ROS Python...
     val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
     environment = mutableMapOf("PYTHONPATH" to "$rosPython:$pythonPath")
         .apply { putAll(System.getenv()) } as Map<String, Any>
     println("Python path: " + environment["PYTHONPATH"])
-    println("Project root directory: $projectRoot")
+    println("Project root directory: $rosProjectRoot")
 
-    args = listOf(projectRoot.absolutePath)
+    args = listOf(if(isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
   }
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
@@ -148,7 +146,7 @@ intellij {
   version = clionVersion
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
-  alternativeIdePath = "build/clion/clion-$clionVersion"
+  if(!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
 
   setPlugins("name.kropp.intellij.makefile:1.3",     // Makefile support
       "org.intellij.plugins.markdown:182.2371",      // Markdown support

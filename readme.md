@@ -42,6 +42,14 @@ To launch the IDE (optionally, you can specify the path to an existing ROS proje
 
 On first launch, you may need to setup a Python SDK. From **File | Project Structure** (or alternately **Preferences | 🔍 Python Interpreter | Project Interpreter**), then select or create a new *Python SDK* to receive coding assistance in Python files.
 
+### Contributing
+
+To contribute to this project, run the following command from inside the project root directory:
+
+`./gradlew runIde -PluginDev`
+
+This will download and run IntelliJ IDEA CE and open the project. You are ready to get started!
+
 #### Plugin
 
 Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery).
