@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/hatchery.iml" filepath="$PROJECT_DIR$/hatchery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hatchery.iml" filepath="$PROJECT_DIR$/.idea/modules/hatchery.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hatchery_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hatchery_main.iml" group="hatchery" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hatchery_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hatchery_test.iml" group="hatchery" />
     </modules>
