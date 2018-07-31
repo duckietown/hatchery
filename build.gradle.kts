@@ -90,7 +90,8 @@ tasks {
         System.err.println("Unable to detect a usable setup.bash file in /opt/ros!")
       }
     } catch (e: Exception) {
-      System.err.println("Could not configure ROS environment", e)
+      System.err.println("Could not configure ROS environment")
+      e.printStackTrace()
     }
     val srcRoot = rosProjectRoot.walkTopDown().firstOrNull { it.isDirectory && it.name == "catkin_ws" }?.absolutePath
 
