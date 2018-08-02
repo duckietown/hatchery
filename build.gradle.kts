@@ -78,13 +78,14 @@ tasks {
   }
 
   val setupRosEnv by creating(Exec::class) {
+    executable = "echo"
     try {
       var rosSetupFile = File("/opt/ros/$rosDistro/setup.bash")
       if (rosSetupFile.exists()) {
-//        executable = "source $rosSetupFile"
+        executable = "source $rosSetupFile"
       } else if (File("/opt/ros/").isDirectory) {
         rosSetupFile = File("/opt/ros/").walkTopDown().first { it.name == "setup.bash" }
-//        executable = "source $rosSetupFile"
+        executable = "source $rosSetupFile"
         println("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
       } else {
         System.err.println("Unable to detect a usable setup.bash file in /opt/ros!")
