@@ -17,7 +17,12 @@ Provides language support and code assistance for developing ROS applications, w
 
 Hatchery requires a JRE or JDK. First check you have one installed: `java -version`
  
-[JDK 8](http://openjdk.java.net/install/) or higher is sufficient. Ubuntu/Debian: `sudo apt-get install openjdk-8-jdk`
+[JDK 8](http://openjdk.java.net/install/) or higher is sufficient. Ubuntu/Debian: 
+```bash
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+```
 </details>
 
 <details>
