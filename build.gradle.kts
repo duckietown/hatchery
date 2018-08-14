@@ -51,6 +51,8 @@ val rosProjectRoot = File(projectPath)/*.walkTopDown()
     .firstOrNull()
     ?.parentFile*/
 
+val LOG = project.logger
+
 val rosPython = "/opt/ros/$rosDistro/lib/python2.7/dist-packages"
 
 fun prop(name: String): String =
@@ -78,32 +80,26 @@ tasks {
   }
 
   val setupRosEnv by creating(Exec::class) {
-    executable = "echo"
     try {
       var rosSetupFile = File("/opt/ros/$rosDistro/setup.bash")
-      if (rosSetupFile.exists()) {
-//        executable = "source $rosSetupFile"
-      } else if (File("/opt/ros/").isDirectory) {
+      if (rosSetupFile.exists())
+        commandLine("bash", rosSetupFile)
+      else if (File("/opt/ros/").isDirectory) {
         rosSetupFile = File("/opt/ros/").walkTopDown().first { it.name == "setup.bash" }
-//        executable = "source $rosSetupFile"
-        println("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
-      } else {
-        System.err.println("Unable to detect a usable setup.bash file in /opt/ros!")
-      }
-    } catch (e: Exception) {
-      System.err.println("Could not configure ROS environment")
-      e.printStackTrace()
-    }
-    val srcRoot = rosProjectRoot.walkTopDown().firstOrNull { it.isDirectory && it.name == "catkin_ws" }?.absolutePath
+        executable = "source $rosSetupFile"
+        LOG.warn("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
+      } else LOG.error("Unable to detect a usable setup.bash file in /opt/ros!")
 
-    try {
+      val srcRoot = rosProjectRoot.walkTopDown().first { it.isDirectory && it.name == "catkin_ws" }.absolutePath
+
       isIgnoreExitValue = true
-//      commandLine("catkin_make", "-C", srcRoot)
-      val rosDevScript = File(srcRoot).resolveSibling("devel").walkTopDown().first { it.name == "setup.bash" }
+      commandLine("bash", rosSetupFile, "catkin_make", "-C", srcRoot)
+      val rosDevScript = File(srcRoot).resolveSibling("devel/setup.bash")
       rosDevScript.setExecutable(true)
-//      commandLine(rosDevScript.absolutePath)
+      commandLine("bash", rosDevScript.absolutePath)
     } catch (e: Exception) {
-      System.err.println("Could not find project setup.bash")
+      executable = "echo"
+      LOG.error("Could not configure ROS environment", e)
     }
   }
 
@@ -114,8 +110,8 @@ tasks {
     val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
     environment = mutableMapOf("PYTHONPATH" to "$rosPython:$pythonPath")
         .apply { putAll(System.getenv()) } as Map<String, Any>
-    println("Python path: " + environment["PYTHONPATH"])
-    println("Project root directory: $rosProjectRoot")
+    LOG.info("Python path: " + environment["PYTHONPATH"])
+    LOG.info("Project root directory: $rosProjectRoot")
 
     args = listOf(if(isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
   }
