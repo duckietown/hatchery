@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.cli.jvm.main
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.60" apply true
+  kotlin("jvm") version "1.2.61" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
   id("org.jetbrains.intellij") version "0.3.5" apply true
