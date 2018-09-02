@@ -18,10 +18,10 @@ import org.jetbrains.kotlin.cli.jvm.main
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.60" apply true
+  kotlin("jvm") version "1.2.61" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
-  id("org.jetbrains.intellij") version "0.3.5" apply true
+  id("org.jetbrains.intellij") version "0.3.7" apply true
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.1.7" apply true
   id("com.google.cloud.tools.jib") version "0.9.7"
