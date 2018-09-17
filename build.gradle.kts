@@ -18,19 +18,19 @@ import org.jetbrains.kotlin.cli.jvm.main
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.61" apply true
+  kotlin("jvm") version "1.2.70" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
-  id("org.jetbrains.intellij") version "0.3.5" apply true
+  id("org.jetbrains.intellij") version "0.3.10" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.1.7" apply true
+  id("org.jetbrains.grammarkit") version "2018.2" apply true
   id("com.google.cloud.tools.jib") version "0.9.7"
   id("org.ajoberstar.grgit") version "3.0.0-beta.1" apply true
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
 val rosDistro = "kinetic"
-val clionVersion = "2018.2"
+val clionVersion = "2018.2.3"
 val userHomeDir = System.getProperty("user.home")!!
 
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
@@ -137,7 +137,7 @@ tasks {
   }
 }
 
-java.sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
+sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
 
 intellij {
   pluginName = "hatchery"
