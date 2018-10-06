@@ -18,19 +18,19 @@ import org.jetbrains.kotlin.cli.jvm.main
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.70" apply true
+  kotlin("jvm") version "1.2.71" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
-  id("org.jetbrains.intellij") version "0.3.10" apply true
+  id("org.jetbrains.intellij") version "0.3.11" apply true
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.2" apply true
-  id("com.google.cloud.tools.jib") version "0.9.7"
-  id("org.ajoberstar.grgit") version "3.0.0-beta.1" apply true
+  id("com.google.cloud.tools.jib") version "0.9.11"
+  id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
 val rosDistro = "kinetic"
-val clionVersion = "2018.2.3"
+val clionVersion = "2018.2.4"
 val userHomeDir = System.getProperty("user.home")!!
 
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
@@ -60,7 +60,7 @@ fun prop(name: String): String =
         ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
-  tasks.withType<PublishTask> {
+  withType<PublishTask> {
     username(prop("publishUsername"))
     password(prop("publishPassword"))
     channels(prop("publishChannel"))
