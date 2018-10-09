@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.cli.jvm.main
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.71" apply true
+  kotlin("jvm") version "1.3.0-rc-116"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
   id("org.jetbrains.intellij") version "0.3.11" apply true
@@ -150,7 +150,7 @@ intellij {
       "org.intellij.plugins.markdown:182.2371",      // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.8.0", // CSV file support
       "com.intellij.ideolog:182.0.7.0",              // Log file support
-      "Pythonid:2018.2.182.3684.101",                // Python   support
+      "Pythonid:2018.2.182.4505.22",                 // Python   support
       "BashSupport:1.6.13.182",                      // [Ba]sh   support
       "Docker:182.3684.90",                          // Docker   support
       "PsiViewer:182.2757.2",                        // PSI view support
