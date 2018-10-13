@@ -22,7 +22,7 @@ import kotlin.text.Typography.copyright
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.3.0-rc-116"
+  kotlin("jvm") version "1.3.0-rc-146"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
   id("org.jetbrains.intellij") version "0.3.11" apply true
