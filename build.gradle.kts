@@ -8,6 +8,9 @@ import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.version
 import org.jetbrains.intellij.tasks.PublishTask
 import org.gradle.language.base.internal.plugins.CleanRule
+import org.jetbrains.gradle.ext.Application
+import org.jetbrains.gradle.ext.GradleTask
+import org.jetbrains.gradle.ext.ProjectSettings
 import org.jetbrains.grammarkit.GrammarKit
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -15,6 +18,7 @@ import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.*
 import org.jetbrains.kotlin.backend.common.onlyIf
 import org.jetbrains.kotlin.cli.jvm.main
+import kotlin.text.Typography.copyright
 
 plugins {
   idea apply true
@@ -26,6 +30,13 @@ plugins {
   id("org.jetbrains.grammarkit") version "2018.2" apply true
   id("com.google.cloud.tools.jib") version "0.9.11"
   id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
+  id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2"
+}
+
+idea {
+  project {
+    // TODO
+  }
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
@@ -39,7 +50,8 @@ val sampleRepo = "https://github.com/duckietown/Software.git"
 val samplePath = "${project.buildDir}/Software"
 
 val defaultProjectPath = samplePath.let { if (File(it).isDirectory) it else sampleRepo }
-var projectPath = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath
+var projectPath = properties["roject"] as? String
+    ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath
 val isPluginDev = hasProperty("luginDev")
 fun cloneProject(url: String) = samplePath.apply { Grgit.clone(mapOf("dir" to this, "uri" to url)) }
 projectPath = projectPath.let { if (it.startsWith("http")) cloneProject(it) else it }
@@ -104,7 +116,7 @@ tasks {
   }
 
   withType<RunIdeTask> {
-    if(!isPluginDev) dependsOn(unpackClion, setupRosEnv)
+    if (!isPluginDev) dependsOn(unpackClion, setupRosEnv)
 
     // Try to set Python SDK default to ROS Python...
     val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
@@ -113,7 +125,7 @@ tasks {
     LOG.info("Python path: " + environment["PYTHONPATH"])
     LOG.info("Project root directory: $rosProjectRoot")
 
-    args = listOf(if(isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
+    args = listOf(if (isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
   }
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
@@ -144,7 +156,7 @@ intellij {
   version = clionVersion
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
-  if(!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
+  if (!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
 
   setPlugins("name.kropp.intellij.makefile:1.3",     // Makefile support
       "org.intellij.plugins.markdown:182.2371",      // Markdown support
