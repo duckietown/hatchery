@@ -40,7 +40,7 @@ idea {
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
-val rosDistro = "melodic"
+val rosDistro = "kinetic"
 val clionVersion = "2018.2.4"
 val userHomeDir = System.getProperty("user.home")!!
 
@@ -119,20 +119,20 @@ tasks {
     }
   }
 
-  val setupProjectEnv by creating(Exec::class) {
-    dependsOn(setupRosEnv)
-    executable = "bash"
-    val srcRoot = rosProjectRoot.walkTopDown()
-        .first { it.isDirectory && it.name == "catkin_ws" }.absolutePath
-    val develSetup = "$srcRoot/devel/setup.bash"
-    val commandString = """
-      catkin_make -C $srcRoot && \
-      chmod +x $develSetup && \
-      source $develSetup
-      """
-
-    args("-c", commandString)
-  }
+//  val setupProjectEnv by creating(Exec::class) {
+//    dependsOn(setupRosEnv)
+//    executable = "bash"
+//    val srcRoot = rosProjectRoot.walkTopDown()
+//        .first { it.isDirectory && it.name == "catkin_ws" }.absolutePath
+//    val develSetup = "$srcRoot/devel/setup.bash"
+//    val commandString = """
+//      catkin_make -C $srcRoot && \
+//      chmod +x $develSetup && \
+//      source $develSetup
+//      """
+//
+//    args("-c", commandString)
+//  }
 
   withType<RunIdeTask> {
     if (!isPluginDev) dependsOn(unpackClion, setupRosEnv)

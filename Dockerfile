@@ -1,4 +1,9 @@
-FROM java
+FROM duckietown/rpi-gui-tools:master18
+
+RUN apt-get update && \
+    apt-get install -y \
+	default-jdk && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/IdeaProjects
 
