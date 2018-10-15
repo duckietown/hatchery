@@ -22,7 +22,7 @@ import kotlin.text.Typography.copyright
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.3.0-rc-146"
+  kotlin("jvm") version "1.3.0-rc-116"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
   id("org.jetbrains.intellij") version "0.3.11" apply true
@@ -40,7 +40,7 @@ idea {
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
-val rosDistro = "kinetic"
+val rosDistro = "melodic"
 val clionVersion = "2018.2.4"
 val userHomeDir = System.getProperty("user.home")!!
 
@@ -62,8 +62,6 @@ val rosProjectRoot = File(projectPath)/*.walkTopDown()
     .sortedBy { it.absolutePath.length }
     .firstOrNull()
     ?.parentFile*/
-
-val LOG = project.logger
 
 val rosPython = "/opt/ros/$rosDistro/lib/python2.7/dist-packages"
 
@@ -92,27 +90,48 @@ tasks {
   }
 
   val setupRosEnv by creating(Exec::class) {
-    try {
+    executable = "bash"
+
+    val weAreCurrentlyInRosEnv = System.getenv("ROS_DISTRO") != null
+    val commandString = if (weAreCurrentlyInRosEnv) {
+      "echo \"Using ROS_ROOT: \$ROS_ROOT\""
+    } else {
       var rosSetupFile = File("/opt/ros/$rosDistro/setup.bash")
-      if (rosSetupFile.exists())
-        commandLine("bash", rosSetupFile)
-      else if (File("/opt/ros/").isDirectory) {
+      if (rosSetupFile.exists()) {
+        logger.info("Sourcing ROS $rosSetupFile")
+      } else if (File("/opt/ros/").isDirectory) {
         rosSetupFile = File("/opt/ros/").walkTopDown().first { it.name == "setup.bash" }
-        executable = "source $rosSetupFile"
-        LOG.warn("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
-      } else LOG.error("Unable to detect a usable setup.bash file in /opt/ros!")
+        logger.warn("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
+      } else {
+        throw GradleException("Unable to detect a usable setup.bash file in /opt/ros!")
+      }
 
-      val srcRoot = rosProjectRoot.walkTopDown().first { it.isDirectory && it.name == "catkin_ws" }.absolutePath
-
-      isIgnoreExitValue = true
-      commandLine("bash", rosSetupFile, "catkin_make", "-C", srcRoot)
-      val rosDevScript = File(srcRoot).resolveSibling("devel/setup.bash")
-      rosDevScript.setExecutable(true)
-      commandLine("bash", rosDevScript.absolutePath)
-    } catch (e: Exception) {
-      executable = "echo"
-      LOG.error("Could not configure ROS environment", e)
+      val pluginDevArg = if (isPluginDev) "-PluginDev" else ""
+      "source $rosSetupFile && source gradlew runIde ${pluginDevArg}"
     }
+
+    args("-c", commandString)
+
+    doLast {
+      if (!weAreCurrentlyInRosEnv) {
+        throw GradleException("Exiting IDE!")
+      }
+    }
+  }
+
+  val setupProjectEnv by creating(Exec::class) {
+    dependsOn(setupRosEnv)
+    executable = "bash"
+    val srcRoot = rosProjectRoot.walkTopDown()
+        .first { it.isDirectory && it.name == "catkin_ws" }.absolutePath
+    val develSetup = "$srcRoot/devel/setup.bash"
+    val commandString = """
+      catkin_make -C $srcRoot && \
+      chmod +x $develSetup && \
+      source $develSetup
+      """
+
+    args("-c", commandString)
   }
 
   withType<RunIdeTask> {
@@ -122,8 +141,8 @@ tasks {
     val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
     environment = mutableMapOf("PYTHONPATH" to "$rosPython:$pythonPath")
         .apply { putAll(System.getenv()) } as Map<String, Any>
-    LOG.info("Python path: " + environment["PYTHONPATH"])
-    LOG.info("Project root directory: $rosProjectRoot")
+    logger.info("Python path: " + environment["PYTHONPATH"])
+    logger.info("Project root directory: $rosProjectRoot")
 
     args = listOf(if (isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
   }
@@ -181,3 +200,6 @@ envs {
 
 group = "edu.umontreal"
 version = "0.2.1"
+
+fun String.execute(envp: Array<String>?, workingDir: File?) =
+    Runtime.getRuntime().exec(this, envp, workingDir)
