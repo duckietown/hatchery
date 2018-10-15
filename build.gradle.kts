@@ -8,6 +8,9 @@ import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.version
 import org.jetbrains.intellij.tasks.PublishTask
 import org.gradle.language.base.internal.plugins.CleanRule
+import org.jetbrains.gradle.ext.Application
+import org.jetbrains.gradle.ext.GradleTask
+import org.jetbrains.gradle.ext.ProjectSettings
 import org.jetbrains.grammarkit.GrammarKit
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -15,22 +18,30 @@ import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.*
 import org.jetbrains.kotlin.backend.common.onlyIf
 import org.jetbrains.kotlin.cli.jvm.main
+import kotlin.text.Typography.copyright
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.2.61" apply true
+  kotlin("jvm") version "1.3.0-rc-116"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
-  id("org.jetbrains.intellij") version "0.3.7" apply true
+  id("org.jetbrains.intellij") version "0.3.11" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.1.7" apply true
-  id("com.google.cloud.tools.jib") version "0.9.7"
-  id("org.ajoberstar.grgit") version "3.0.0-beta.1" apply true
+  id("org.jetbrains.grammarkit") version "2018.2" apply true
+  id("com.google.cloud.tools.jib") version "0.9.11"
+  id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
+  id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2"
+}
+
+idea {
+  project {
+    // TODO
+  }
 }
 
 // TODO: Maybe these should go in settings.gradle.kts?
-val rosDistro = "kinetic"
-val clionVersion = "2018.2"
+val rosDistro = "melodic"
+val clionVersion = "2018.2.4"
 val userHomeDir = System.getProperty("user.home")!!
 
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
@@ -39,7 +50,8 @@ val sampleRepo = "https://github.com/duckietown/Software.git"
 val samplePath = "${project.buildDir}/Software"
 
 val defaultProjectPath = samplePath.let { if (File(it).isDirectory) it else sampleRepo }
-var projectPath = properties["roject"] as? String ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath
+var projectPath = properties["roject"] as? String
+    ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath
 val isPluginDev = hasProperty("luginDev")
 fun cloneProject(url: String) = samplePath.apply { Grgit.clone(mapOf("dir" to this, "uri" to url)) }
 projectPath = projectPath.let { if (it.startsWith("http")) cloneProject(it) else it }
@@ -58,7 +70,7 @@ fun prop(name: String): String =
         ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
-  tasks.withType<PublishTask> {
+  withType<PublishTask> {
     username(prop("publishUsername"))
     password(prop("publishPassword"))
     channels(prop("publishChannel"))
@@ -78,46 +90,61 @@ tasks {
   }
 
   val setupRosEnv by creating(Exec::class) {
-    executable = "echo"
-    try {
+    executable = "bash"
+
+    val weAreCurrentlyInRosEnv = System.getenv("ROS_DISTRO") != null
+    val commandString = if (weAreCurrentlyInRosEnv) {
+      "echo \"Using ROS_ROOT: \$ROS_ROOT\""
+    } else {
       var rosSetupFile = File("/opt/ros/$rosDistro/setup.bash")
       if (rosSetupFile.exists()) {
-//        executable = "source $rosSetupFile"
+        logger.info("Sourcing ROS $rosSetupFile")
       } else if (File("/opt/ros/").isDirectory) {
         rosSetupFile = File("/opt/ros/").walkTopDown().first { it.name == "setup.bash" }
-//        executable = "source $rosSetupFile"
-        println("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
+        logger.warn("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.name} instead")
       } else {
-        System.err.println("Unable to detect a usable setup.bash file in /opt/ros!")
+        throw GradleException("Unable to detect a usable setup.bash file in /opt/ros!")
       }
-    } catch (e: Exception) {
-      System.err.println("Could not configure ROS environment")
-      e.printStackTrace()
-    }
-    val srcRoot = rosProjectRoot.walkTopDown().firstOrNull { it.isDirectory && it.name == "catkin_ws" }?.absolutePath
 
-    try {
-      isIgnoreExitValue = true
-//      commandLine("catkin_make", "-C", srcRoot)
-      val rosDevScript = File(srcRoot).resolveSibling("devel").walkTopDown().first { it.name == "setup.bash" }
-      rosDevScript.setExecutable(true)
-//      commandLine(rosDevScript.absolutePath)
-    } catch (e: Exception) {
-      System.err.println("Could not find project setup.bash")
+      val pluginDevArg = if (isPluginDev) "-PluginDev" else ""
+      "source $rosSetupFile && source gradlew runIde ${pluginDevArg}"
+    }
+
+    args("-c", commandString)
+
+    doLast {
+      if (!weAreCurrentlyInRosEnv) {
+        throw GradleException("Exiting IDE!")
+      }
     }
   }
 
+  val setupProjectEnv by creating(Exec::class) {
+    dependsOn(setupRosEnv)
+    executable = "bash"
+    val srcRoot = rosProjectRoot.walkTopDown()
+        .first { it.isDirectory && it.name == "catkin_ws" }.absolutePath
+    val develSetup = "$srcRoot/devel/setup.bash"
+    val commandString = """
+      catkin_make -C $srcRoot && \
+      chmod +x $develSetup && \
+      source $develSetup
+      """
+
+    args("-c", commandString)
+  }
+
   withType<RunIdeTask> {
-    if(!isPluginDev) dependsOn(unpackClion, setupRosEnv)
+    if (!isPluginDev) dependsOn(unpackClion, setupRosEnv)
 
     // Try to set Python SDK default to ROS Python...
     val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
     environment = mutableMapOf("PYTHONPATH" to "$rosPython:$pythonPath")
         .apply { putAll(System.getenv()) } as Map<String, Any>
-    println("Python path: " + environment["PYTHONPATH"])
-    println("Project root directory: $rosProjectRoot")
+    logger.info("Python path: " + environment["PYTHONPATH"])
+    logger.info("Project root directory: $rosProjectRoot")
 
-    args = listOf(if(isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
+    args = listOf(if (isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
   }
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
@@ -141,20 +168,20 @@ tasks {
   }
 }
 
-java.sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
+sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
 
 intellij {
   pluginName = "hatchery"
   version = clionVersion
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
-  if(!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
+  if (!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
 
   setPlugins("name.kropp.intellij.makefile:1.3",     // Makefile support
       "org.intellij.plugins.markdown:182.2371",      // Markdown support
       "net.seesharpsoft.intellij.plugins.csv:1.8.0", // CSV file support
       "com.intellij.ideolog:182.0.7.0",              // Log file support
-      "Pythonid:2018.2.182.3684.101",                // Python   support
+      "Pythonid:2018.2.182.4505.22",                 // Python   support
       "BashSupport:1.6.13.182",                      // [Ba]sh   support
       "Docker:182.3684.90",                          // Docker   support
       "PsiViewer:182.2757.2",                        // PSI view support
@@ -173,3 +200,6 @@ envs {
 
 group = "edu.umontreal"
 version = "0.2.1"
+
+fun String.execute(envp: Array<String>?, workingDir: File?) =
+    Runtime.getRuntime().exec(this, envp, workingDir)
