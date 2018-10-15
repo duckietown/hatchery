@@ -11,6 +11,8 @@ COPY . .
 
 ENV DUCKIETOWN_ROOT /home/software
 
+RUN ./gradlew unpackClion
+
 RUN ./gradlew buildPlugin
 
 CMD ./gradlew runIde
