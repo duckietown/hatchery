@@ -5,12 +5,12 @@ RUN apt-get update && \
 	default-jdk && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/IdeaProjects
+WORKDIR /home/IdeaProjects/hatchery
 
-COPY . hatchery/
+COPY . .
 
-ENV DUCKIETOWN_ROOT /home/IdeaProjects/software/
+ENV DUCKIETOWN_ROOT /home/software
 
-RUN cd hatchery && ./gradlew buildPlugin
+RUN ./gradlew buildPlugin
 
 CMD ./gradlew runIde
