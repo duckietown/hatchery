@@ -22,7 +22,8 @@ import kotlin.text.Typography.copyright
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.3.0-rc-116"
+  `kotlin-dsl`
+  kotlin("jvm") version "1.3.0-rc-190"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25"
   id("org.jetbrains.intellij") version "0.3.11" apply true
@@ -31,6 +32,13 @@ plugins {
   id("com.google.cloud.tools.jib") version "0.9.11"
   id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2"
+}
+
+println("".test())
+
+buildscript {
+  dependencies.classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.60")
+  repositories.maven("https://dl.bintray.com/kotlin/kotlin-eap")
 }
 
 idea {
