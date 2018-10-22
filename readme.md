@@ -35,7 +35,7 @@ If not, you should first run `source environment.sh` from inside the Duckietown 
 Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag below.
 </details>
 
-#### Running
+#### Command line
 
 First, clone this repository and open the project directory using the command line.
 
@@ -57,9 +57,13 @@ This will download and run IntelliJ IDEA CE and open the project. You are ready 
 
 #### Plugin
 
-Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Browse Repositories... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery).
+Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Marketplace... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery).
 
 For the adventurous, untested, bleeding edge builds are also available on our [TeamCity build server](https://teamcity.jetbrains.com/project.html?projectId=hatchery). Download the plugin ZIP file and [install it from disk](https://www.jetbrains.com/help/idea/managing-plugins.html#installing-plugins-from-disk).
+
+#### ROS Enrivonment
+
+When using Hatchery, ensure that you are running the IDE inside with the ROS environment (the script `<ROS_INSTALLATION_PATH>/<ROS_DISTRO>/setup.bash` must be run prior to running the IDE). If using the [command line](#command-line) installer, Hatchery attempts to locate and source this file, otherwise you must manually configure the [ROS environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment).
 
 ### Getting Started
 
