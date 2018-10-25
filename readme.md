@@ -61,7 +61,7 @@ This will download and run IntelliJ IDEA CE and open the project. You are ready 
 
 Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Marketplace... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery).
 
-For the adventurous, untested, bleeding edge builds are also available on our [TeamCity build server](https://teamcity.jetbrains.com/project.html?projectId=hatchery). Download the plugin ZIP file and [install it from disk](https://www.jetbrains.com/help/idea/managing-plugins.html#installing-plugins-from-disk).
+For the adventurous, untested, bleeding edge builds are also available on our [TeamCity build server](https://teamcity.jetbrains.com/repository/download/hatchery_buildplugin/.lastFinished/hatchery.zip?guest=1). Download the plugin ZIP file and [install it from disk](https://www.jetbrains.com/help/idea/managing-plugins.html#installing-plugins-from-disk).
 
 #### ROS Enrivonment
 
