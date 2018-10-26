@@ -22,7 +22,6 @@ import kotlin.text.Typography.copyright
 
 val clionVersion = "2018.2.5"
 val kotlinVersion = "1.3.0-rc-190"
-val rosDistro = "kinetic"
 
 buildscript {
   repositories.maven("https://dl.bintray.com/kotlin/kotlin-eap")
@@ -43,13 +42,11 @@ plugins {
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2"
 }
 
-println("".test())
-
-idea {
-  project {
-    // TODO
-  }
-}
+//idea {
+//  project {
+//    // TODO
+//  }
+//}
 
 val userHomeDir = System.getProperty("user.home")!!
 
@@ -66,14 +63,6 @@ fun cloneProject(url: String) = samplePath.apply { Grgit.clone(mapOf("dir" to th
 projectPath = projectPath.let { if (it.startsWith("http")) cloneProject(it) else it }
 
 val rosProjectRoot = File(projectPath)
-/*.walkTopDown()
-    .filter { it.name == "CMakeLists.txt" }
-    // Since FileTreeWalk does not support BFS...
-    .sortedBy { it.absolutePath.length }
-    .firstOrNull()
-    ?.parentFile*/
-
-val rosPython = "/opt/ros/$rosDistro/lib/python2.7/dist-packages"
 
 fun prop(name: String): String =
     extra.properties[name] as? String
@@ -99,56 +88,10 @@ tasks {
     dependsOn(downloadClion)
   }
 
-  val setupRosEnv by creating(Exec::class) {
-    executable = "bash"
-
-    val weAreCurrentlyInRosEnv = System.getenv("ROS_DISTRO") != null
-    val commandString = if (weAreCurrentlyInRosEnv) {
-      "echo \"Using ROS_ROOT: \$ROS_ROOT\""
-    } else {
-      var rosSetupFile = File("/opt/ros/$rosDistro/setup.bash")
-      if (rosSetupFile.exists()) {
-        logger.info("Sourcing ROS $rosSetupFile")
-      } else if (File("/opt/ros/").isDirectory) {
-        rosSetupFile = File("/opt/ros/").walkTopDown().maxDepth(3).first { it.name == "setup.bash" }
-        logger.warn("Unable to find default ROS distro ($rosDistro), using ${rosSetupFile.parentFile.path} instead")
-      } else {
-        throw GradleException("Unable to detect a usable setup.bash file in /opt/ros!")
-      }
-
-      val pluginDevArg = if (isPluginDev) "-PluginDev" else ""
-      "source $rosSetupFile && source gradlew runIde ${pluginDevArg}"
-    }
-
-    args("-c", commandString)
-
-    doLast { if (!weAreCurrentlyInRosEnv) throw GradleException("Exiting IDE!") }
-  }
-
-//  val setupProjectEnv by creating(Exec::class) {
-//    dependsOn(setupRosEnv)
-//    executable = "bash"
-//    val srcRoot = rosProjectRoot.walkTopDown()
-//        .first { it.isDirectory && it.name == "catkin_ws" }.absolutePath
-//    val develSetup = "$srcRoot/devel/setup.bash"
-//    val commandString = """
-//      catkin_make -C $srcRoot && \
-//      chmod +x $develSetup && \
-//      source $develSetup
-//      """
-//
-//    args("-c", commandString)
-//  }
+  val rosTask by withRosTask()
 
   withType<RunIdeTask> {
-    if (!isPluginDev) dependsOn(unpackClion, setupRosEnv)
-
-// Try to set Python SDK default to ROS Python...
-    val pythonPath = System.getenv()["PYTHONPATH"] ?: ""
-    environment = mutableMapOf("PYTHONPATH" to "$rosPython:$pythonPath")
-        .apply { putAll(System.getenv()) } as Map<String, Any>
-    logger.info("Python path: " + environment["PYTHONPATH"])
-    logger.info("Project root directory: $rosProjectRoot")
+    if (!isPluginDev) dependsOn(unpackClion, rosTask)
 
     args = listOf(if (isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
   }
