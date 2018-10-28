@@ -4,7 +4,9 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.xml.XmlAttributeValue
 
-class RosLaunchReference(element: PsiElement) : PsiReferenceBase<PsiElement>(element, false) {
+class RosLaunchReference : PsiReferenceBase<PsiElement> {
+  constructor(element: PsiElement) : super(element, false)
+
   override fun resolve(): PsiElement? {
     val relativePath = (element as XmlAttributeValue).value!!.substringAfter("$(find ").replace(")", "")
     return RosLaunchLineMarkerProvider.findFilesByRelativePath(element.project, relativePath).firstOrNull()

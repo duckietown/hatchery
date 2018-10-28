@@ -10,7 +10,10 @@ object RosLaunchRunConfigurationProducer : RunConfigurationProducer<RosLaunchRun
     context.location?.virtualFile?.extension == ".launch"
 
   override fun setupConfigurationFromContext(configuration: RosLaunchRunConfiguration, context: ConfigurationContext, sourceElement: Ref<PsiElement>): Boolean {
-    configuration.name = context.location?.virtualFile?.name ?: return false
+    context.location?.virtualFile.let {
+      configuration.name = it?.name ?: return false
+      configuration.path = it.path
+    }
 
     return true
   }

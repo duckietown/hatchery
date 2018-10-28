@@ -2,14 +2,18 @@ package edu.umontreal.hatchery.roslaunch
 
 import com.intellij.patterns.StandardPatterns
 import com.intellij.patterns.XmlPatterns
-import com.intellij.psi.PsiReferenceContributor
-import com.intellij.psi.PsiReferenceRegistrar
+import com.intellij.psi.*
+import com.intellij.util.ProcessingContext
 
 object RosLaunchReferenceContributor : PsiReferenceContributor() {
   // http://wiki.ros.org/roslaunch/XML#substitution_args
-  const val findSubstitution = "\\\$\\(find [\\w]*\\)[\\w/\\.]*"
-  val referencePattern = XmlPatterns.xmlAttributeValue().withValue(StandardPatterns.string().matches(findSubstitution))!!
+  private const val findSubstitution = "\\\$\\(find [\\w]*\\)[\\w/\\.]*"
+  private val pattern = XmlPatterns.xmlAttributeValue()
+    .withValue(StandardPatterns.string().matches(findSubstitution))!!
 
-  override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) =
-      registrar.registerReferenceProvider(referencePattern, RosLaunchReferenceProvider)
+  override fun registerReferenceProviders(psiReg: PsiReferenceRegistrar) =
+    psiReg.registerReferenceProvider(pattern, object : PsiReferenceProvider() {
+      override fun getReferencesByElement(e: PsiElement, c: ProcessingContext) =
+        arrayOf(RosLaunchReference(e))
+    })
 }

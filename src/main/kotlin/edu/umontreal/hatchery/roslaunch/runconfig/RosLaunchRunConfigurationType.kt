@@ -6,11 +6,11 @@ import edu.umontreal.hatchery.filesystem.Icons
 object RosLaunchRunConfigurationType : ConfigurationType {
   override fun getIcon() = Icons.ros_launch
 
-  override fun getConfigurationTypeDescription() = "roslaunch_runconfig_description"
+  override fun getConfigurationTypeDescription() = "ros_launch_runconfig_description"
 
-  override fun getId() = "roslaunch_runconfig_id"
+  override fun getId() = "ros_launch_run_config_type_id"
 
-  override fun getDisplayName() = "roslaunch_runconfig_display_name"
+  override fun getDisplayName() = "ros_launch_run_config_type_display_name"
 
-  override fun getConfigurationFactories() = arrayOf(RosLaunchRunConfigurationFactory(this))
+  override fun getConfigurationFactories() = arrayOf(RosLaunchRunConfigurationFactory)
 }

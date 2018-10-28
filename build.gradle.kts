@@ -33,40 +33,47 @@ plugins {
   `kotlin-dsl`
   kotlin("jvm") version "1.3.0-rc-190"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
-  id("com.jetbrains.python.envs") version "0.0.25"
+  id("com.jetbrains.python.envs") version "0.0.25" apply true
   id("org.jetbrains.intellij") version "0.3.11" apply true
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.2" apply true
   id("com.google.cloud.tools.jib") version "0.9.11"
   id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
-  id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2"
+  id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2" apply true
 }
 
-//idea {
-//  project {
-//    // TODO
-//  }
-//}
+idea {
+  module {
+    isDownloadSources = true
+  }
+
+  project {
+    idea.project {
+      (this as ExtensionAware)
+      configure<ProjectSettings> {
+        // TODO
+      }
+    }
+  }
+}
 
 val userHomeDir = System.getProperty("user.home")!!
-
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
 val sampleRepo = "https://github.com/duckietown/Software.git"
 val samplePath = "${project.buildDir}/Software"
 
-val defaultProjectPath = samplePath.let { if (File(it).isDirectory) it else sampleRepo }
-var projectPath = properties["roject"] as? String
-    ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath
+val defaultProjectPath = samplePath.let {
+  if (File(it).isDirectory) it
+  else it.apply { Grgit.clone(mapOf("dir" to this, "uri" to sampleRepo)) }
+}
+
+val projectPath = File(properties["roject"] as? String
+    ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath).absolutePath!!
+
 val isPluginDev = hasProperty("luginDev")
-fun cloneProject(url: String) = samplePath.apply { Grgit.clone(mapOf("dir" to this, "uri" to url)) }
-projectPath = projectPath.let { if (it.startsWith("http")) cloneProject(it) else it }
-
-val rosProjectRoot = File(projectPath)
-
-fun prop(name: String): String =
-    extra.properties[name] as? String
-        ?: error("Property `$name` is not defined in gradle.properties")
+fun prop(name: String): String = extra.properties[name] as? String
+    ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
   withType<PublishTask> {
@@ -91,9 +98,9 @@ tasks {
   val rosTask by withRosTask()
 
   withType<RunIdeTask> {
-    if (!isPluginDev) dependsOn(unpackClion, rosTask)
+    if (!isPluginDev) dependsOn(unpackClion, rosTask, ":build_envs")
 
-    args = listOf(if (isPluginDev) projectDir.absolutePath else rosProjectRoot.absolutePath)
+    args = listOf(if (isPluginDev) projectDir.absolutePath else projectPath)
   }
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
@@ -126,13 +133,13 @@ intellij {
   if (hasProperty("roject")) downloadSources = false
   if (!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
 
-  setPlugins("name.kropp.intellij.makefile:1.3",     // Makefile support
-      "org.intellij.plugins.markdown:182.2371",      // Markdown support
-      "net.seesharpsoft.intellij.plugins.csv:1.8.0", // CSV file support
+  setPlugins("name.kropp.intellij.makefile:1.5",     // Makefile support
+      "org.intellij.plugins.markdown:182.4892.20",      // Markdown support
+      "net.seesharpsoft.intellij.plugins.csv:1.9.1", // CSV file support
       "com.intellij.ideolog:182.0.7.0",              // Log file support
       "Pythonid:2018.2.182.4505.22",                 // Python   support
       "BashSupport:1.6.13.182",                      // [Ba]sh   support
-      "Docker:182.3684.90",                          // Docker   support
+      "Docker:182.4323.18",                          // Docker   support
       "PsiViewer:182.2757.2",                        // PSI view support
 //      "IdeaVIM:0.49",
 //      "AceJump:3.5.0",
@@ -149,6 +156,3 @@ envs {
 
 group = "edu.umontreal"
 version = "0.2.1"
-
-fun String.execute(envp: Array<String>?, workingDir: File?) =
-    Runtime.getRuntime().exec(this, envp, workingDir)
