@@ -20,24 +20,23 @@ import org.jetbrains.kotlin.backend.common.onlyIf
 import org.jetbrains.kotlin.cli.jvm.main
 import kotlin.text.Typography.copyright
 
-val clionVersion = "2018.2.5"
-val kotlinVersion = "1.3.0-rc-190"
-
 buildscript {
   repositories.maven("https://dl.bintray.com/kotlin/kotlin-eap")
-  dependencies.classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.0-rc-190")
+  dependencies {
+    val kotlinVersion = properties["kotlinVersion"]
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+  }
 }
 
 plugins {
   idea apply true
   `kotlin-dsl`
-  kotlin("jvm") version "1.3.0-rc-190"
+  kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25" apply true
-  id("org.jetbrains.intellij") version "0.3.11" apply true
+  id("org.jetbrains.intellij") version "0.3.12" apply true
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.2" apply true
-  id("com.google.cloud.tools.jib") version "0.9.11"
   id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2" apply true
 }
@@ -57,6 +56,7 @@ idea {
   }
 }
 
+val clionVersion = properties["clionVersion"] as String
 val userHomeDir = System.getProperty("user.home")!!
 val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
@@ -69,11 +69,11 @@ val defaultProjectPath = samplePath.let {
 }
 
 val projectPath = File(properties["roject"] as? String
-    ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath).absolutePath!!
+  ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath).absolutePath!!
 
 val isPluginDev = hasProperty("luginDev")
 fun prop(name: String): String = extra.properties[name] as? String
-    ?: error("Property `$name` is not defined in gradle.properties")
+  ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
   withType<PublishTask> {
@@ -133,17 +133,17 @@ intellij {
   if (hasProperty("roject")) downloadSources = false
   if (!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
 
-  setPlugins("name.kropp.intellij.makefile:1.5",     // Makefile support
-      "org.intellij.plugins.markdown:182.4892.20",      // Markdown support
-      "net.seesharpsoft.intellij.plugins.csv:1.9.1", // CSV file support
-      "com.intellij.ideolog:182.0.7.0",              // Log file support
-      "Pythonid:2018.2.182.4505.22",                 // Python   support
-      "BashSupport:1.6.13.182",                      // [Ba]sh   support
-      "Docker:182.4323.18",                          // Docker   support
-      "PsiViewer:182.2757.2",                        // PSI view support
+  setPlugins("name.kropp.intellij.makefile:1.5",   // Makefile support
+    "org.intellij.plugins.markdown:182.4129.4",   // Markdown support
+    "net.seesharpsoft.intellij.plugins.csv:1.9.1", // CSV file support
+    "com.intellij.ideolog:182.0.7.0",              // Log file support
+    "Pythonid:2018.2.182.4505.22",                 // Python   support
+    "BashSupport:1.6.13.182",                      // [Ba]sh   support
+    "Docker:182.4323.18",                          // Docker   support
+    "PsiViewer:182.2757.2",                        // PSI view support
 //      "IdeaVIM:0.49",
 //      "AceJump:3.5.0",
-      "yaml")                                        // YML file support
+    "yaml")                                        // YML file support
 }
 
 envs {
