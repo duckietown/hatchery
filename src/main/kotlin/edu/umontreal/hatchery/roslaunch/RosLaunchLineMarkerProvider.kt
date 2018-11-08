@@ -12,9 +12,7 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlAttributeValue
-import com.intellij.util.indexing.FileBasedIndex
 import edu.umontreal.hatchery.filesystem.Icons
-import java.util.*
 
 
 object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
@@ -30,22 +28,25 @@ object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
         builder.setTooltipText(it).setTargets(targets)
         result.add(builder.createLineMarkerInfo(element))
       } ?: result.add(NavigationGutterIconBuilder.create(Icons.broken_resource)
-          .setTooltipText("Unknown resource!")
-          .setTarget(element).createLineMarkerInfo(element))
+        .setTooltipText("Unknown resource!")
+        .setTarget(element).createLineMarkerInfo(element))
     }
   }
 
   private fun isRosLaunchFileSubstitution(element: PsiElement): Boolean =
-      (element as? XmlAttributeValue)?.value?.startsWith("$(find ") ?: false
+    (element as? XmlAttributeValue)?.value?.startsWith("$(find ") ?: false
 
   fun findFilesByRelativePath(project: Project, fileRelativePath: String): List<PsiFileSystemItem?> {
     val relativePath = if (fileRelativePath.startsWith("/")) fileRelativePath else "/$fileRelativePath"
-    val fileTypes = Collections.singleton(FileTypeManager.getInstance().getFileTypeByFileName(relativePath))
-    val fileList = ArrayList<VirtualFile>()
-    val manager = PsiManager.getInstance(project)
+    val fileType = FileTypeManager.getInstance().getFileTypeByFileName(relativePath)
+    val files = mutableListOf<VirtualFile>()
+    val psiMgr = PsiManager.getInstance(project)
     val projectScope = GlobalSearchScope.projectScope(project)
-    FileBasedIndex.getInstance().processFilesContainingAllKeys(FileTypeIndex.NAME, fileTypes, projectScope, null)
-    { virtualFile -> if (virtualFile.path.endsWith(relativePath)) fileList.add(virtualFile); true }
-    return fileList.map { manager.run { findFile(it) ?: findDirectory(it) } }
+    val fileProcessor = { virtualFile: VirtualFile ->
+      if (virtualFile.path.endsWith(relativePath)) files.add(virtualFile); true
+    }
+
+    FileTypeIndex.processFiles(fileType, fileProcessor, projectScope)
+    return files.mapNotNull { psiMgr.run { findFile(it) ?: findDirectory(it) } }
   }
 }

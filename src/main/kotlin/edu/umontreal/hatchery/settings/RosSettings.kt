@@ -12,7 +12,6 @@ data class RosSettings(var rosPath: String = "",
                        internal var textHighlightRGB: Int = GREEN.rgb,
                        internal var tagForegroundRGB: Int = BLACK.rgb,
                        internal var tagBackgroundRGB: Int = YELLOW.rgb) {
-
   // ...but we expose them to the world as Color
   val jumpModeColor: Color by { jumpModeRGB }
   val targetModeColor: Color by { targetModeRGB }

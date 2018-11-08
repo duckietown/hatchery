@@ -8,9 +8,9 @@ import com.intellij.execution.process.ColoredProcessHandler
 import com.intellij.execution.process.ProcessTerminatedListener
 import com.intellij.execution.runners.ExecutionEnvironment
 
-open class RosCommandLineState : CommandLineState {
+class RosCommandLineState : CommandLineState {
   private val commands: Array<out String>
-  open val commandLine: GeneralCommandLine
+  val commandLine: GeneralCommandLine
 
   constructor(env: ExecutionEnvironment, vararg commands: String) : super(env) {
     this.commands = commands

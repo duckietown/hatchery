@@ -9,18 +9,19 @@ import com.intellij.psi.xml.XmlTag
 
 class RosPackageReference(private val psiElement: PsiElement) : PsiReferenceBase<PsiElement>(psiElement, false) {
   override fun resolve() =
-      (psiElement as? XmlTag)?.let { tag ->
-        getAllROSPackages().firstOrNull { it.containingDirectory.name == tag.value.text }?.containingDirectory
-      }
+    (psiElement as? XmlTag)?.let { tag ->
+      getAllROSPackages().firstOrNull { it.containingDirectory.name == tag.value.text }?.containingDirectory
+    }
 
   override fun getVariants() =
-      getAllROSPackages().flatMap { file ->
-        file.document?.rootTag?.subTags?.filter { it.name == "name" }?.map { it.value.text } ?: listOf()
-      }.toTypedArray()
+    getAllROSPackages().flatMap { file ->
+      file.document?.rootTag?.subTags
+        ?.filter { it.name == "name" }?.map { it.value.text } ?: listOf()
+    }.toTypedArray()
 
   private fun getAllROSPackages() =
-      FilenameIndex.getFilesByName(psiElement.project,
-          RosPackageFileType.filename,
-          GlobalSearchScope.allScope(psiElement.project)
-      ).filterIsInstance<XmlFile>()
+    FilenameIndex.getFilesByName(psiElement.project,
+      RosPackageFileType.filename,
+      GlobalSearchScope.allScope(psiElement.project)
+    ).filterIsInstance<XmlFile>()
 }

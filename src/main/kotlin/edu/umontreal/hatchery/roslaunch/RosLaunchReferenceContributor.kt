@@ -2,7 +2,10 @@ package edu.umontreal.hatchery.roslaunch
 
 import com.intellij.patterns.StandardPatterns
 import com.intellij.patterns.XmlPatterns
-import com.intellij.psi.*
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiReferenceContributor
+import com.intellij.psi.PsiReferenceProvider
+import com.intellij.psi.PsiReferenceRegistrar
 import com.intellij.util.ProcessingContext
 
 object RosLaunchReferenceContributor : PsiReferenceContributor() {

@@ -16,7 +16,7 @@ object RosLaunchRunLineMarkerContributor : RunLineMarkerContributor() {
       Info(AllIcons.General.Run, ExecutorAction.getActions()) { "Run ROSLaunch Configuration" }
     else null
 
-  fun isIdentifier(element: PsiElement?): Boolean {
+  private fun isIdentifier(element: PsiElement?): Boolean {
     val isLaunchFile = element?.containingFile?.name?.endsWith(".launch") ?: false
     val isTopmostTag = (element as? XmlTag)?.name == "launch"
     return isLaunchFile && isTopmostTag

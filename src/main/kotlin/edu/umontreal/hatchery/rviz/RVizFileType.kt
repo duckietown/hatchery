@@ -5,7 +5,6 @@ import edu.umontreal.hatchery.filesystem.Icons
 import org.jetbrains.yaml.YAMLLanguage
 
 
-
 object RVizFileType : LanguageFileType(YAMLLanguage.INSTANCE) {
   override fun getName() = "rviz_file_name"
 

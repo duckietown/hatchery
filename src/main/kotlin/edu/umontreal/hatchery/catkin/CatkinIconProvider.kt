@@ -7,7 +7,7 @@ import edu.umontreal.hatchery.filesystem.Icons
 
 object CatkinIconProvider : IconProvider() {
   override fun getIcon(element: PsiElement, flags: Int) =
-      if (element is PsiDirectory && element.hasPackageXml()) Icons.catkin_file else null
+    if (element is PsiDirectory && element.hasPackageXml()) Icons.catkin_file else null
 
   private fun PsiDirectory.hasPackageXml() = files.any { it.name == "package.xml" }
 }

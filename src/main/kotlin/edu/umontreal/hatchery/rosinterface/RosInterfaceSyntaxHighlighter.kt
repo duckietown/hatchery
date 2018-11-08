@@ -28,13 +28,13 @@ object RosInterfaceSyntaxHighlighter : SyntaxHighlighterBase() {
   override fun getHighlightingLexer() = RosInterfaceLexerAdapter
 
   override fun getTokenHighlights(tokenType: IElementType) =
-      when (tokenType) {
-        RosInterfaceTypes.TYPE -> TYPE_KEYS
-        RosInterfaceTypes.SEPARATOR -> SEPARATOR_KEYS
-        RosInterfaceTypes.KEY -> KEY_KEYS
-        RosInterfaceTypes.VALUE -> VALUE_KEYS
-        RosInterfaceTypes.COMMENT -> COMMENT_KEYS
-        TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
-        else -> EMPTY_KEYS
-      }
+    when (tokenType) {
+      RosInterfaceTypes.TYPE -> TYPE_KEYS
+      RosInterfaceTypes.SEPARATOR -> SEPARATOR_KEYS
+      RosInterfaceTypes.KEY -> KEY_KEYS
+      RosInterfaceTypes.VALUE -> VALUE_KEYS
+      RosInterfaceTypes.COMMENT -> COMMENT_KEYS
+      TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
+      else -> EMPTY_KEYS
+    }
 }

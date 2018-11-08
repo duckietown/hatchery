@@ -1,7 +1,6 @@
 package edu.umontreal.hatchery.psi
 
 import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
 import edu.umontreal.hatchery.rosinterface.RosInterfaceFileType
 
@@ -16,10 +15,7 @@ object RosInterfaceElementFactory {
     return file.firstChild as RosInterfaceProperty
   }
 
-  fun createCRLF(project: Project): PsiElement {
-    val file = createFile(project, "\n")
-    return file.firstChild
-  }
+  fun createCRLF(project: Project) = createFile(project, "\n").firstChild
 
   fun createFile(project: Project, text: String): RosInterfaceFile {
     val name = "dummy.RosInterface"

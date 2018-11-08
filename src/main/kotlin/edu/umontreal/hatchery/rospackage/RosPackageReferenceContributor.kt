@@ -6,5 +6,5 @@ import edu.umontreal.hatchery.rospackage.RosPackagePsiReferenceProvider.XML_PATT
 
 object RosPackageReferenceContributor : PsiReferenceContributor() {
   override fun registerReferenceProviders(psiReferenceRegistrar: PsiReferenceRegistrar) =
-      psiReferenceRegistrar.registerReferenceProvider(XML_PATTERN, RosPackagePsiReferenceProvider)
+    psiReferenceRegistrar.registerReferenceProvider(XML_PATTERN, RosPackagePsiReferenceProvider)
 }

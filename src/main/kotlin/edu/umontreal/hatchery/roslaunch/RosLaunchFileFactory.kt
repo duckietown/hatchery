@@ -6,5 +6,6 @@ import com.intellij.openapi.fileTypes.FileTypeFactory
 object RosLaunchFileFactory : FileTypeFactory() {
   const val ROSLAUNCH_EXTENSIONS = "launch;test"
 
-  override fun createFileTypes(consumer: FileTypeConsumer) = consumer.consume(RosLaunchFileType, ROSLAUNCH_EXTENSIONS)
+  override fun createFileTypes(consumer: FileTypeConsumer) =
+    consumer.consume(RosLaunchFileType, ROSLAUNCH_EXTENSIONS)
 }

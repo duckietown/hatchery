@@ -9,5 +9,6 @@ object RosPackagePsiReferenceProvider : PsiReferenceProvider() {
   val DEPEND_TAG_NAMES = arrayOf("build_depend", "run_depend", "test_depend")
   val XML_PATTERN = XmlPatterns.xmlTag().withLocalName(*DEPEND_TAG_NAMES)
 
-  override fun getReferencesByElement(element: PsiElement, c: ProcessingContext) = arrayOf(RosPackageReference(element))
+  override fun getReferencesByElement(e: PsiElement, c: ProcessingContext) =
+    arrayOf(RosPackageReference(e))
 }
