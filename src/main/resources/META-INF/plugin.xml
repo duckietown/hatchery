@@ -9,7 +9,12 @@
     <depends>org.jetbrains.plugins.yaml</depends>
     <description><![CDATA[<a href="https://github.com/duckietown/hatchery#hatchery">Hatchery</a> is plugin for developing applications for the <a href="https://ros.org">Robot Operating System</a> (ROS).]]></description>
 
-    <resource-bundle>edu.umontreal.hatchery.HatcheryBundle</resource-bundle>
+    <resource-bundle>HatcheryBundle</resource-bundle>
+    <application-components>
+        <component>
+            <implementation-class>edu.umontreal.hatchery.settings.RosConfig</implementation-class>
+        </component>
+    </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="edu.umontreal.hatchery.xacro.XacroFileTypeFactory"/>
@@ -39,5 +44,8 @@
         <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigurationProducer"/>
 
         <moduleType id="DEMO_MODULE_TYPE" implementationClass="edu.umontreal.hatchery.modules.DemoModuleType"/>
+
+        <applicationService serviceImplementation="org.acejump.config.AceConfig"/>
+        <applicationConfigurable groupId="tools" displayName="Hatchery" id="preferences.RosConfig" instance="edu.umontreal.hatchery.settings.RosConfig"/>
     </extensions>
 </idea-plugin>
