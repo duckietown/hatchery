@@ -30,13 +30,12 @@ buildscript {
 
 plugins {
   idea apply true
-  `kotlin-dsl`
   kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25" apply true
   id("org.jetbrains.intellij") version "0.3.12" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.2" apply true
+  id("org.jetbrains.grammarkit") version "2018.2.1" apply true
   id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2" apply true
 }
@@ -134,11 +133,11 @@ intellij {
   if (!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
 
   setPlugins("name.kropp.intellij.makefile:1.5",   // Makefile support
-    "org.intellij.plugins.markdown:182.4129.4",   // Markdown support
+    "org.intellij.plugins.markdown:182.4892.20",   // Markdown support
     "net.seesharpsoft.intellij.plugins.csv:1.9.1", // CSV file support
     "com.intellij.ideolog:182.0.7.0",              // Log file support
     "Pythonid:2018.2.182.4505.22",                 // Python   support
-    "BashSupport:1.6.13.182",                      // [Ba]sh   support
+    "BashSupport:1.7.3",                           // [Ba]sh   support
     "Docker:182.4323.18",                          // Docker   support
     "PsiViewer:182.2757.2",                        // PSI view support
 //      "IdeaVIM:0.49",
