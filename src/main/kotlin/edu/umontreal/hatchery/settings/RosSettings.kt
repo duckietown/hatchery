@@ -1,10 +1,11 @@
 package edu.umontreal.hatchery.settings
 
+import edu.umontreal.hatchery.RosInstall
 import java.awt.Color
 import java.awt.Color.*
 import kotlin.reflect.KProperty
 
-data class RosSettings(var rosPath: String = "",
+data class RosSettings(var rosPath: String = RosInstall.getRosSetupScript().path,
   // These must be primitives in order to be serializable
                        internal var jumpModeRGB: Int = BLUE.rgb,
                        internal var targetModeRGB: Int = RED.rgb,

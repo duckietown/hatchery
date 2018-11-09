@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import edu.umontreal.hatchery.withRosTask
 import org.ajoberstar.grgit.Grgit
 import org.apache.tools.ant.taskdefs.ExecTask
 import org.gradle.api.tasks.JavaExec
@@ -123,7 +124,6 @@ tasks {
   }
 }
 
-sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
 
 intellij {
   pluginName = "hatchery"
@@ -143,6 +143,14 @@ intellij {
 //      "IdeaVIM:0.49",
 //      "AceJump:3.5.0",
     "yaml")                                        // YML file support
+}
+
+sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
+
+dependencies {
+  // Share ROS libraries for identifying the ROS home directory
+  compile(fileTree("${project.rootDir}/buildSrc/build/"))
+  compile(gradleApi())
 }
 
 envs {

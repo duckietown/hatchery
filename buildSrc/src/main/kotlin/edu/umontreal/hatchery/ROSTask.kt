@@ -1,10 +1,10 @@
+package edu.umontreal.hatchery
+
 import org.gradle.api.*
 import org.gradle.api.tasks.*
 import org.gradle.kotlin.dsl.*
-import java.io.File
 
 open class ROSTask : Exec() {
-  val rosDistro = "kinetic"
 
   init {
     group = "My"
@@ -45,21 +45,9 @@ fun Project.withRosTask() = tasks.register("rosTask", ROSTask::class) {
   val commandString = if (null != systemRosDistro) {
     "echo \"Using ROS_ROOT: $systemRosDistro\""
   } else {
-    val optRos = File("/opt/ros")
-    val setupShell = "setup.bash"
-    var rosSetupFile = optRos.resolve("$rosDistro/$setupShell")
-    if (rosSetupFile.exists()) {
-      logger.info("Sourcing ROS $rosSetupFile")
-    } else if (optRos.isDirectory) {
-      rosSetupFile = optRos.walkTopDown().maxDepth(3).first { it.name == setupShell }
-      val distroPath = rosSetupFile.parentFile.path
-      logger.warn("Unable to find default ROS distro ($rosDistro), using $distroPath instead")
-    } else {
-      throw GradleException("Unable to detect a usable setup.bash file in $optRos")
-    }
-
+    val rosSetupScript = RosInstall.getRosSetupScript()
     val pluginDevArg = if (project.hasProperty("luginDev")) "-PluginDev" else ""
-    "source $rosSetupFile && source gradlew runIde ${pluginDevArg}"
+    "source $rosSetupScript && source gradlew runIde ${pluginDevArg}"
   }
 
   args("-c", commandString)

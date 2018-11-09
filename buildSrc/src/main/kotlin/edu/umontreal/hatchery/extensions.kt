@@ -1,3 +1,5 @@
+package edu.umontreal.hatchery
+
 import org.gradle.api.*
 
 /**
