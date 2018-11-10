@@ -14,6 +14,7 @@ import javax.swing.text.JTextComponent
 import kotlin.reflect.KProperty
 
 class RosSettingsPanel {
+  // TODO: Make this into a proper TextFieldWithBrowseButton https://www.jetbrains.org/intellij/sdk/docs/user_interface_components/file_and_class_choosers.html#file-choosers
   private val rosPathField = JTextField()
 
   init {
