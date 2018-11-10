@@ -10,7 +10,7 @@ import com.intellij.execution.runners.ExecutionEnvironment
 
 class RosCommandLineState : CommandLineState {
   private val commands: Array<out String>
-  val commandLine: GeneralCommandLine
+  private val commandLine: GeneralCommandLine
 
   constructor(env: ExecutionEnvironment, vararg commands: String) : super(env) {
     this.commands = commands

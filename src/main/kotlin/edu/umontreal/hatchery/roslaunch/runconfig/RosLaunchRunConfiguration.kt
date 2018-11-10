@@ -4,6 +4,7 @@ import com.intellij.execution.Executor
 import com.intellij.execution.configurations.LocatableConfigurationBase
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.project.Project
+import edu.umontreal.hatchery.RosInstall
 import edu.umontreal.hatchery.cli.RosCommandLineState
 
 class RosLaunchRunConfiguration : LocatableConfigurationBase {
@@ -15,5 +16,6 @@ class RosLaunchRunConfiguration : LocatableConfigurationBase {
   override fun getConfigurationEditor() = RosLaunchSettingsEditor
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-    RosCommandLineState(environment, "roslaunch", path)
+    RosCommandLineState(environment,
+        "/bin/bash", "-c", "source ${RosInstall.rosSetupScript} && roslaunch $path")
 }
