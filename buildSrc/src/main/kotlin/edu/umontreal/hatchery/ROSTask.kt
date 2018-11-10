@@ -1,5 +1,6 @@
 package edu.umontreal.hatchery
 
+import edu.umontreal.hatchery.RosInstall.defaultShell
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.tasks.Exec
@@ -41,7 +42,7 @@ open class ROSTask : Exec() {
  */
 
 fun Project.withRosTask() = tasks.register("rosTask", ROSTask::class) {
-  executable = "bash"
+  executable = "$defaultShell"
 
   val systemRosDistro = System.getenv("ROS_DISTRO")
   val commandString = if (null != systemRosDistro) {

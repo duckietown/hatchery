@@ -3,16 +3,10 @@ package edu.umontreal.hatchery.roslaunch
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
-import com.intellij.openapi.fileTypes.FileTypeManager
-import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFileSystemItem
-import com.intellij.psi.PsiManager
-import com.intellij.psi.search.FileTypeIndex
-import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlAttributeValue
 import edu.umontreal.hatchery.filesystem.Icons
+import edu.umontreal.hatchery.util.findFilesByRelativePath
 
 
 object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
@@ -35,18 +29,4 @@ object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
   private fun isRosLaunchFileSubstitution(element: PsiElement): Boolean =
     (element as? XmlAttributeValue)?.value?.startsWith("$(find ") ?: false
-
-  fun findFilesByRelativePath(project: Project, fileRelativePath: String): List<PsiFileSystemItem?> {
-    val relativePath = if (fileRelativePath.startsWith("/")) fileRelativePath else "/$fileRelativePath"
-    val fileType = FileTypeManager.getInstance().getFileTypeByFileName(relativePath)
-    val files = mutableListOf<VirtualFile>()
-    val psiMgr = PsiManager.getInstance(project)
-    val projectScope = GlobalSearchScope.projectScope(project)
-    val fileProcessor = { virtualFile: VirtualFile ->
-      if (virtualFile.path.endsWith(relativePath)) files.add(virtualFile); true
-    }
-
-    FileTypeIndex.processFiles(fileType, fileProcessor, projectScope)
-    return files.mapNotNull { psiMgr.run { findFile(it) ?: findDirectory(it) } }
-  }
 }

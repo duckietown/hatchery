@@ -1,6 +1,6 @@
 package edu.umontreal.hatchery
 
-import edu.umontreal.hatchery.RosInstall.Shell.BASH
+import edu.umontreal.hatchery.RosInstall.Shell.*
 import java.io.File
 
 object RosInstall {
@@ -16,7 +16,7 @@ object RosInstall {
   val shell: Shell = defaultShell
 
   enum class Shell(val extension: String) {
-    BASH("bash"), SH("sh");
+    BASH("bash"), SH("sh"), ZSH("zsh");
 
     override fun toString() = extension
   }
