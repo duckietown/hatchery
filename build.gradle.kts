@@ -145,7 +145,8 @@ intellij {
     "yaml")                                        // YML file support
 }
 
-sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar")
+sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar",
+    "${project.rootDir}/buildSrc/build/")
 
 dependencies {
   // Share ROS libraries for identifying the ROS home directory

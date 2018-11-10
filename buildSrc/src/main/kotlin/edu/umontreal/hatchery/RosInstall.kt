@@ -1,25 +1,38 @@
 package edu.umontreal.hatchery
 
+import edu.umontreal.hatchery.RosInstall.Shell.BASH
 import java.io.File
-import java.io.FileNotFoundException
 
 object RosInstall {
-  public val defaultRosDistro = "kinetic"
-  val optRos = File("/opt/ros")
-  const val defaultShell = "bash"
-  val setupScript = "setup.$defaultShell"
+  const val defaultDistro = "kinetic"
+  const val defaultPath = "/opt/ros"
+  const val rosRootEnvVar = "ROS_ROOT"
+  // http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT
+  val rootDir = System.getenv()[rosRootEnvVar]
+      ?.let { File(it).parentFile?.parentFile }
+      ?.absolutePath
 
-  fun getRosRoot(rosDistro: String = defaultRosDistro): File {
-    var rosSetupFile = optRos.resolve("${rosDistro}/$setupScript")
-    val userConfiguredRosInstall = System.getenv()["ROS_ROOT"]?.let { File(it).parentFile?.parentFile }
+  val defaultShell = BASH
+  val shell: Shell = defaultShell
 
-    return if (userConfiguredRosInstall != null) userConfiguredRosInstall
-    else if (rosSetupFile.exists()) rosSetupFile
-    else if (optRos.isDirectory)
-      optRos.walkTopDown().maxDepth(3).first { it.name == setupScript }.parentFile
-    else throw FileNotFoundException()
+  enum class Shell(val extension: String) {
+    BASH("bash"), SH("sh");
+
+    override fun toString() = extension
   }
 
-  fun getRosSetupScript(rosDistro: String = defaultRosDistro) =
-    File("${getRosRoot(rosDistro).path}/$setupScript")
+  val setupScript: String
+    get() = "setup.$defaultShell"
+  var rosDistro = defaultDistro
+  val defaultRosSetupScript: String
+    get() = "$defaultPath/$defaultDistro/$setupScript"
+
+  val installDir: String
+    get() = if (rootDir != null) rootDir
+    else if (File(defaultRosSetupScript).exists()) defaultRosSetupScript
+    else if (File(defaultPath).isDirectory)
+      File(defaultPath).listFiles().first().absolutePath
+    else ""
+
+  val rosSetupScript = "$installDir/$setupScript"
 }

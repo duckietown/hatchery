@@ -1,8 +1,10 @@
 package edu.umontreal.hatchery
 
-import org.gradle.api.*
-import org.gradle.api.tasks.*
-import org.gradle.kotlin.dsl.*
+import org.gradle.api.GradleException
+import org.gradle.api.Project
+import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.TaskAction
+import org.gradle.kotlin.dsl.register
 
 open class ROSTask : Exec() {
 
@@ -45,7 +47,7 @@ fun Project.withRosTask() = tasks.register("rosTask", ROSTask::class) {
   val commandString = if (null != systemRosDistro) {
     "echo \"Using ROS_ROOT: $systemRosDistro\""
   } else {
-    val rosSetupScript = RosInstall.getRosSetupScript()
+    val rosSetupScript = RosInstall.rosSetupScript
     val pluginDevArg = if (project.hasProperty("luginDev")) "-PluginDev" else ""
     "source $rosSetupScript && source gradlew runIde ${pluginDevArg}"
   }
