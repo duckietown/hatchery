@@ -23,10 +23,10 @@ object RosPackageLineMarkerProvider : RelatedItemLineMarkerProvider() {
     if (directories.isEmpty()) return
 
     val lineMarkerInfo = NavigationGutterIconBuilder
-        .create(Icons.package_file)
-        .setTargets(directories)
-        .setTooltipText(TOOLTIP_TEXT)
-        .createLineMarkerInfo(element)
+      .create(Icons.package_file)
+      .setTargets(directories)
+      .setTooltipText(TOOLTIP_TEXT)
+      .createLineMarkerInfo(element)
 
     results.add(lineMarkerInfo)
   }

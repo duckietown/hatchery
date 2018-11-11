@@ -1,8 +1,6 @@
 package edu.umontreal.hatchery.rospackage
 
-import com.intellij.openapi.fileTypes.ExactFileNameMatcher
-import com.intellij.openapi.fileTypes.FileTypeConsumer
-import com.intellij.openapi.fileTypes.FileTypeFactory
+import com.intellij.openapi.fileTypes.*
 
 class RosPackageFileFactory : FileTypeFactory() {
   private object PackageFileNameMatcher : ExactFileNameMatcher(RosPackageFileType.filename)
