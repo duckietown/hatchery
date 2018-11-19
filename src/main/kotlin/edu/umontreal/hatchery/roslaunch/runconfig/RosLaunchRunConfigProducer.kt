@@ -17,8 +17,8 @@ object RosLaunchRunConfigProducer:
                                              source: Ref<PsiElement>): Boolean {
     context.location?.virtualFile.also { file ->
       config.name = file?.nameWithoutExtension ?: return false
-      config.rosLaunchFileName = file.canonicalPath
-      config.rosPackageName = file.parent?.parent?.canonicalPath ?: ""
+      config.rosLaunchPath = file.canonicalPath
+      config.rosPackagePath = file.parent?.parent?.canonicalPath ?: ""
     } ?: return false
 
     return true
