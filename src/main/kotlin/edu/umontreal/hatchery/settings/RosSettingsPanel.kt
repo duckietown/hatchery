@@ -1,5 +1,6 @@
 package edu.umontreal.hatchery.settings
 
+import com.intellij.ui.IdeBorderFactory
 import com.intellij.ui.SeparatorComponent
 import com.intellij.ui.layout.panel
 import edu.umontreal.hatchery.util.medium
@@ -7,11 +8,11 @@ import java.awt.Font
 import java.util.*
 import javax.swing.JPanel
 import javax.swing.JTextField
+import javax.swing.border.LineBorder
 import javax.swing.text.JTextComponent
 import kotlin.reflect.KProperty
 
 class RosSettingsPanel {
-  // TODO: Make this into a proper TextFieldWithBrowseButton https://www.jetbrains.org/intellij/sdk/docs/user_interface_components/file_and_class_choosers.html#file-choosers
   private val localRosPathField = JTextField()
   private val localRunCommandField = JTextField()
     .apply { font = Font("monospaced", font.style, font.size) }
@@ -24,15 +25,15 @@ class RosSettingsPanel {
   fun prop(s: String) = ResourceBundle.getBundle("HatcheryBundle").getString(s)!!
 
   internal val rootPanel: JPanel = panel {
-    noteRow(prop("rosInstallationHeading")) { SeparatorComponent() }
-    row("ROS installation path:") { medium(localRosPathField) }
-    row("ROS run command path:") { medium(localRunCommandField) }
-    noteRow(prop("remoteSettingsHeading")) { SeparatorComponent() }
+    row(prop("rosInstallationHeading")) {}
+    row("ROS installation path:") { localRosPathField(grow) }
+    row("ROS run command:") { medium(localRunCommandField) }
+    row(prop("remoteSettingsHeading")) { LineBorder.createGrayLineBorder() }
     row("Remote address: ") { medium(remoteAddressField) }
-    row("Remote ROS installation Path:") { medium(remoteRosPathField) }
-    noteRow(prop("sshSettingsHeading")) { SeparatorComponent() }
-    row("Path to SSH credentials file:") { medium(sshCredentialsPathField) }
-  }
+    row("Remote ROS installation Path:") { remoteRosPathField(grow) }
+    row(prop("sshSettingsHeading")) {}
+    row("Path to SSH credentials file:") { sshCredentialsPathField(grow) }
+  }.also { it.border =  IdeBorderFactory.createTitledBorder("Test") }
 
   internal var localRosPath by localRosPathField
   internal var localRunCommand by localRunCommandField

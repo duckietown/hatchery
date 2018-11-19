@@ -52,11 +52,11 @@ class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosL
   private var remoteRosPath by rosLaunchDestinationPathField
 
   override fun createEditor() = panel {
-    row("Package name:") { medium(rosPackageNameTextField) }
-    row("Launch file:") { medium(rosLaunchFileTextField) }
-    row("Run command:") { medium(runCommandTextArea) }
+    row("ROS package:") { rosPackageNameTextField(grow) }
+    row("Launch file:") { rosLaunchFileTextField(grow) }
+    row("Run command:") { runCommandTextArea(grow) }
     row("Destination: ") { medium(rosLaunchDestinationAddressField) }
-    row("Destination path: ") { medium(rosLaunchDestinationPathField) }
+    row("Destination path: ") { rosLaunchDestinationPathField(grow) }
   }
 
   override fun applyEditorTo(config: RosLaunchRunConfig) {
