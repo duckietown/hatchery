@@ -26,10 +26,14 @@ object RosConfig : Configurable, PersistentStateComponent<RosSettings> {
 
   override fun createComponent() = panel.rootPanel
 
-  override fun isModified() = panel.rosPath != settings.rosPath
+  override fun isModified() = panel.localRosPath != settings.localRosPath ||
+    panel.remoteAddress != settings.remoteAddress
 
   override fun apply() {
-    settings.rosPath = panel.rosPath
+    settings.localRosPath = panel.localRosPath
+    settings.remoteRosPath = panel.remoteRosPath
+    settings.remoteAddress = panel.remoteAddress
+    settings.sshCredentialsPath = panel.sshCredentialsPath
     logger.info("User applied new settings: $settings")
   }
 

@@ -146,12 +146,15 @@ intellij {
 }
 
 sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar",
-    "${project.rootDir}/buildSrc/build/")
+  "${project.rootDir}/buildSrc/build/")
 
 dependencies {
   // Share ROS libraries for identifying the ROS home directory
   compile(fileTree("${project.rootDir}/buildSrc/build/"))
   compile(gradleApi())
+  // Used for remote deployment over SCP
+  compile("net.schmizz:sshj:0.10.0")
+  compile("com.jcraft:jzlib:1.1.3")
 }
 
 envs {

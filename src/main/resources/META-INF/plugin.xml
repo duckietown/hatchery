@@ -39,9 +39,9 @@
         <iconProvider implementation="edu.umontreal.hatchery.catkin.CatkinIconProvider" order="first"/>
         <iconProvider implementation="edu.umontreal.hatchery.python.PythonSourcesDirectoryIconProvider" order="first"/>
 
-        <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigurationType"/>
+        <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigType"/>
         <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunLineMarkerContributor"/>
-        <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigurationProducer"/>
+        <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigProducer"/>
 
         <moduleType id="DEMO_MODULE_TYPE" implementationClass="edu.umontreal.hatchery.modules.DemoModuleType"/>
 

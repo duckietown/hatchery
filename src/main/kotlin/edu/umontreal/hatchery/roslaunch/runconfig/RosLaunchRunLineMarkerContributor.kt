@@ -10,15 +10,15 @@ import com.intellij.psi.xml.XmlTag
  * @see com.intellij.execution.application.ApplicationRunLineMarkerProvider
  */
 
-object RosLaunchRunLineMarkerContributor : RunLineMarkerContributor() {
+object RosLaunchRunLineMarkerContributor: RunLineMarkerContributor() {
   override fun getInfo(element: PsiElement) =
     if (isIdentifier(element))
-      Info(AllIcons.General.Run, ExecutorAction.getActions()) { "Run ROSLaunch Configuration" }
+      Info(AllIcons.General.Run, ExecutorAction.getActions()) { "Run ROSLaunch" }
     else null
 
-  private fun isIdentifier(element: PsiElement?): Boolean {
-    val isLaunchFile = element?.containingFile?.name?.endsWith(".launch") ?: false
-    val isTopmostTag = (element as? XmlTag)?.name == "launch"
+  private fun isIdentifier(psiEl: PsiElement?): Boolean {
+    val isLaunchFile = psiEl?.containingFile?.name?.endsWith(".launch") ?: false
+    val isTopmostTag = (psiEl as? XmlTag)?.name == "launch"
     return isLaunchFile && isTopmostTag
   }
 }
