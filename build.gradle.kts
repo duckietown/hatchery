@@ -58,8 +58,10 @@ idea {
 
 val clionVersion = properties["clionVersion"] as String
 val userHomeDir = System.getProperty("user.home")!!
-val installPath = "${project.projectDir}/build/clion/clion-$clionVersion"
+val clionInstallPath = "${project.projectDir}/build/clion/clion-$clionVersion"
+val clionJarDir = "$clionInstallPath/lib/clion.jar"
 val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
+val buildSrcBuildDir = "${project.rootDir}/buildSrc/build/"
 val sampleRepo = "https://github.com/duckietown/Software.git"
 val samplePath = "${project.buildDir}/Software"
 
@@ -83,13 +85,13 @@ tasks {
   }
 
   val downloadClion by creating(Download::class) {
-    onlyIf { !file("$installPath.tar.gz").exists() }
+    onlyIf { !file("$clionInstallPath.tar.gz").exists() }
     src(downloadURL)
-    dest(file("$installPath.tar.gz"))
+    dest(file("$clionInstallPath.tar.gz"))
   }
 
   val unpackClion by creating(Copy::class) {
-    onlyIf { !file(installPath).exists() }
+    onlyIf { !file(clionInstallPath).exists() }
     from(tarTree("build/clion/clion-$clionVersion.tar.gz"))
     into(file("${project.projectDir}/build/clion"))
     dependsOn(downloadClion)
@@ -130,7 +132,7 @@ intellij {
   version = clionVersion
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
-  if (!isPluginDev) alternativeIdePath = "build/clion/clion-$clionVersion"
+  if (!isPluginDev) alternativeIdePath = clionInstallPath
 
   setPlugins("name.kropp.intellij.makefile:1.5",   // Makefile support
     "org.intellij.plugins.markdown:182.4892.20",   // Markdown support
@@ -145,12 +147,11 @@ intellij {
     "yaml")                                        // YML file support
 }
 
-sourceSets["main"].compileClasspath += files("$installPath/lib/clion.jar",
-  "${project.rootDir}/buildSrc/build/")
+sourceSets["main"].compileClasspath += files(clionJarDir, buildSrcBuildDir)
 
 dependencies {
   // Share ROS libraries for identifying the ROS home directory
-  compile(fileTree("${project.rootDir}/buildSrc/build/"))
+  compile(fileTree(buildSrcBuildDir))
   compile(gradleApi())
   // Used for remote deployment over SCP
   compile("net.schmizz:sshj:0.10.0")
