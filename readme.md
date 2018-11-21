@@ -65,7 +65,7 @@ For the adventurous, untested, bleeding edge builds are also available on our [T
 
 #### ROS Enrivonment
 
-When using Hatchery, ensure that you are running the IDE inside with the ROS environment (the script `<ROS_INSTALLATION_PATH>/<ROS_DISTRO>/setup.bash` must be run prior to running the IDE). If using the [command line](#command-line) installer, Hatchery attempts to locate and source this file, otherwise you must manually configure the [ROS environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment).
+When using Hatchery, it helps if you are running the IDE inside with the ROS environment. In most cases, we can detect the ROS installation path, however you may need to manually configure the [ROS environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) beforehand.
 
 ### Getting Started
 
