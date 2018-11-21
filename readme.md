@@ -142,7 +142,8 @@ It also supports refactoring and navigation in the following file types:
     - [ ] [`rqt_plot`](http://wiki.ros.org/rqt_plot) - Plot data visually
     - [ ] [`rqt_graph`](http://wiki.ros.org/rqt_graph) - Graph messages
     - [ ] [`rqt_dep`](http://wiki.ros.org/rqt_dep) - Visualize dependecies
-    - [ ] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay bag files
+    - [ ] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay and edit bag files
+    - [ ] [rqt_common](http://wiki.ros.org/rqt_common_plugins) - Other common plugins
 
 ### Roadmap
 
