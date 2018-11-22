@@ -28,6 +28,10 @@ sudo apt-get install openjdk-8-jdk
 </details>
 
 <details>
+<summary><b>CLion users</b> should follow the <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html">ROS Setup Tutorial</a> to configure build paths...</summary> and access CLion-specific features such as <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#664f3ede">linking Catkin libraries</a>, <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#b294c4a0">running a ROS node from the IDE</a> and <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#da2d526d">attaching a debugger to a running node</a>.
+</details>
+
+<details>
 <summary><b>Duckietown participants</b> should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>...</summary>
 
 Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown directory](https://github.com/duckietown/software).
