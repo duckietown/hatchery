@@ -28,6 +28,10 @@ sudo apt-get install openjdk-8-jdk
 </details>
 
 <details>
+<summary><b>CLion users</b> should follow the <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html">ROS Setup Tutorial</a> to configure build paths...</summary> and access CLion-specific features such as <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#664f3ede">linking Catkin libraries</a>, <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#b294c4a0">running a ROS node from the IDE</a> and <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#da2d526d">attaching a debugger to a running node</a>.
+</details>
+
+<details>
 <summary><b>Duckietown participants</b> should configure their Duckietown environment as <a href="http://book.duckietown.org/">instructed</a>...</summary>
 
 Ensure `echo $DUCKIETOWN_ROOT` returns the correct path to your [Duckietown directory](https://github.com/duckietown/software).
@@ -65,7 +69,7 @@ For the adventurous, untested, bleeding edge builds are also available on our [T
 
 #### ROS Enrivonment
 
-When using Hatchery, ensure that you are running the IDE inside with the ROS environment (the script `<ROS_INSTALLATION_PATH>/<ROS_DISTRO>/setup.bash` must be run prior to running the IDE). If using the [command line](#command-line) installer, Hatchery attempts to locate and source this file, otherwise you must manually configure the [ROS environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment).
+When using Hatchery, it helps if you are running the IDE inside with the ROS environment. In most cases, we can detect the ROS installation path, however you may need to manually configure the [ROS environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) beforehand.
 
 ### Getting Started
 
@@ -142,7 +146,8 @@ It also supports refactoring and navigation in the following file types:
     - [ ] [`rqt_plot`](http://wiki.ros.org/rqt_plot) - Plot data visually
     - [ ] [`rqt_graph`](http://wiki.ros.org/rqt_graph) - Graph messages
     - [ ] [`rqt_dep`](http://wiki.ros.org/rqt_dep) - Visualize dependecies
-    - [ ] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay bag files
+    - [ ] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay and edit bag files
+    - [ ] [rqt_common](http://wiki.ros.org/rqt_common_plugins) - Other common plugins
 
 ### Roadmap
 
