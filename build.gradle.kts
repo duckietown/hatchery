@@ -3,10 +3,6 @@ import edu.umontreal.hatchery.withRosTask
 import org.ajoberstar.grgit.Grgit
 import org.apache.tools.ant.taskdefs.ExecTask
 import org.gradle.api.tasks.JavaExec
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.getting
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.version
 import org.jetbrains.intellij.tasks.PublishTask
 import org.gradle.language.base.internal.plugins.CleanRule
 import org.jetbrains.gradle.ext.Application
@@ -44,6 +40,8 @@ plugins {
 idea {
   module {
     isDownloadSources = true
+    generatedSourceDirs.add(file("src/main/java"))
+    excludeDirs.add(file(intellij.sandboxDirectory))
   }
 
   project {
@@ -122,7 +120,8 @@ tasks {
 
   withType<KotlinCompile> {
     dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    kotlinOptions.freeCompilerArgs += "-progressive"
   }
 }
 
@@ -150,11 +149,13 @@ intellij {
 sourceSets["main"].compileClasspath += files(clionJarDir, buildSrcBuildDir)
 
 dependencies {
+  // gradle-intellij-plugin doesn't attach sources properly for Kotlin :(
+  compileOnly(kotlin("stdlib-jdk8"))
   // Share ROS libraries for identifying the ROS home directory
   compile(fileTree(buildSrcBuildDir))
   compile(gradleApi())
   // Used for remote deployment over SCP
-  compile("net.schmizz:sshj:0.10.0")
+  compile("com.hierynomus:sshj:0.26.0")
   compile("com.jcraft:jzlib:1.1.3")
 }
 
