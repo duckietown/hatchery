@@ -36,7 +36,7 @@ plugins {
   id("com.jetbrains.python.envs") version "0.0.25" apply true
   id("org.jetbrains.intellij") version "0.3.12" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.2.1" apply true
+  id("org.jetbrains.grammarkit") version "2018.2.2" apply true
   id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2" apply true
 }
@@ -135,13 +135,13 @@ intellij {
   if (!isPluginDev) alternativeIdePath = clionInstallPath
 
   setPlugins("name.kropp.intellij.makefile:1.5",   // Makefile support
-    "org.intellij.plugins.markdown:182.4892.20",   // Markdown support
+    "org.intellij.plugins.markdown:183.4284.36",   // Markdown support
     "net.seesharpsoft.intellij.plugins.csv:1.9.1", // CSV file support
-    "com.intellij.ideolog:182.0.7.0",              // Log file support
-    "Pythonid:2018.2.182.4505.22",                 // Python   support
+    "com.intellij.ideolog:183.0.7.0",              // Log file support
+    "Pythonid:2018.3.183.4284.148",                 // Python   support
     "BashSupport:1.7.3",                           // [Ba]sh   support
-    "Docker:182.4323.18",                          // Docker   support
-    "PsiViewer:182.2757.2",                        // PSI view support
+    "Docker:183.4284.148",                          // Docker   support
+    "PsiViewer:183.2153",                        // PSI view support
 //      "IdeaVIM:0.49",
 //      "AceJump:3.5.0",
     "yaml")                                        // YML file support

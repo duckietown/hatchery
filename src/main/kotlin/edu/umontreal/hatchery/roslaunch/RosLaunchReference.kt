@@ -10,7 +10,7 @@ class RosLaunchReference : PsiReferenceBase<PsiElement> {
 
   // TODO: Make this smarter
   override fun resolve(): PsiElement? {
-    val relativePath = (element as XmlAttributeValue).value!!.substringAfter("$(find ").replace(")", "")
+    val relativePath = (element as XmlAttributeValue).value.substringAfter("$(find ").replace(")", "")
     return findFilesByRelativePath(element.project, relativePath).firstOrNull()
   }
 

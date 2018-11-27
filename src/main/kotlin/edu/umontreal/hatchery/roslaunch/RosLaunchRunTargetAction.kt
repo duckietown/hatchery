@@ -4,10 +4,10 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 
-class RosLaunchRunTargetAction : AnAction {
-  constructor(name: String) : super("roslaunch $name", "roslaunch $name", AllIcons.General.Run)
+class RosLaunchRunTargetAction: AnAction {
+  constructor(name: String): super("roslaunch $name", "roslaunch $name", AllIcons.RunConfigurations.TestState.Run)
 
-  override fun actionPerformed(e: AnActionEvent?) {
-    TODO("not yet implemented") //To change body of created functions use File | Settings | File Templates.
+  override fun actionPerformed(e: AnActionEvent) {
+    TODO("not implemented")
   }
 }

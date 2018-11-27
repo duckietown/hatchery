@@ -48,4 +48,8 @@
         <applicationService serviceImplementation="org.acejump.config.AceConfig"/>
         <applicationConfigurable groupId="tools" displayName="Hatchery" id="preferences.RosConfig" instance="edu.umontreal.hatchery.settings.RosConfig"/>
     </extensions>
+
+    <actions>
+        <action class="edu.umontreal.hatchery.roslaunch.RosLaunchRunTargetAction"/>
+    </actions>
 </idea-plugin>

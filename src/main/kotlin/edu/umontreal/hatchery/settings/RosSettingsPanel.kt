@@ -1,7 +1,6 @@
 package edu.umontreal.hatchery.settings
 
 import com.intellij.ui.IdeBorderFactory
-import com.intellij.ui.SeparatorComponent
 import com.intellij.ui.layout.panel
 import edu.umontreal.hatchery.util.medium
 import java.awt.Font

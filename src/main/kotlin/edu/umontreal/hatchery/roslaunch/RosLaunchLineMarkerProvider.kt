@@ -13,7 +13,7 @@ object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
   override fun collectNavigationMarkers(element: PsiElement, result: MutableCollection<in RelatedItemLineMarkerInfo<PsiElement>>) {
     if (!isRosLaunchFileSubstitution(element)) return
 
-    val relPath = (element as XmlAttributeValue).value!!.substringAfter("$(find ").replace(")", "")
+    val relPath = (element as XmlAttributeValue).value.substringAfter("$(find ").replace(")", "")
     if (!relPath.contains("(")) {
       val builder = NavigationGutterIconBuilder.create(Icons.resource_file)
       val targets = findFilesByRelativePath(element.project, relPath)
