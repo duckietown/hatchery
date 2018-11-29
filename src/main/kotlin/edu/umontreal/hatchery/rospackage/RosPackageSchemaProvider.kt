@@ -13,9 +13,9 @@ import org.jetbrains.annotations.NonNls
  */
 
 object RosPackageSchemaProvider : XmlSchemaProvider() {
-  const val schemaName = "rospackage.xsd"
+  private const val schemaName = "rospackage.xsd"
 
-  val xsdFile by lazy { VfsUtil.findFileByURL(javaClass.getResource(schemaName))!! }
+  private val xsdFile by lazy { VfsUtil.findFileByURL(javaClass.getResource(schemaName))!! }
 
   private fun isPackageFile(name: String) = name.contains(".package")
 

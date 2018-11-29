@@ -24,12 +24,12 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
 
   internal var runCommand = ""
     get() = if (field.isNotEmpty()) field
-    else "echo Sourcing $rosSetupScript && source $rosSetupScript && " +
-      "echo ROS workspace directory: ${rosWorkspace.absolutePath} && " +
-      "cd ${rosWorkspace.absolutePath} && catkin_make && " +
-      "echo Sourcing ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel && " +
-      "source ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel && " +
-      "${RosConfig.settings.localRunCommand} $rosPackageName $rosLaunchFileName"
+    else """echo Sourcing $rosSetupScript && source $rosSetupScript &&
+      echo ROS workspace directory: ${rosWorkspace.absolutePath} &&
+      cd ${rosWorkspace.absolutePath} && catkin_make &&
+      echo Sourcing ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
+      source ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
+      ${RosConfig.settings.localRunCommand} $rosPackageName $rosLaunchFileName""".trimMargin()
 
   internal var remoteAddress = RosConfig.settings.remoteAddress
   internal var remoteRosPath = RosConfig.settings.remoteRosPath
@@ -51,7 +51,8 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
   internal val rosLaunchFileName
     get() = rosLaunchFile.name
 
-  override fun getConfigurationEditor() = RosLaunchSettingsEditor(project, rosPackagePath, rosLaunchPath)
+  override fun getConfigurationEditor() =
+    RosLaunchSettingsEditor(project, rosPackagePath, rosLaunchPath)
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
     RosCommandLineState(environment, "$shell", "-c", runCommand)

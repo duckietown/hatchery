@@ -7,7 +7,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
 
-class RosPackageReference(private val psiElement: PsiElement) : PsiReferenceBase<PsiElement>(psiElement, false) {
+class RosPackageReference(private val psiElement: PsiElement): PsiReferenceBase<PsiElement>(psiElement, false) {
   override fun resolve() =
     (psiElement as? XmlTag)?.let { tag ->
       getAllROSPackages().firstOrNull { it.containingDirectory.name == tag.value.text }?.containingDirectory
