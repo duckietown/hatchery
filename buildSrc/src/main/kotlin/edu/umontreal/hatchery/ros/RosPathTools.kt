@@ -11,7 +11,6 @@ val rootDir = System.getenv()[rosRootEnvVar]
   ?.let { File(it).parentFile?.parentFile }
   ?.absolutePath
 
-
 enum class Shell(val extension: String) {
   BASH("bash"), SH("sh"), ZSH("zsh");
 
@@ -40,9 +39,9 @@ val rosSetupScript = "$installDir/$setupScript"
 fun File.getContainingRosWorkspaceIfItExists(): File =
   if (!exists()) throw FileNotFoundException("File does not exist!")
   else if (toPath().nameCount == 0) throw FileNotFoundException("No workspace found!")
-  else if (parent.equals("src")) parentFile.parentFile
+  else if (parent == "src") parentFile.parentFile
   else if (isDirectory && name.endsWith("_ws")) this
-  else if (parent.equals("_ws")) parentFile
+  else if (parent == "_ws") parentFile
   else parentFile.getContainingRosWorkspaceIfItExists()
 
 val rosDevelScriptPathRel = "devel/setup.$shell"

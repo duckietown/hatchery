@@ -9,7 +9,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.register
 
 open class RosTask : Exec() {
-
   init {
     group = "My"
     description = "Prints a description of ${project.name}."
@@ -51,7 +50,7 @@ fun Project.withRosTask() = tasks.register("rosTask", RosTask::class) {
   } else {
     val rosSetupScript = rosSetupScript
     val pluginDevArg = if (project.hasProperty("luginDev")) "-PluginDev" else ""
-    "source $rosSetupScript && source gradlew runIde ${pluginDevArg}"
+    "source $rosSetupScript && source gradlew runIde $pluginDevArg"
   }
 
   args("-c", commandString)
