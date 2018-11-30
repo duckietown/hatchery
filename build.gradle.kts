@@ -97,10 +97,10 @@ tasks {
 
   val rosTask by withRosTask()
 
-//  named("buildPlugin") { dependsOn("test") }
+  named("buildPlugin") { dependsOn("test") }
 
   withType<RunIdeTask> {
-//    dependsOn("test")
+    dependsOn("test")
 
     if (!isPluginDev) dependsOn(unpackClion, rosTask, ":build_envs")
 
@@ -144,7 +144,6 @@ intellij {
     "BashSupport:1.7.3",                           // [Ba]sh   support
     "Docker:183.4284.148",                         // Docker   support
     "PsiViewer:183.2153",                          // PSI view support
-    "aws.toolkit:1.0",                             // AWS tool support
     "yaml")                                        // YML file support
 }
 
@@ -159,8 +158,6 @@ dependencies {
   // Used for remote deployment over SCP
   compile("com.hierynomus:sshj:0.26.0")
   compile("com.jcraft:jzlib:1.1.3")
-//  testCompile("org.apache.logging.log4j:log4j-api:2.11.1")
-//  testCompile("org.apache.logging.log4j:log4j-core:2.11.1")
 }
 
 envs {

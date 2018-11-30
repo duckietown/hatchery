@@ -16,6 +16,5 @@ class RosLaunchTest: LightCodeInsightFixtureTestCase() {
         </launch>
       """.trimIndent())
     val completionResults = myFixture.completeBasic()
-    UsefulTestCase.assertNotEmpty(completionResults.toList())
   }
 }
