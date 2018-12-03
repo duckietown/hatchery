@@ -149,6 +149,11 @@ intellij {
 
 sourceSets["main"].compileClasspath += files(clionJarDir, buildSrcBuildDir)
 
+repositories {
+  jcenter()
+  maven("https://raw.githubusercontent.com/rosjava/rosjava_mvn_repo/master")
+}
+
 dependencies {
   // gradle-intellij-plugin doesn't attach sources properly for Kotlin :(
   compileOnly(kotlin("stdlib-jdk8"))
@@ -158,7 +163,7 @@ dependencies {
   // Used for remote deployment over SCP
   compile("com.hierynomus:sshj:0.26.0")
   compile("com.jcraft:jzlib:1.1.3")
-  compile("org.ros.rosjava_core:rosjava:0.3.6")
+  compile("org.ros.rosjava_core:rosjava:0.3.5")
 }
 
 envs {
