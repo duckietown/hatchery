@@ -163,7 +163,9 @@ dependencies {
   // Used for remote deployment over SCP
   compile("com.hierynomus:sshj:0.26.0")
   compile("com.jcraft:jzlib:1.1.3")
-  compile("org.ros.rosjava_core:rosjava:0.3.5")
+
+  // Useful ROS Dependencies
+  compile("org.ros.rosjava_core:rosjava:[0.3,)")
 }
 
 envs {
