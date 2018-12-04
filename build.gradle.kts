@@ -158,7 +158,7 @@ dependencies {
   // gradle-intellij-plugin doesn't attach sources properly for Kotlin :(
   compileOnly(kotlin("stdlib-jdk8"))
   // Share ROS libraries for identifying the ROS home directory
-  compileOnly(fileTree(buildSrcBuildDir))
+  compile(fileTree(buildSrcBuildDir))
   compileOnly(gradleApi())
   // Used for remote deployment over SCP
   compile("com.hierynomus:sshj:0.26.0")
