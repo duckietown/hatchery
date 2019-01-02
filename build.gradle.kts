@@ -35,10 +35,10 @@ plugins {
 //  id("ros-java") version "0.3.0" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
 //  id("org.ros2.tools.gradle") version "0.7.0" apply true
-  id("com.jetbrains.python.envs") version "0.0.25" apply true
-  id("org.jetbrains.intellij") version "0.4.2" apply true
+  id("com.jetbrains.python.envs") version "0.0.28" apply true
+  id("org.jetbrains.intellij") version "0.4.1" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.3" apply true
+  id("org.jetbrains.grammarkit") version "2018.2.2" apply true
   id("org.ajoberstar.grgit") version "3.0.0" apply true
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2" apply true
 }
@@ -58,7 +58,7 @@ idea {
 //      }
 //    }
 //  }
-//}
+}
 
 val clionVersion = properties["clionVersion"] as String
 val userHomeDir = System.getProperty("user.home")!!
@@ -147,7 +147,7 @@ intellij {
     "net.seesharpsoft.intellij.plugins.csv:1.9.1", // CSV file support
     "com.intellij.ideolog:183.0.7.0",              // Log file support
     "Pythonid:2018.3.183.4284.148",                // Python   support
-    "BashSupport:1.7.3",                           // [Ba]sh   support
+    "BashSupport:1.7.4",                           // [Ba]sh   support
     "Docker:183.4284.148",                         // Docker   support
     "PsiViewer:183.2153",                          // PSI view support
     "yaml")                                        // YML file support
