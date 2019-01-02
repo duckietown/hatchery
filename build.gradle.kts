@@ -30,10 +30,10 @@ plugins {
   kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.25" apply true
-  id("org.jetbrains.intellij") version "0.3.12" apply true
+  id("org.jetbrains.intellij") version "0.4.2" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.2.2" apply true
-  id("org.ajoberstar.grgit") version "3.0.0-rc.2" apply true
+  id("org.jetbrains.grammarkit") version "2018.3" apply true
+  id("org.ajoberstar.grgit") version "3.0.0" apply true
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2" apply true
 }
 
@@ -44,15 +44,15 @@ idea {
     excludeDirs.add(file(intellij.sandboxDirectory))
   }
 
-  project {
-    idea.project {
-      (this as ExtensionAware)
-      configure<ProjectSettings> {
-        // TODO
-      }
-    }
-  }
-}
+//  project {
+//    idea.project {
+//      (this as ExtensionAware)
+//      configure<ProjectSettings> {
+//        // TODO
+//      }
+//    }
+//  }
+//}
 
 val clionVersion = properties["clionVersion"] as String
 val userHomeDir = System.getProperty("user.home")!!
