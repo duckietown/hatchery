@@ -18,7 +18,11 @@ import org.jetbrains.kotlin.cli.jvm.main
 import kotlin.text.Typography.copyright
 
 buildscript {
-  repositories.maven("https://dl.bintray.com/kotlin/kotlin-eap")
+  repositories {
+    maven("https://dl.bintray.com/kotlin/kotlin-eap")
+    maven("https://raw.githubusercontent.com/rosjava/rosjava_mvn_repo/master")
+  }
+
   dependencies {
     val kotlinVersion = properties["kotlinVersion"]
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
@@ -28,7 +32,9 @@ buildscript {
 plugins {
   idea apply true
   kotlin("jvm")
+//  id("ros-java") version "0.3.0" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
+//  id("org.ros2.tools.gradle") version "0.7.0" apply true
   id("com.jetbrains.python.envs") version "0.0.25" apply true
   id("org.jetbrains.intellij") version "0.4.2" apply true
   id("de.undercouch.download") version "3.4.3" apply true
@@ -149,15 +155,25 @@ intellij {
 
 sourceSets["main"].compileClasspath += files(clionJarDir, buildSrcBuildDir)
 
+repositories {
+  jcenter()
+  maven("https://raw.githubusercontent.com/rosjava/rosjava_mvn_repo/master")
+}
+
 dependencies {
   // gradle-intellij-plugin doesn't attach sources properly for Kotlin :(
   compileOnly(kotlin("stdlib-jdk8"))
   // Share ROS libraries for identifying the ROS home directory
-  compileOnly(fileTree(buildSrcBuildDir))
+  compile(fileTree(buildSrcBuildDir))
   compileOnly(gradleApi())
   // Used for remote deployment over SCP
   compile("com.hierynomus:sshj:0.26.0")
   compile("com.jcraft:jzlib:1.1.3")
+
+  // Useful ROS Dependencies
+  compile("org.ros.rosjava_core:rosjava:[0.3,)")
+  compile("org.ros.rosjava_messages:std_msgs:[0.5,)")
+  compile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
 }
 
 envs {
