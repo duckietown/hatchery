@@ -36,7 +36,7 @@ plugins {
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
 //  id("org.ros2.tools.gradle") version "0.7.0" apply true
   id("com.jetbrains.python.envs") version "0.0.28" apply true
-  id("org.jetbrains.intellij") version "0.4.1" apply true
+  id("org.jetbrains.intellij") version "0.4.2" apply true
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.2.2" apply true
   id("org.ajoberstar.grgit") version "3.0.0" apply true
@@ -96,8 +96,8 @@ tasks {
 
   val unpackClion by creating(Copy::class) {
     onlyIf { !file(clionInstallPath).exists() }
-    from(tarTree("build/clion/clion-$clionVersion.tar.gz"))
-    into(file("${project.projectDir}/build/clion"))
+    from(tarTree("$clionInstallPath.tar.gz"))
+    into(file("$clionInstallPath/.."))
     dependsOn(downloadClion)
   }
 
@@ -136,21 +136,33 @@ tasks {
 }
 
 intellij {
+//  type = "CL"
+//  version = "CL-$clionVersion"
   pluginName = "hatchery"
   version = clionVersion
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
-  if (!isPluginDev) alternativeIdePath = clionInstallPath
+  if (!isPluginDev) alternativeIdePath = "$clionInstallPath/"
 
-  setPlugins("name.kropp.intellij.makefile:1.5",   // Makefile support
+  setPlugins("name.kropp.intellij.makefile:1.6",   // Makefile support
     "org.intellij.plugins.markdown:183.4284.36",   // Markdown support
-    "net.seesharpsoft.intellij.plugins.csv:1.9.1", // CSV file support
+    "net.seesharpsoft.intellij.plugins.csv:2.2.0", // CSV file support
     "com.intellij.ideolog:183.0.7.0",              // Log file support
     "Pythonid:2018.3.183.4284.148",                // Python   support
     "BashSupport:1.7.4",                           // [Ba]sh   support
     "Docker:183.4284.148",                         // Docker   support
     "PsiViewer:183.2153",                          // PSI view support
     "yaml")                                        // YML file support
+
+//  setPlugins("name.kropp.intellij.makefile:1.6",   // Makefile support
+//      "org.intellij.plugins.markdown:191.4212.41",   // Markdown support
+//      "net.seesharpsoft.intellij.plugins.csv:2.2.0", // CSV file support
+//      "com.intellij.ideolog:191.0.7.0",              // Log file support
+//      "Pythonid:2019.1.191.4212.41",                 // Python   support
+////    "BashSupport:1.7.4",                         // [Ba]sh   support
+//      "Docker:191.4212.41",                          // Docker   support
+//      "PsiViewer:191.4212",                          // PSI view support
+//      "yaml")
 }
 
 sourceSets["main"].compileClasspath += files(clionJarDir, buildSrcBuildDir)
