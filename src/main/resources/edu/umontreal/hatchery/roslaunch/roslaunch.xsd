@@ -131,7 +131,7 @@
             <xs:attribute name='unless' type='StringType'/>
             <xs:attribute name='pkg' type='StringType' use='required'/>
             <xs:attribute name='type' type='StringType' use='required'/>
-            <xs:attribute name='name' type='StringType'/>
+            <xs:attribute name='name' type='StringType' use='required'/>
             <xs:attribute name='args' type='StringType'/>
             <xs:attribute name='machine' type='StringType'/>
             <xs:attribute name='respawn' type="BoolType"/>
