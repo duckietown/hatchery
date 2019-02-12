@@ -1,21 +1,11 @@
 import de.undercouch.gradle.tasks.download.Download
 import edu.umontreal.hatchery.withRosTask
 import org.ajoberstar.grgit.Grgit
-import org.apache.tools.ant.taskdefs.ExecTask
-import org.gradle.api.tasks.JavaExec
+import org.jetbrains.grammarkit.tasks.GenerateLexer
+import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.PublishTask
-import org.gradle.language.base.internal.plugins.CleanRule
-import org.jetbrains.gradle.ext.Application
-import org.jetbrains.gradle.ext.GradleTask
-import org.jetbrains.gradle.ext.ProjectSettings
-import org.jetbrains.grammarkit.GrammarKit
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.grammarkit.GrammarKitPluginExtension
-import org.jetbrains.grammarkit.tasks.*
-import org.jetbrains.kotlin.backend.common.onlyIf
-import org.jetbrains.kotlin.cli.jvm.main
-import kotlin.text.Typography.copyright
 
 buildscript {
   repositories {
@@ -35,12 +25,12 @@ plugins {
 //  id("ros-java") version "0.3.0" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
 //  id("org.ros2.tools.gradle") version "0.7.0" apply true
-  id("com.jetbrains.python.envs") version "0.0.28" apply true
+  id("com.jetbrains.python.envs") version "0.0.30" apply true
   id("org.jetbrains.intellij") version "0.4.2" apply true
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.2.2" apply true
   id("org.ajoberstar.grgit") version "3.0.0" apply true
-  id("org.jetbrains.gradle.plugin.idea-ext") version "0.4.2" apply true
+  id("org.jetbrains.gradle.plugin.idea-ext") version "0.5" apply true
 }
 
 idea {
@@ -145,12 +135,12 @@ intellij {
   if (!isPluginDev) alternativeIdePath = "$clionInstallPath/"
 
   setPlugins("name.kropp.intellij.makefile:1.6",   // Makefile support
-    "org.intellij.plugins.markdown:183.4284.36",   // Markdown support
-    "net.seesharpsoft.intellij.plugins.csv:2.2.0", // CSV file support
+    "org.intellij.plugins.markdown:183.5153.1",    // Markdown support
+    "net.seesharpsoft.intellij.plugins.csv:2.2.1", // CSV file support
     "com.intellij.ideolog:183.0.7.0",              // Log file support
-    "Pythonid:2018.3.183.4284.148",                // Python   support
+    "Pythonid:2018.3.183.5429.30",                 // Python   support
     "BashSupport:1.7.4",                           // [Ba]sh   support
-    "Docker:183.4284.148",                         // Docker   support
+    "Docker:183.5153.1",                           // Docker   support
     "PsiViewer:183.2153",                          // PSI view support
     "yaml")                                        // YML file support
 
@@ -179,7 +169,7 @@ dependencies {
   compile(fileTree(buildSrcBuildDir))
   compileOnly(gradleApi())
   // Used for remote deployment over SCP
-  compile("com.hierynomus:sshj:0.26.0")
+  compile("com.hierynomus:sshj:0.27.0")
   compile("com.jcraft:jzlib:1.1.3")
 
   // Useful ROS Dependencies
