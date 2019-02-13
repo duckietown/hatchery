@@ -28,7 +28,7 @@ plugins {
   id("com.jetbrains.python.envs") version "0.0.30" apply true
   id("org.jetbrains.intellij") version "0.4.2" apply true
   id("de.undercouch.download") version "3.4.3" apply true
-  id("org.jetbrains.grammarkit") version "2018.2.2" apply true
+  id("org.jetbrains.grammarkit") version "2018.3" apply true
   id("org.ajoberstar.grgit") version "3.0.0" apply true
   id("org.jetbrains.gradle.plugin.idea-ext") version "0.5" apply true
 }
@@ -85,7 +85,7 @@ tasks {
   }
 
   val unpackClion by creating(Copy::class) {
-    onlyIf { !file(clionInstallPath).exists() }
+    onlyIf { file("$clionInstallPath.tar.gz").exists() && !file(clionInstallPath).exists() }
     from(tarTree("$clionInstallPath.tar.gz"))
     into(file("$clionInstallPath/.."))
     dependsOn(downloadClion)
