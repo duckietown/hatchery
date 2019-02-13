@@ -126,7 +126,7 @@ tasks {
 }
 
 intellij {
-//  type = "CL"
+//  type = "CL" // <-- when this line is added, the build fails
 //  version = "CL-$clionVersion"
   pluginName = "hatchery"
   version = clionVersion
