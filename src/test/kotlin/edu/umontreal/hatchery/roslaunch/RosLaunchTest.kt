@@ -1,13 +1,13 @@
 package edu.umontreal.hatchery.roslaunch
 
 import com.intellij.testFramework.UsefulTestCase
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
 
 /**
  * Tests roslaunch functionality.
  */
 
-class RosLaunchTest: LightCodeInsightFixtureTestCase() {
+class RosLaunchTest: LightPlatformCodeInsightFixtureTestCase() {
   fun `test launch file detected`() {
     myFixture.configureByText(RosLaunchFileType, """
         <launch>
