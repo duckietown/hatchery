@@ -142,11 +142,11 @@ It also supports refactoring and navigation in the following file types:
     - [ ] Validate Python/msg/srv compatibility
     - [ ] ROS nodes and graph analysis via `rosdep`/`rqt_dep`
 - [ ] [rqt](http://wiki.ros.org/rqt) plugin support
-    - [ ] [`rqt_img_view`](http://wiki.ros.org/rqt_image_view) - View images
-    - [ ] [`rqt_plot`](http://wiki.ros.org/rqt_plot) - Plot data visually
-    - [ ] [`rqt_graph`](http://wiki.ros.org/rqt_graph) - Graph messages
-    - [ ] [`rqt_dep`](http://wiki.ros.org/rqt_dep) - Visualize dependecies
-    - [ ] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay and edit bag files
+    - [x] [`rqt_img_view`](http://wiki.ros.org/rqt_image_view) - View images
+    - [x] [`rqt_plot`](http://wiki.ros.org/rqt_plot) - Plot data visually
+    - [x] [`rqt_graph`](http://wiki.ros.org/rqt_graph) - Graph messages
+    - [x] [`rqt_dep`](http://wiki.ros.org/rqt_dep) - Visualize dependecies
+    - [x] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay and edit bag files
     - [ ] [rqt_common](http://wiki.ros.org/rqt_common_plugins) - Other common plugins
 
 ### Roadmap
