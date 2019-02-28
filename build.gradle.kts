@@ -7,6 +7,8 @@ import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val kotlinVersion = properties["kotlinVersion"] as String
+
 buildscript {
   repositories {
     maven("https://dl.bintray.com/kotlin/kotlin-eap")
@@ -14,7 +16,7 @@ buildscript {
   }
 
   dependencies {
-    val kotlinVersion = properties["kotlinVersion"]
+    val kotlinVersion = properties["kotlinVersion"] as String
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
   }
 }
@@ -120,28 +122,32 @@ tasks {
 
   withType<KotlinCompile> {
     dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
-    kotlinOptions.freeCompilerArgs += "-progressive"
+    kotlinOptions {
+      jvmTarget = JavaVersion.VERSION_1_8.toString()
+      languageVersion = kotlinVersion.substringBeforeLast('.')
+      apiVersion = languageVersion
+      freeCompilerArgs = listOf("-progressive")
+    }
   }
 }
 
 intellij {
-  type = "CL" // <-- when this line is added, the build fails
-  version = "CL-$clionVersion-EAP-SNAPSHOT"
+//  type = "CL" // <-- when this line is added, the build fails
+//  version = "CL-$clionVersion-EAP-SNAPSHOT"
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
   if (!isPluginDev) alternativeIdePath = "$clionInstallPath/"
 
-  setPlugins("name.kropp.intellij.makefile:1.6",     // Makefile support
-      "org.intellij.plugins.markdown:191.5109.14",   // Markdown support
-      "net.seesharpsoft.intellij.plugins.csv:2.2.1", // CSV file support
-      "com.intellij.ideolog:191.0.7.0",              // Log file support
-      "Pythonid:2019.1.191.4212.41",                 // Python   support
-//    "BashSupport:1.7.4",                           // [Ba]sh   support
-      "Docker:191.5701.16",                          // Docker   support
-      "PsiViewer:191.4212",                          // PSI view support
-      "yaml")
+  setPlugins("name.kropp.intellij.makefile:1.6",   // Makefile support
+    "org.intellij.plugins.markdown:191.5109.14",   // Markdown support
+    "net.seesharpsoft.intellij.plugins.csv:2.2.1", // CSV file support
+    "com.intellij.ideolog:191.0.7.0",              // Log file support
+    "Pythonid:2019.1.191.4212.41",                 // Python   support
+    "BashSupport:1.7.5@eap",                       // [Ba]sh   support
+    "Docker:191.5701.16",                          // Docker   support
+    "PsiViewer:191.4212",                          // PSI view support
+    "yaml")
 }
 
 sourceSets["main"].compileClasspath += files(clionJarDir, buildSrcBuildDir)
