@@ -10,5 +10,5 @@ object DemoModuleType : ModuleType<DemoModuleBuilder>("DEMO_MODULE_TYPE") {
 
   override fun getDescription() = "Demo Module Type"
 
-  override fun getNodeIcon(b: Boolean) = AllIcons.General.Information
+  override fun getNodeIcon(b: Boolean) = AllIcons.General.Information!!
 }

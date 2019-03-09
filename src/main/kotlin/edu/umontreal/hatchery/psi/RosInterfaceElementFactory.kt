@@ -15,7 +15,7 @@ object RosInterfaceElementFactory {
     return file.firstChild as RosInterfaceProperty
   }
 
-  fun createCRLF(project: Project) = createFile(project, "\n").firstChild
+  fun createCRLF(project: Project) = createFile(project, "\n").firstChild!!
 
   fun createFile(project: Project, text: String): RosInterfaceFile {
     val name = "dummy.RosInterface"
