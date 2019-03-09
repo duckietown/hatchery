@@ -28,8 +28,7 @@
                 </xs:element>
                 <xs:element name="version" type="VersionType"/>
                 <xs:element name="description" type="DescriptionType"/>
-                <xs:element name="maintainer" type="PersonWithEmailType"
-                            maxOccurs="unbounded"/>
+                <xs:element name="maintainer" type="PersonWithEmailType" maxOccurs="unbounded"/>
                 <xs:element name="license" type="xs:token" maxOccurs="unbounded"/>
 
                 <xs:element name="url" type="UrlType" minOccurs="0" maxOccurs="unbounded"/>
