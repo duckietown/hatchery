@@ -9,7 +9,7 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="name" minOccurs="1" maxOccurs="1">
+                <xs:element name="name">
                     <xs:annotation>
                         <xs:documentation>
                             The package name should be unique within the ROS community.
@@ -26,10 +26,11 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="version" type="VersionType" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="version" type="VersionType"/>
                 <xs:element name="description" type="DescriptionType" minOccurs="1" maxOccurs="1"/>
-                <xs:element name="maintainer" type="PersonWithEmailType" minOccurs="1" maxOccurs="unbounded"/>
-                <xs:element name="license" type="xs:token" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element name="maintainer" type="PersonWithEmailType"
+                            maxOccurs="unbounded"/>
+                <xs:element name="license" type="xs:token" maxOccurs="unbounded"/>
 
                 <xs:element name="url" type="UrlType" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="author" type="PersonWithOptionalEmailType" minOccurs="0" maxOccurs="unbounded"/>
@@ -47,7 +48,7 @@
                     <xs:element type="DependencyType" name="replace"/>
                 </xs:choice>
 
-                <xs:element name="export" type="ExportType" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="export" type="ExportType" minOccurs="0"/>
             </xs:sequence>
             <xs:attribute name="format" fixed="2" use="required"/>
         </xs:complexType>
