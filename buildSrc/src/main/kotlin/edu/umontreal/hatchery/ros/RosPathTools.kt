@@ -1,5 +1,6 @@
 package edu.umontreal.hatchery.ros
 
+import edu.umontreal.hatchery.ros.Shell.*
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -11,13 +12,13 @@ val rootDir = System.getenv()[rosRootEnvVar]
   ?.let { File(it).parentFile?.parentFile }
   ?.absolutePath
 
-enum class Shell(val extension: String) {
+enum class Shell(private val extension: String) {
   BASH("bash"), SH("sh"), ZSH("zsh");
 
   override fun toString() = extension
 }
 
-val defaultShell = Shell.BASH
+val defaultShell = BASH
 val shell: Shell = defaultShell
 
 val setupScript: String
@@ -27,11 +28,11 @@ val defaultRosSetupScript: String
   get() = "$defaultPath/$defaultDistro/$setupScript"
 
 val installDir: String
-  get() = if (rootDir != null) rootDir
-  else if (File(defaultRosSetupScript).exists()) defaultRosSetupScript
-  else if (File(defaultPath).isDirectory)
-    File(defaultPath).listFiles().first().absolutePath
-  else ""
+  get() = rootDir ?: when {
+    File(defaultRosSetupScript).exists() -> defaultRosSetupScript
+    File(defaultPath).isDirectory -> File(defaultPath).listFiles().first().absolutePath
+    else -> ""
+  }
 
 val rosSetupScript = "$installDir/$setupScript"
 

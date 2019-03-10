@@ -1,12 +1,14 @@
 package edu.umontreal.hatchery.roslaunch.runconfig
 
 import com.intellij.execution.actions.ConfigurationContext
+import com.intellij.execution.actions.LazyRunConfigurationProducer
 import com.intellij.execution.actions.RunConfigurationProducer
+import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
 
-object RosLaunchRunConfigProducer:
-  RunConfigurationProducer<RosLaunchRunConfig>(RosLaunchRunConfigType) {
+object RosLaunchRunConfigProducer: LazyRunConfigurationProducer<RosLaunchRunConfig>() {
+  override fun getConfigurationFactory() = RosLaunchRunConfigFactory
 
   override fun isConfigurationFromContext(config: RosLaunchRunConfig,
                                           context: ConfigurationContext) =

@@ -19,7 +19,7 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
 
   internal var rosPackageFile = File("")
   internal var rosLaunchFile = File("")
-  internal var rosWorkspace = File("")
+  internal val rosWorkspace
     get() = rosPackageFile.getContainingRosWorkspaceIfItExists()
 
   internal var runCommand = ""
@@ -29,6 +29,10 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
       cd ${rosWorkspace.absolutePath} && catkin_make &&
       echo Sourcing ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
       source ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
+      echo Available nodes: && rosnode list &&
+      echo Available topics: && rostopic list &&
+      echo Available services: && rosservice list &&
+      echo Available parameters: && rosparam list &&
       ${RosConfig.settings.localRunCommand} $rosPackageName $rosLaunchFileName""".trimMargin()
 
   internal var remoteAddress = RosConfig.settings.remoteAddress
