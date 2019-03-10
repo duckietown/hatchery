@@ -1,6 +1,8 @@
+@file:Suppress("unused")
+
 package edu.umontreal.hatchery.ros
 
-import edu.umontreal.hatchery.ros.Shell.*
+import edu.umontreal.hatchery.ros.Shell.BASH
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -37,12 +39,14 @@ val installDir: String
 val rosSetupScript = "$installDir/$setupScript"
 
 // If we are inside a catkin_ws, then return the root workspace directory
-fun File.getContainingRosWorkspaceIfItExists(): File =
-  if (!exists()) throw FileNotFoundException("File does not exist!")
-  else if (toPath().nameCount == 0) throw FileNotFoundException("No workspace found!")
-  else if (parent == "src") parentFile.parentFile
-  else if (isDirectory && name.endsWith("_ws")) this
-  else if (parent == "_ws") parentFile
-  else parentFile.getContainingRosWorkspaceIfItExists()
+@Throws(FileNotFoundException::class)
+fun File.getContainingRosWorkspaceIfItExists(query: File? = null): File = when {
+  !exists() -> throw FileNotFoundException("Could not find parent ROS workspace for file: $query")
+  toPath().nameCount == 0 -> throw FileNotFoundException("No workspace found!")
+  parent == "src" -> parentFile.parentFile
+  isDirectory && name.endsWith("_ws") -> this
+  parent == "_ws" -> parentFile
+  else -> parentFile.getContainingRosWorkspaceIfItExists(query ?: this)
+}
 
 val rosDevelScriptPathRel = "devel/setup.$shell"

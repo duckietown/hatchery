@@ -46,11 +46,11 @@ fun Project.withRosTask() = tasks.register("rosTask", RosTask::class) {
 
   val systemRosDistro = System.getenv("ROS_DISTRO")
   val commandString = if (null != systemRosDistro) {
-    "echo \"Using ROS_ROOT: $systemRosDistro\""
+    "echo \"Using ROS_DISTRO: $systemRosDistro\""
   } else {
-    val rosSetupScript = rosSetupScript
     val pluginDevArg = if (project.hasProperty("luginDev")) "-PluginDev" else ""
-    "source $rosSetupScript && source gradlew runIde $pluginDevArg"
+    "echo \"ROS_DISTRO not found, sourcing $rosSetupScript and retrying\" &&" +
+      " source $rosSetupScript && source gradlew runIde $pluginDevArg"
   }
 
   args("-c", commandString)

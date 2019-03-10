@@ -10,22 +10,16 @@ import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
 private var mRosCore: RosCore? = null
-fun main(args: Array<String>) {
+
+const val IP = "localhost"
+
+fun main() {
 
   System.setProperty("javax.net.debug", "all")
 
-  for (s in args) {
-    println(s)
-  }
-
-  //String IP = "localhost";
-  var IP = "192.168.1.244"
-  if (args.isNotEmpty()) {
-    IP = args[0]
-  }
-
   mRosCore = RosCore.newPublic(IP, 11311)
   mRosCore!!.start()
+
   try {
     mRosCore!!.awaitStart(5, TimeUnit.SECONDS)
   } catch (e: InterruptedException) {
@@ -36,14 +30,11 @@ fun main(args: Array<String>) {
 
   startChatter()
 
-  //TODO Improve this way
-  while (true) {
-  }
+  while (true) { }
 }
 
 @Throws(UnknownHostException::class)
 private fun startChatter() {
-
   val e = DefaultNodeMainExecutor.newDefault()
 
   println("Starting listener node...")
@@ -53,7 +44,6 @@ private fun startChatter() {
   val listener = Listener()
   e.execute(listener, listenerConfig)
 
-
   println("Starting talker node...")
   //NodeConfiguration talkerConfig = NodeConfiguration.newPublic(Inet4Address.getLocalHost().getHostAddress());
   val talkerConfig = NodeConfiguration.newPublic("ev3dev")
@@ -61,6 +51,4 @@ private fun startChatter() {
   talkerConfig.setNodeName("Talker")
   val talker = Talker()
   e.execute(talker, talkerConfig)
-
-
 }

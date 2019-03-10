@@ -75,12 +75,16 @@ val samplePath = "${project.buildDir}/Software"
 
 val defaultProjectPath = samplePath.let {
   if (File(it).isDirectory) it
-  else it.apply { Grgit.clone(mapOf("dir" to this, "uri" to sampleRepo)) }
+  else it.apply {
+    logger.info("Cloning $sampleRepo to $samplePath...")
+    Grgit.clone(mapOf("dir" to this, "uri" to sampleRepo))
+  }
 }
 
 val projectPath = File(properties["roject"] as? String
   ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath).absolutePath!!
 
+val isCIBuild = hasProperty("CI")
 val isPluginDev = hasProperty("luginDev")
 fun prop(name: String): String = extra.properties[name] as? String
   ?: error("Property `$name` is not defined in gradle.properties")
@@ -112,7 +116,7 @@ tasks {
   withType<RunIdeTask> {
     dependsOn("test")
 
-    if (!isPluginDev) dependsOn(unpackClion, rosTask, ":build_envs")
+    if (!isPluginDev && !isCIBuild) dependsOn(unpackClion, rosTask, ":build_envs")
 
     args = listOf(if (isPluginDev) projectDir.absolutePath else projectPath)
   }
