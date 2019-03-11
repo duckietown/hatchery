@@ -1,9 +1,6 @@
 import de.undercouch.gradle.tasks.download.Download
 import edu.umontreal.hatchery.withRosTask
 import org.ajoberstar.grgit.Grgit
-import org.jetbrains.gradle.ext.GradleTask
-import org.jetbrains.gradle.ext.IdeaExtPlugin
-import org.jetbrains.gradle.ext.ProjectSettings
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.PublishTask
@@ -35,7 +32,7 @@ plugins {
   id("de.undercouch.download") version "3.4.3" apply true
   id("org.jetbrains.grammarkit") version "2018.3" apply true
   id("org.ajoberstar.grgit") version "3.0.0" apply true
-  id("org.jetbrains.gradle.plugin.idea-ext") version "0.3" apply true
+//  id("org.jetbrains.gradle.plugin.idea-ext") version "0.3" apply true
 }
 
 idea {
@@ -45,23 +42,20 @@ idea {
     excludeDirs.add(file(intellij.sandboxDirectory))
   }
 
-  project {
-    idea.project {
-      (this as ExtensionAware)
-      configure<ProjectSettings> {
-        runConfigurations {
-          create<org.jetbrains.gradle.ext.Application>("Run Hatchery") {
-            beforeRun.create<GradleTask>("runIde") {
-              task = tasks.getByPath("runIde")
-            }
-          }
-        }
-      }
-      configure<ProjectSettings> {
-        // TODO
-      }
-    }
-  }
+//  project {
+//    idea.project {
+//      (this as ExtensionAware)
+//      configure<ProjectSettings> {
+//        runConfigurations {
+//          create<org.jetbrains.gradle.ext.Application>("Run Hatchery") {
+//            beforeRun.create<GradleTask>("runIde") {
+//              task = tasks.getByPath("runIde")
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
 }
 
 val clionVersion = properties["clionVersion"] as String
