@@ -8,7 +8,7 @@ import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlTag
 import edu.umontreal.hatchery.filesystem.Icons
-import edu.umontreal.hatchery.rospackage.RosPackagePsiReferenceProvider.DEPEND_TAG_NAMES
+import edu.umontreal.hatchery.rospackage.RosPackageReferenceContributor.DEPEND_TAG_NAMES
 
 object RosPackageLineMarkerProvider : RelatedItemLineMarkerProvider() {
   private const val TOOLTIP_TEXT = "ROS Package Dependency"

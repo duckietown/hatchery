@@ -31,6 +31,7 @@ object RosConfig : Configurable, PersistentStateComponent<RosSettings> {
 
   override fun apply() {
     settings.localRosPath = panel.localRosPath
+    settings.localRunCommand = panel.localRunCommand
     settings.remoteRosPath = panel.remoteRosPath
     settings.remoteAddress = panel.remoteAddress
     settings.sshCredentialsPath = panel.sshCredentialsPath

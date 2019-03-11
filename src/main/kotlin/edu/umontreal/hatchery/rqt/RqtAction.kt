@@ -8,6 +8,7 @@ class RqtAction: AnAction {
   constructor(name: String): super("rqt_image_view $name")
 
   override fun actionPerformed(e: AnActionEvent) {
+    // TODO: Fix this hack - unsure how to get action ID, so we use description
     ProcessBuilder(e.presentation.description).start()
   }
 }
