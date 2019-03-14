@@ -3,6 +3,7 @@ import edu.umontreal.hatchery.withRosTask
 import org.ajoberstar.grgit.Grgit
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.intellij.tasks.JarSearchableOptionsTask
 import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -115,6 +116,10 @@ tasks {
     args = listOf(if (isPluginDev) projectDir.absolutePath else projectPath)
   }
 
+//  withType<JarSearchableOptionsTask> {
+//    enabled = false
+//  }
+
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
     source = "src/main/grammars/ROSInterface.flex"
     targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
@@ -184,7 +189,7 @@ dependencies {
 }
 
 envs {
-  bootstrapDirectory = File(buildDir, "pythons")
+  bootstrapDirectory =  File(buildDir, "pythons")
   envsDirectory = File(buildDir, "envs")
 
   conda("Miniconda2", "Miniconda2-latest", listOf("numpy", "pillow"))
