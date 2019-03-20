@@ -2,3 +2,5 @@
 build
 Dockerfile
 .dockerignore
+out
+.gradle
