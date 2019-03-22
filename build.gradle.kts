@@ -25,7 +25,6 @@ plugins {
   idea apply true
   kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
-//  id("org.ros2.tools.gradle") version "0.7.0" apply true
   id("com.jetbrains.python.envs") version "0.0.30" apply true
   id("org.jetbrains.intellij") version "0.4.5" apply true
   id("de.undercouch.download") version "3.4.3" apply true
@@ -57,11 +56,7 @@ idea {
 //  }
 }
 
-val clionVersion = properties["clionVersion"] as String
 val userHomeDir = System.getProperty("user.home")!!
-val clionInstallPath = "${project.projectDir}/build/clion/clion-$clionVersion"
-val clionJarDir = "$clionInstallPath/lib/clion.jar"
-val downloadURL = "https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz"
 val buildSrcBuildDir = "${project.rootDir}/buildSrc/build/"
 val sampleRepo = "https://github.com/duckietown/Software.git"
 val samplePath = "${project.buildDir}/Software"
@@ -89,19 +84,6 @@ tasks {
     channels(prop("publishChannel"))
   }
 
-  val downloadClion by creating(Download::class) {
-    onlyIf { !file("$clionInstallPath.tar.gz").exists() }
-    src(downloadURL)
-    dest(file("$clionInstallPath.tar.gz"))
-  }
-
-  val unpackClion by creating(Copy::class) {
-    onlyIf { file("$clionInstallPath.tar.gz").exists() && !file(clionInstallPath).exists() }
-    from(tarTree("$clionInstallPath.tar.gz"))
-    into(file("$clionInstallPath/.."))
-    dependsOn(downloadClion)
-  }
-
   val rosTask by withRosTask()
 
   named("buildPlugin") { dependsOn("test") }
@@ -113,7 +95,7 @@ tasks {
   withType<RunIdeTask> {
     dependsOn("test")
 
-    if (!isPluginDev && !isCIBuild) dependsOn(unpackClion, rosTask, ":build_envs")
+    if (!isPluginDev && !isCIBuild) dependsOn(rosTask, ":build_envs")
 
     args = listOf(if (isPluginDev) projectDir.absolutePath else projectPath)
   }
@@ -147,12 +129,11 @@ tasks {
 }
 
 intellij {
-//  type = "CL" // <-- when this line is added, the build fails
+  type = "CL"
   version = "CL-LATEST-EAP-SNAPSHOT"
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
-  if (!isPluginDev) alternativeIdePath = "$clionInstallPath/"
 
   setPlugins("name.kropp.intellij.makefile:1.6",   // Makefile support
     "org.intellij.plugins.markdown:191.5109.14",   // Markdown support
@@ -165,7 +146,7 @@ intellij {
     "yaml")
 }
 
-sourceSets["main"].compileClasspath += files(clionJarDir, buildSrcBuildDir)
+sourceSets["main"].compileClasspath += files(buildSrcBuildDir)
 
 repositories {
   jcenter()
