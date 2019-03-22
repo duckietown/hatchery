@@ -24,7 +24,6 @@ buildscript {
 plugins {
   idea apply true
   kotlin("jvm")
-  id("ros-java") version "0.3.0" apply true
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
 //  id("org.ros2.tools.gradle") version "0.7.0" apply true
   id("com.jetbrains.python.envs") version "0.0.30" apply true
@@ -106,6 +105,10 @@ tasks {
   val rosTask by withRosTask()
 
   named("buildPlugin") { dependsOn("test") }
+  
+  withType<Zip> {
+    archiveFileName.set("hatchery.zip")
+  }
 
   withType<RunIdeTask> {
     dependsOn("test")
@@ -145,7 +148,7 @@ tasks {
 
 intellij {
 //  type = "CL" // <-- when this line is added, the build fails
-//  version = "CL-$clionVersion-EAP-SNAPSHOT"
+  version = "CL-LATEST-EAP-SNAPSHOT"
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
