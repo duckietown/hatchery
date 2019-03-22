@@ -10,11 +10,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 val kotlinVersion = properties["kotlinVersion"] as String
 
 buildscript {
-  repositories {
-    maven("https://dl.bintray.com/kotlin/kotlin-eap")
-    maven("https://raw.githubusercontent.com/rosjava/rosjava_mvn_repo/master")
-  }
-
   dependencies {
     val kotlinVersion = properties["kotlinVersion"] as String
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
@@ -39,21 +34,6 @@ idea {
     generatedSourceDirs.add(file("src/main/java"))
     excludeDirs.add(file(intellij.sandboxDirectory))
   }
-
-//  project {
-//    idea.project {
-//      (this as ExtensionAware)
-//      configure<ProjectSettings> {
-//        runConfigurations {
-//          create<org.jetbrains.gradle.ext.Application>("Run Hatchery") {
-//            beforeRun.create<GradleTask>("runIde") {
-//              task = tasks.getByPath("runIde")
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
 }
 
 val userHomeDir = System.getProperty("user.home")!!
