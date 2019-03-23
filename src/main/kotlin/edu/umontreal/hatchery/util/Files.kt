@@ -7,14 +7,7 @@ import com.intellij.psi.PsiFileSystemItem
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
-import java.io.File
 import java.util.concurrent.TimeUnit
-import com.intellij.psi.PsiFile
-import com.intellij.openapi.vfs.VfsUtil
-import com.intellij.psi.PsiElement
-import com.intellij.util.ResourceUtil
-
-
 
 fun findFilesByRelativePath(project: Project, fileRelativePath: String): List<PsiFileSystemItem?> {
   val relativePath = if (fileRelativePath.startsWith("/")) fileRelativePath else "/$fileRelativePath"

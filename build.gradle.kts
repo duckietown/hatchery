@@ -147,6 +147,9 @@ dependencies {
   compile("org.ros.rosjava_core:rosjava:[0.3,)")
   compile("org.ros.rosjava_messages:std_msgs:[0.5,)")
   compile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
+
+  // Python
+  compile("org.python:jython-standalone:2.7.1")
 }
 
 envs {

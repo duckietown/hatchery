@@ -7,10 +7,7 @@ import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import edu.umontreal.hatchery.cli.RosCommandLineState
-import edu.umontreal.hatchery.ros.getContainingRosWorkspaceIfItExists
-import edu.umontreal.hatchery.ros.rosDevelScriptPathRel
-import edu.umontreal.hatchery.ros.rosSetupScript
-import edu.umontreal.hatchery.ros.shell
+import edu.umontreal.hatchery.ros.*
 import edu.umontreal.hatchery.settings.RosConfig
 import java.io.File
 import java.io.FileNotFoundException
