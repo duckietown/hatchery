@@ -33,7 +33,7 @@ class RosSettingsPanel {
     .apply { font = Font("monospaced", font.style, font.size) }
   private val sshCredentialsPathField = JTextField()
 
-  fun prop(s: String) = ResourceBundle.getBundle("HatcheryBundle").getString(s)!!
+  private fun prop(s: String) = ResourceBundle.getBundle("HatcheryBundle").getString(s)!!
 
   internal val rootPanel: JPanel = panel {
     row(prop("rosInstallationHeading")) {}
@@ -42,7 +42,7 @@ class RosSettingsPanel {
     row("Installed ROS packages") {}
     row { localRosPackages(growX) }
     row(prop("remoteSettingsHeading")) { LineBorder.createGrayLineBorder() }
-    row("Remote address: ") { medium(remoteAddressField) }
+    row("Remote address:") { medium(remoteAddressField) }
     row("Remote ROS installation Path:") { remoteRosPathField(grow) }
     row("Remote ROS run command:") { medium(remoteRunCommandField) }
     row(prop("sshSettingsHeading")) {}

@@ -34,6 +34,7 @@ object RosConfig : Configurable, PersistentStateComponent<RosSettings> {
     settings.localRunCommand = panel.localRunCommand
     settings.remoteRosPath = panel.remoteRosPath
     settings.remoteAddress = panel.remoteAddress
+    settings.remoteRunCommand = panel.remoteRunCommand
     settings.sshCredentialsPath = panel.sshCredentialsPath
     logger.info("User applied new settings: $settings")
   }

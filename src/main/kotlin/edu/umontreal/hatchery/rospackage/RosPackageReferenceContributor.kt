@@ -3,14 +3,15 @@ package edu.umontreal.hatchery.rospackage
 import com.intellij.patterns.XmlPatterns
 import com.intellij.psi.PsiReferenceContributor
 import com.intellij.psi.PsiReferenceRegistrar
-import edu.umontreal.hatchery.util.runCommand
+import edu.umontreal.hatchery.ros.Ros
+import edu.umontreal.hatchery.settings.RosConfig
 import java.io.File
 
 object RosPackageReferenceContributor : PsiReferenceContributor() {
   val DEPEND_TAG_NAMES = arrayOf("build_depend", "run_depend", "test_depend")
-  val XML_PATTERN = XmlPatterns.xmlTag().withLocalName(*DEPEND_TAG_NAMES)!!
+  private val XML_PATTERN = XmlPatterns.xmlTag().withLocalName(*DEPEND_TAG_NAMES)!!
   val rosPackages: Map<String, File> by lazy {
-    "rospack list".runCommand().lines().dropLast(1).map {
+    Ros(RosConfig.settings.localRosPath).pack.list.call().lines().dropLast(1).map {
       Pair(it.substringBefore(" "), File(it.substringAfter(" ") + "/package.xml"))
     }.toMap()
   }

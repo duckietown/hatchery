@@ -62,14 +62,12 @@ class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosL
   override fun applyEditorTo(config: RosLaunchRunConfig) {
     config.rosPackagePath = rosPackageName
     config.rosLaunchPath = rosLaunchFile
-    config.runCommand = runCommand
     config.remoteAddress = remoteAddress
   }
 
   override fun resetEditorFrom(config: RosLaunchRunConfig) {
     rosPackageName = config.rosPackagePath
     rosLaunchFile = config.rosLaunchPath
-    runCommand = config.runCommand
     remoteAddress = config.remoteAddress
     remoteRosPath = config.remoteRosPath
   }

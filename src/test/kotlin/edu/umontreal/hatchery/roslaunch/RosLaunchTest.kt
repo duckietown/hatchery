@@ -3,6 +3,7 @@ package edu.umontreal.hatchery.roslaunch
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
 import org.python.core.PyInteger
 import org.python.util.PythonInterpreter
+import java.util.*
 
 /**
  * Tests roslaunch functionality.
@@ -16,14 +17,16 @@ class RosLaunchTest: LightPlatformCodeInsightFixtureTestCase() {
         <caret>
         </launch>
       """.trimIndent())
-    val completionResults = myFixture.completeBasic()
   }
 
   fun testPythonInterpreter() {
+    val props = Properties()
+    props.setProperty("python.path", "/home/modules:scripts")
+    PythonInterpreter.initialize(System.getProperties(), props, arrayOf(""))
     val interp = PythonInterpreter()
 
     println("Hello, brave new world")
-    interp.exec("import sys")
+    interp.exec("import rospy")
     interp.exec("print sys")
 
     interp.set("a", PyInteger(42))

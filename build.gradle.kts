@@ -119,7 +119,7 @@ intellij {
     "org.intellij.plugins.markdown:191.5109.14",   // Markdown support
     "net.seesharpsoft.intellij.plugins.csv:2.2.1", // CSV file support
     "com.intellij.ideolog:191.0.7.0",              // Log file support
-    "Pythonid:2019.1.191.4212.41",                 // Python   support
+    "PythonCore:2019.1.191.4212.41",               // Python   support
     "BashSupport:1.7.5@eap",                       // [Ba]sh   support
     "Docker:191.5701.16",                          // Docker   support
     "PsiViewer:191.4212",                          // PSI view support
