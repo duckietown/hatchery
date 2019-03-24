@@ -1,12 +1,10 @@
 package edu.umontreal.hatchery.rospackage
 
 import com.intellij.psi.PsiReferenceBase
-import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
-import com.jetbrains.extensions.python.toPsi
 import edu.umontreal.hatchery.rospackage.RosPackageReferenceContributor.rosPackages
 
 class RosPackageReference(private val psiElement: XmlTag) : PsiReferenceBase<XmlTag>(psiElement, false) {
