@@ -1,6 +1,8 @@
 package edu.umontreal.hatchery
 
-import edu.umontreal.hatchery.ros.*
+import edu.umontreal.hatchery.ros.Ros
+import edu.umontreal.hatchery.ros.RosEnv.ROS_DISTRO
+import edu.umontreal.hatchery.ros.defaultShell
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.tasks.Exec
@@ -42,9 +44,9 @@ open class RosTask : Exec() {
 
 fun Project.withRosTask() = tasks.register("rosTask", RosTask::class) {
   executable = "$defaultShell"
-
-  val rosSetupScript = Ros().rosSetupScript
-  val systemRosDistro = System.getenv(ROS_DISTRO)
+  val ros = Ros()
+  val rosSetupScript = ros.rosSetupScript
+  val systemRosDistro = System.getenv("$ROS_DISTRO")
   val commandString = if (null != systemRosDistro) {
     "echo \"Using ROS_DISTRO: $systemRosDistro\""
   } else {

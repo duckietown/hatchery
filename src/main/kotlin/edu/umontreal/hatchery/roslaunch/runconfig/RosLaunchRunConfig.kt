@@ -6,7 +6,7 @@ import com.intellij.execution.configurations.RunProfileState
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.project.Project
 import edu.umontreal.hatchery.cli.RosCommandLineState
-import edu.umontreal.hatchery.ros.*
+import edu.umontreal.hatchery.ros.Ros
 import edu.umontreal.hatchery.settings.RosConfig
 
 class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
@@ -23,6 +23,5 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
     RosLaunchSettingsEditor(project, rosPackagePath, rosLaunchPath)
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-    RosCommandLineState(environment, "$defaultShell", "-c",
-      Ros().launch(rosPackagePath, rosLaunchPath).toString())
+    RosCommandLineState(environment, Ros().launch(rosPackagePath, rosLaunchPath).toString())
 }

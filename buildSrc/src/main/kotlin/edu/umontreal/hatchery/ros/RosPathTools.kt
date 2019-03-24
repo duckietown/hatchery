@@ -2,6 +2,7 @@
 
 package edu.umontreal.hatchery.ros
 
+import edu.umontreal.hatchery.ros.RosEnv.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.concurrent.Callable
@@ -18,77 +19,97 @@ fun File.getContainingRosWorkspaceIfItExists(query: File? = null): File = when {
   else -> parentFile.getContainingRosWorkspaceIfItExists(query ?: this)
 }
 
-const val ROS_ROOT = "ROS_ROOT"
-const val ROS_DISTRO = "ROS_DISTRO"
-const val PYTHONPATH = "PYTHONPATH"
-const val ROS_MASTER_URI = "ROS_MASTER_URI"
-const val ROS_PACKAGE_PATH = "ROS_PACKAGE_PATH"
-
-const val defaultDistro = "kinetic"
-const val defaultPath = "/opt/ros"
-val defaultShell = Shell.BASH
-
-enum class Shell(private val extension: String) {
-  BASH("bash"), SH("sh"), ZSH("zsh");
-
-  override fun toString() = extension
+enum class RosEnv {
+  ROS_ROOT, ROS_DISTRO, PYTHONPATH, ROS_MASTER_URI, ROS_PACKAGE_PATH
 }
 
-class Ros(private val distro: String = defaultDistro) {
-  // http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT
-  private val rootDir = System.getenv()[ROS_ROOT]
+const val defaultDistro = "kinetic"
+const val baseRosPath = "/opt/ros"
+val defaultShell = Shell.BASH
+
+private val defaultRootDir =
+  System.getenv("$ROS_ROOT")
     ?.let { File(it).parentFile?.parentFile }
     ?.absolutePath
 
+val defaultInstallDir
+  get() = defaultRootDir ?: if (File(baseRosPath).isDirectory)
+    File(baseRosPath).listFiles().first().absolutePath
+  else null
 
-  val shell: Shell = defaultShell
+val defaultRosSetupScript =
+  if (defaultInstallDir != null) "$defaultInstallDir/setup.$defaultShell" else ""
 
-  val setupScript: String
-    get() = "setup.$shell"
-  var rosDistro = defaultDistro
-  val defaultRosSetupScript: String
-    get() = "$defaultPath/$defaultDistro/$setupScript"
+enum class Shell {
+  BASH, SH, ZSH;
 
-  val installDir: String
-    get() = rootDir ?: when {
-      File(defaultRosSetupScript).exists() -> defaultRosSetupScript
-      File(defaultPath).isDirectory -> File(defaultPath).listFiles().first().absolutePath
-      else -> ""
+  override fun toString() = name.toLowerCase()
+}
+
+enum class Distro {
+  ELECTRIC, FUERTE, GROOVY, HYDRO, INDIGO, JADE, KINETIC, LUNAR, MELODIC, BOUNCY, CRYSTAL, UNKNOWN;
+}
+
+class Ros(val rosSetupScript: String = defaultRosSetupScript) {
+  val rosSetupScriptFile = File(rosSetupScript)
+
+  val shell = try {
+    Shell.valueOf(rosSetupScript.split(".").last())
+  } catch (e: Exception) {
+    Shell.SH
+  }
+
+  val distro: Distro
+  val pythonPath: File
+
+  init {
+    val info = runCommand(shell.name, "-c",
+      """source $rosSetupScript && echo '
+      |$$ROS_DISTRO
+      |$$PYTHONPATH""".trimMargin()).lines().takeLast(2)
+    pythonPath = File(info.first())
+    distro = try {
+      Distro.valueOf(info.last().toUpperCase())
+    } catch (e: Exception) {
+      Distro.UNKNOWN
     }
+  }
 
-  val rosSetupScript = "$installDir/$setupScript"
-
-  interface Listable {
+  // http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT
+  open class Listable(val ros: Ros) {
     val command: String
       get() = "$this list"
 
     val list: Callable<String>
-      get() = Callable { command.runCommand() }
+      get() = object : Callable<String> {
+        override fun call() = runCommand(ros.shell.name, "-c", command)
+        override fun toString() = command
+      }
   }
 
-  val pack = object: Listable {
-    override fun toString() = this@Ros.toString() + if (isRos2(distro)) "pkg" else "pack"
+  val pack = object : Listable(this) {
+    override fun toString() = this@Ros.toString() + if (isRos2(rosSetupScript)) "pkg" else "pack"
   }
 
-  val service = object: Listable {
-    override fun toString() = this@Ros.toString() + if (isRos2(distro)) "service" else "srv"
+  val service = object : Listable(this) {
+    override fun toString() = this@Ros.toString() + if (isRos2(rosSetupScript)) "service" else "srv"
   }
 
-  val node = object: Listable {
+  val node = object : Listable(this) {
     override fun toString() = "${this@Ros}node"
   }
 
-  val topic = object: Listable {
+  val topic = object : Listable(this) {
     override fun toString() = "${this@Ros}topic"
   }
 
-  val msg = object: Listable {
+  val msg = object : Listable(this) {
     override fun toString() = "${this@Ros}msg"
   }
 
-  fun launch(pkg: String, launchFile: String) = object: Runnable {
+  fun launch(pkg: String, launchFile: String) = object : Runnable {
     override fun run() {
-      this.toString().runCommand()
+      runCommand(shell.name, "-c", toString())
     }
 
     private val rosWorkspace: File
@@ -105,30 +126,26 @@ class Ros(private val distro: String = defaultDistro) {
       cd ${rosWorkspace.absolutePath} && catkin_make &&
       echo 'Sourcing ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel' &&
       source ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
-      echo 'Available nodes:
-            ${node.list.call()}
-            Available topics:
-            ${topic.list.call()}
-            Available services:
-            ${service.list.call()}
-            Available parameters:
-            ${param.list.call()}' &&
+      echo 'Available nodes:' &&
+      ${node.list} &&
+      echo 'Available topics:' &&
+      ${topic.list} &&
+      echo 'Available services:' &&
+      ${service.list} &&
+      echo 'Available parameters:' &&
+      ${param.list}' &&
       ${this@Ros}launch $pkg $launchFile""".trimMargin()
   }
 
-  val param = object: Listable {
+  val param = object : Listable(this) {
     override fun toString() = "${this@Ros}param"
   }
 
-  override fun toString() = if (isRos2(distro)) "ros2 " else "ros"
+  override fun toString() = if (isRos2(rosSetupScript)) "ros2 " else "ros"
 }
 
-fun isRos2(distro: String) =
-  "ardent" in distro || "bouncy" in distro || "crystal" in distro
-
-fun String.runCommand(): String {
-  val parts = split("\\s".toRegex())
-  val proc = ProcessBuilder(*parts.toTypedArray())
+fun runCommand(vararg commands: String): String {
+  val proc = ProcessBuilder(*commands)
     .redirectOutput(ProcessBuilder.Redirect.PIPE)
     .redirectError(ProcessBuilder.Redirect.PIPE)
     .start()
@@ -136,3 +153,6 @@ fun String.runCommand(): String {
   proc.waitFor(60, TimeUnit.SECONDS)
   return proc.inputStream.bufferedReader().readText()
 }
+
+fun isRos2(distro: String) =
+  "ardent" in distro || "bouncy" in distro || "crystal" in distro

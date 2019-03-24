@@ -25,8 +25,7 @@ class RosLaunchTest: LightPlatformCodeInsightFixtureTestCase() {
     PythonInterpreter.initialize(System.getProperties(), props, arrayOf(""))
     val interp = PythonInterpreter()
 
-    println("Hello, brave new world")
-    interp.exec("import rospy")
+    interp.exec("import sys")
     interp.exec("print sys")
 
     interp.set("a", PyInteger(42))
@@ -35,6 +34,5 @@ class RosLaunchTest: LightPlatformCodeInsightFixtureTestCase() {
     val x = interp.get("x")
 
     println("x: $x")
-    println("Goodbye, cruel world")
   }
 }
