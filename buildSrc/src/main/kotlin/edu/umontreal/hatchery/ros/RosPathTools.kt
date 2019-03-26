@@ -63,7 +63,7 @@ class Ros(val rosSetupScript: String = defaultRosSetupScript) {
   val pythonPath: File
 
   init {
-    val info = runCommand(shell.name, "-c",
+    val info = runCommand(shell.toString(), "-c",
       """source $rosSetupScript && echo '
       |$$ROS_DISTRO
       |$$PYTHONPATH""".trimMargin()).lines().takeLast(2)
@@ -82,7 +82,7 @@ class Ros(val rosSetupScript: String = defaultRosSetupScript) {
 
     val list: Callable<String>
       get() = object : Callable<String> {
-        override fun call() = runCommand(ros.shell.name, "-c", command)
+        override fun call() = runCommand(ros.shell.toString(), "-c", command)
         override fun toString() = command
       }
   }
@@ -109,7 +109,7 @@ class Ros(val rosSetupScript: String = defaultRosSetupScript) {
 
   fun launch(pkg: String, launchFile: String) = object : Runnable {
     override fun run() {
-      runCommand(shell.name, "-c", toString())
+      runCommand(shell.toString(), "-c", toString())
     }
 
     private val rosWorkspace: File
