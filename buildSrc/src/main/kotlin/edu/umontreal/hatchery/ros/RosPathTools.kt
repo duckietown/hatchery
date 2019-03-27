@@ -2,7 +2,10 @@
 
 package edu.umontreal.hatchery.ros
 
+import edu.umontreal.hatchery.ros.BuildSystem.*
+import edu.umontreal.hatchery.ros.Distro.*
 import edu.umontreal.hatchery.ros.RosEnv.*
+import edu.umontreal.hatchery.ros.Shell.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.concurrent.Callable
@@ -20,12 +23,13 @@ fun File.getContainingRosWorkspaceIfItExists(query: File? = null): File = when {
 }
 
 enum class RosEnv {
-  ROS_ROOT, ROS_DISTRO, PYTHONPATH, ROS_MASTER_URI, ROS_PACKAGE_PATH
+  ROS_ROOT, ROS_DISTRO, PYTHONPATH, ROS_MASTER_URI, ROS_PACKAGE_PATH, CATKIN_SHELL
 }
 
 const val defaultDistro = "kinetic"
 const val baseRosPath = "/opt/ros"
-val defaultShell = Shell.BASH
+val defaultShell =
+  Shell.values().firstOrNull { it.name == System.getenv("$CATKIN_SHELL") } ?: sh
 
 private val defaultRootDir =
   System.getenv("$ROS_ROOT")
@@ -41,38 +45,47 @@ val defaultRosSetupScript =
   if (defaultInstallDir != null) "$defaultInstallDir/setup.$defaultShell" else ""
 
 enum class Shell {
-  BASH, SH, ZSH;
+  bash, sh, zsh;
 
   override fun toString() = name.toLowerCase()
 }
 
 enum class Distro {
-  ELECTRIC, FUERTE, GROOVY, HYDRO, INDIGO, JADE, KINETIC, LUNAR, MELODIC, BOUNCY, CRYSTAL, UNKNOWN;
+  electric, fuerte,
+  groovy, hydro, indigo, jade, kinetic, lunar, melodic,
+  ardent, bouncy, crystal;
 }
 
-class Ros(val rosSetupScript: String = defaultRosSetupScript) {
-  val rosSetupScriptFile = File(rosSetupScript)
+enum class BuildSystem(val command: String) {
+  catkin("catkin_make"), rosbuild("rosmake"), colcon("colcon build");
+}
+
+class Ros(val setupScript: String = defaultRosSetupScript) {
+  val rosSetupScriptFile = File(setupScript)
 
   val shell = try {
-    Shell.valueOf(rosSetupScript.split(".").last())
+    Shell.valueOf(setupScript.split(".").last())
   } catch (e: Exception) {
-    Shell.SH
+    sh
   }
 
   val distro: Distro
   val pythonPath: File
+  val buildSystem: BuildSystem
 
   init {
-    val info = runCommand(shell.toString(), "-c",
-      """source $rosSetupScript && echo '
+    val info = runCommand(shell.name, "-c",
+      """. $setupScript && echo "
       |$$ROS_DISTRO
-      |$$PYTHONPATH""".trimMargin()).lines().takeLast(2)
-    pythonPath = File(info.first())
-    distro = try {
-      Distro.valueOf(info.last().toUpperCase())
-    } catch (e: Exception) {
-      Distro.UNKNOWN
+      |$$PYTHONPATH"""".trimMargin()).lines().dropLastWhile { it.isBlank() }.takeLast(2)
+    distro = Distro.valueOf(info.first())
+    pythonPath = File(info.last())
+    buildSystem = when (distro) {
+      electric, fuerte -> rosbuild
+      groovy, hydro, indigo, jade, kinetic, lunar, melodic -> catkin
+      ardent, bouncy, crystal-> colcon
     }
+
   }
 
   // http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT
@@ -82,17 +95,17 @@ class Ros(val rosSetupScript: String = defaultRosSetupScript) {
 
     val list: Callable<String>
       get() = object : Callable<String> {
-        override fun call() = runCommand(ros.shell.toString(), "-c", command)
+        override fun call() = runCommand(ros.shell.name, "-c", command)
         override fun toString() = command
       }
   }
 
   val pack = object : Listable(this) {
-    override fun toString() = this@Ros.toString() + if (isRos2(rosSetupScript)) "pkg" else "pack"
+    override fun toString() = this@Ros.toString() + if (isRos2(setupScript)) "pkg" else "pack"
   }
 
   val service = object : Listable(this) {
-    override fun toString() = this@Ros.toString() + if (isRos2(rosSetupScript)) "service" else "srv"
+    override fun toString() = this@Ros.toString() + if (isRos2(setupScript)) "service" else "srv"
   }
 
   val node = object : Listable(this) {
@@ -109,7 +122,7 @@ class Ros(val rosSetupScript: String = defaultRosSetupScript) {
 
   fun launch(pkg: String, launchFile: String) = object : Runnable {
     override fun run() {
-      runCommand(shell.toString(), "-c", toString())
+      runCommand(shell.name, "-c", toString())
     }
 
     private val rosWorkspace: File
@@ -121,11 +134,12 @@ class Ros(val rosSetupScript: String = defaultRosSetupScript) {
 
     val rosDevelScriptPathRel = "${rosWorkspace.absolutePath}/devel/setup.$shell"
 
-    override fun toString() = """echo Sourcing $rosSetupScript && source $rosSetupScript &&
+    override fun toString() = """echo Sourcing $setupScript && . $setupScript &&
       echo 'ROS workspace directory: ${rosWorkspace.absolutePath}' &&
-      cd ${rosWorkspace.absolutePath} && catkin_make &&
+      cd ${rosWorkspace.absolutePath} &&
+      ${buildSystem.command} &&
       echo 'Sourcing ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel' &&
-      source ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
+      . ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
       echo 'Available nodes:' &&
       ${node.list} &&
       echo 'Available topics:' &&
@@ -141,7 +155,7 @@ class Ros(val rosSetupScript: String = defaultRosSetupScript) {
     override fun toString() = "${this@Ros}param"
   }
 
-  override fun toString() = if (isRos2(rosSetupScript)) "ros2 " else "ros"
+  override fun toString() = if (isRos2(setupScript)) "ros2 " else "ros"
 }
 
 fun runCommand(vararg commands: String): String {

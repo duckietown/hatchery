@@ -1,7 +1,9 @@
 package edu.umontreal.hatchery
 
 import edu.umontreal.hatchery.ros.Ros
-import edu.umontreal.hatchery.ros.RosEnv.ROS_DISTRO
+import edu.umontreal.hatchery.ros.RosEnv
+import edu.umontreal.hatchery.ros.RosEnv.*
+import edu.umontreal.hatchery.ros.defaultRosSetupScript
 import edu.umontreal.hatchery.ros.defaultShell
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -44,15 +46,14 @@ open class RosTask : Exec() {
 
 fun Project.withRosTask() = tasks.register("rosTask", RosTask::class) {
   executable = "$defaultShell"
-  val ros = Ros()
-  val rosSetupScript = ros.rosSetupScript
+//  val rosSetupScript = defaultRosSetupScript
   val systemRosDistro = System.getenv("$ROS_DISTRO")
   val commandString = if (null != systemRosDistro) {
     "echo \"Using ROS_DISTRO: $systemRosDistro\""
   } else {
     val pluginDevArg = if (project.hasProperty("luginDev")) "-PluginDev" else ""
-    "echo \"ROS_DISTRO not found, sourcing $rosSetupScript and retrying\" &&" +
-      " source $rosSetupScript && source gradlew runIde $pluginDevArg"
+    "echo ROS_DISTRO not found, sourcing $defaultRosSetupScript and retrying" +
+      "&& . $defaultRosSetupScript && ./gradlew runIde $pluginDevArg"
   }
 
   args("-c", commandString)

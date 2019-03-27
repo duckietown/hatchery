@@ -8,16 +8,14 @@ An open source IDE for the [Robot Operating System](http://www.ros.org/).
 
 Provides language support and code assistance for developing ROS applications, with tools for deploying and monitoring live applications.
 
-[Join us on Slack](https://duckietown.slack.com)!
-
 ### Installation
 
 #### Prerequisites
 
 <details>
-<summary><b>Java</b> must be installed prior to running Hatchery...</summary>
+<summary><b>Java</b> must be installed prior to building Hatchery...</summary>
 
-Hatchery requires a JRE or JDK. First check you have one installed: `java -version`
+Building Hatchery requires a JRE or JDK. First check you have one installed: `java -version`
  
 [JDK 8](http://openjdk.java.net/install/) or higher is sufficient. Ubuntu/Debian: 
 ```bash
@@ -25,10 +23,22 @@ sudo add-apt-repository ppa:openjdk-r/ppa
 sudo apt-get update
 sudo apt-get install openjdk-8-jdk
 ```
+
+First, clone this repository and open the project directory using the command line.
+
+`git clone https://github.com/breandan/hatchery && cd hatchery`
+
+To launch the IDE (optionally, you can specify the path to an existing ROS project):
+
+`./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
+
+On first launch, you may need to setup a Python SDK. From **File | Project Structure** (or alternately **Preferences | :mag: Python Interpreter | Project Interpreter**), then select or create a new *Python SDK* to receive coding assistance in Python files.
 </details>
 
 <details>
-<summary><b>CLion users</b> should follow the <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html">ROS Setup Tutorial</a> to configure build paths...</summary> and access CLion-specific features such as <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#664f3ede">linking Catkin libraries</a>, <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#b294c4a0">running a ROS node from the IDE</a> and <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#da2d526d">attaching a debugger to a running node</a>.
+<summary><b>CLion users</b> should follow the <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html">ROS Setup Tutorial</a> to configure build paths...</summary> 
+
+and access CLion-specific features such as <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#43578262">linking Catkin libraries</a>, <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#80196d29">running a ROS node from the IDE</a> and <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#931260ab">attaching a debugger to a running node</a>. The Hatchery plugin can be <a href="https://www.jetbrains.com/help/idea/managing-plugins.html#install">installed</a> in the usual way from the settings menu.
 </details>
 
 <details>
@@ -41,17 +51,9 @@ If not, you should first run `source environment.sh` from inside the Duckietown 
 Hatchery will use `DUCKIETOWN_ROOT` as the default project directory, so you can omit the `-Project` flag below.
 </details>
 
-#### Command line
+Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Marketplace... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery).
 
-First, clone this repository and open the project directory using the command line.
-
-`git clone https://github.com/breandan/hatchery && cd hatchery`
-
-To launch the IDE (optionally, you can specify the path to an existing ROS project):
-
-`./gradlew runIde [-Project="<ABSOLUTE_PATH_TO_ROS_PROJECT>"]`
-
-On first launch, you may need to setup a Python SDK. From **File | Project Structure** (or alternately **Preferences | :mag: Python Interpreter | Project Interpreter**), then select or create a new *Python SDK* to receive coding assistance in Python files.
+For the adventurous, untested, canary builds are available on our [TeamCity build server](https://teamcity.jetbrains.com/repository/download/hatchery_buildplugin/.lastSuccessful/hatchery.zip?guest=1). Download the plugin ZIP file and [install it from disk](https://www.jetbrains.com/help/idea/managing-plugins.html#installing-plugins-from-disk).
 
 ### Contributing
 
@@ -61,15 +63,9 @@ To contribute to this project, run the following command from inside the project
 
 This will download and run IntelliJ IDEA CE and open the project. You are ready to get started!
 
-#### Plugin
-
-Existing users of JetBrains' IDEs (ex. PyCharm, CLion, or IntelliJ IDEA) can install Hatchery directly through the IDE, via **File | Settings | Plugins | Marketplace... | :mag: "hatchery"**. Older versions of Hatchery are also available through the [plugin repository](https://plugins.jetbrains.com/plugin/10290-hatchery).
-
-For the adventurous, untested, bleeding edge builds are also available on our [TeamCity build server](https://teamcity.jetbrains.com/repository/download/hatchery_buildplugin/.lastSuccessful/hatchery.zip?guest=1). Download the plugin ZIP file and [install it from disk](https://www.jetbrains.com/help/idea/managing-plugins.html#installing-plugins-from-disk).
-
 #### ROS Enrivonment
 
-When using Hatchery, it helps if you are running the IDE inside with the ROS environment. In most cases, we can detect the ROS installation path, however you may need to manually configure the [ROS environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) beforehand.
+Hatchery tries to locate the ROS installation directory, but it helps if you are running the IDE inside with the ROS environment. In most cases, we can detect the ROS installation path, however you may need to manually configure the [ROS environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) beforehand.
 
 ### Getting Started
 
@@ -100,7 +96,6 @@ Currently, Hatchery supports the following [ROS filetypes](https://wiki.wpi.edu/
 <!--
     -[ ] Live logfile tracking
 - [x] ROS Message (`*.msg`)
-<!--
     -[x] Syntax highlighting
 -->
 - [x] ROS Service (`*.srv`)
