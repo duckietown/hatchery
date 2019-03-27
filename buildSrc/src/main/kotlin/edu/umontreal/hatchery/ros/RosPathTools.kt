@@ -25,7 +25,6 @@ enum class RosEnv {
   ROS_ROOT, ROS_DISTRO, PYTHONPATH, ROS_MASTER_URI, ROS_PACKAGE_PATH, CATKIN_SHELL
 }
 
-const val defaultDistro = "kinetic"
 const val baseRosPath = "/opt/ros"
 val defaultShell =
   Shell.values().firstOrNull { it.name == System.getenv("$CATKIN_SHELL") } ?: sh
@@ -97,9 +96,11 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
     val command: String
       get() = "$this list"
 
-    val list: Callable<String>
-      get() = object : Callable<String> {
+    val list: Callable<List<String>>
+      get() = object : Callable<List<String>> {
         override fun call() = runCommand(ros.shell.name, "-c", command)
+          .lines().dropLastWhile { it.isBlank() }.takeLast(2)
+
         override fun toString() = command
       }
   }

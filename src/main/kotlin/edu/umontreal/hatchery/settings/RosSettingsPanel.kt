@@ -19,7 +19,7 @@ class RosSettingsPanel {
   private val localRosPathField = JTextField()
   private val localRosPackages = JBScrollPane(JBTable(
     object : DefaultTableModel(
-      rosPackages.map { arrayOf(it.key, it.value.absolutePath) }.toTypedArray(),
+      rosPackages.map { arrayOf(it.key, it.value) }.toTypedArray(),
       arrayOf("Package", "Path")
     ) {
       override fun isCellEditable(row: Int, column: Int) = false

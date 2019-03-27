@@ -1,12 +1,9 @@
 package edu.umontreal.hatchery.ros.nodes
 
 
-import org.ros.internal.message.Message
-import org.ros.message.MessageListener
 import org.ros.namespace.GraphName
 import org.ros.node.AbstractNodeMain
 import org.ros.node.ConnectedNode
-import std_msgs.String
 
 class Listener: AbstractNodeMain() {
 
