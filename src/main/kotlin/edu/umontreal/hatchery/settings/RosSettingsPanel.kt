@@ -4,7 +4,6 @@ import com.intellij.ui.IdeBorderFactory
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.layout.panel
 import com.intellij.ui.table.JBTable
-import edu.umontreal.hatchery.rospackage.RosPackageReferenceContributor.rosPackages
 import edu.umontreal.hatchery.util.medium
 import java.awt.Font
 import java.util.*
@@ -19,7 +18,7 @@ class RosSettingsPanel {
   private val localRosPathField = JTextField()
   private val localRosPackages = JBScrollPane(JBTable(
     object : DefaultTableModel(
-      rosPackages.map { arrayOf(it.key, it.value) }.toTypedArray(),
+      RosConfig.settings.ros.packages.map { arrayOf(it.key, it.value) }.toTypedArray(),
       arrayOf("Package", "Path")
     ) {
       override fun isCellEditable(row: Int, column: Int) = false

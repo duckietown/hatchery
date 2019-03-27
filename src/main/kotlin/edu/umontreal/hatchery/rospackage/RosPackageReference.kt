@@ -5,14 +5,14 @@ import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
-import edu.umontreal.hatchery.rospackage.RosPackageReferenceContributor.rosPackages
+import edu.umontreal.hatchery.settings.RosConfig
 
 class RosPackageReference(private val psiElement: XmlTag) : PsiReferenceBase<XmlTag>(psiElement, false) {
   override fun resolve() =
     psiElement.let { tag ->
       val packageName = tag.value.text
       getLocalRosPackages().firstOrNull { it.containingDirectory.name == packageName }
-        ?: if (rosPackages.containsKey(packageName)) psiElement else null
+        ?: if (RosConfig.settings.ros.packages.containsKey(packageName)) psiElement else null
     }
 
   override fun getVariants() =

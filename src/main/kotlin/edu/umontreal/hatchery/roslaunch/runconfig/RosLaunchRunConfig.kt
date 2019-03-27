@@ -23,5 +23,5 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
     RosLaunchSettingsEditor(project, rosPackagePath, rosLaunchPath)
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-    RunAnythingRunProfileState(environment, Ros().launch(rosPackagePath, rosLaunchPath).toString())
+    RunAnythingRunProfileState(environment, RosConfig.settings.ros.launch(rosPackagePath, rosLaunchPath).toString())
 }

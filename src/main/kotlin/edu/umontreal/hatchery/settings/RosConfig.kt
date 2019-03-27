@@ -12,6 +12,7 @@ import com.intellij.openapi.options.Configurable
 object RosConfig : Configurable, PersistentStateComponent<RosSettings> {
   private val logger = Logger.getInstance(RosConfig::class.java)
   var settings: RosSettings = RosSettings()
+    private set
 
   override fun getState() = settings
 

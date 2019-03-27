@@ -65,6 +65,14 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
   val pythonPath: File
   val buildSystem: BuildSystem
   val command: String
+  val packages: Map<String, String>
+    get() = pack.list.call()
+      .map {
+        if (it.contains(" "))
+          Pair(it.substringBefore(" "), it.substringAfter(" ") + "/package.xml")
+        else
+          Pair(it, "")
+      }.toMap()
 
   init {
     shell = try {
