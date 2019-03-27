@@ -1,11 +1,10 @@
-@file:Suppress("unused")
+@file:Suppress("EnumEntryName")
 
 package edu.umontreal.hatchery.ros
 
 import edu.umontreal.hatchery.ros.BuildSystem.*
-import edu.umontreal.hatchery.ros.Distro.*
 import edu.umontreal.hatchery.ros.RosEnv.*
-import edu.umontreal.hatchery.ros.Shell.*
+import edu.umontreal.hatchery.ros.Shell.sh
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.concurrent.Callable
@@ -50,10 +49,10 @@ enum class Shell {
   override fun toString() = name.toLowerCase()
 }
 
-enum class Distro {
-  electric, fuerte,
-  groovy, hydro, indigo, jade, kinetic, lunar, melodic,
-  ardent, bouncy, crystal;
+enum class Distro(val version: Int) {
+  electric(0), fuerte(0),
+  groovy(1), hydro(1), indigo(1), jade(1), kinetic(1), lunar(1), melodic(1),
+  ardent(2), bouncy(2), crystal(2), dashing(2);
 }
 
 enum class BuildSystem(val command: String) {
@@ -61,31 +60,36 @@ enum class BuildSystem(val command: String) {
 }
 
 class Ros(val setupScript: String = defaultRosSetupScript) {
-  val rosSetupScriptFile = File(setupScript)
-
-  val shell = try {
-    Shell.valueOf(setupScript.split(".").last())
-  } catch (e: Exception) {
-    sh
-  }
-
+  val shell: Shell
+  val setupScriptFile: File
   val distro: Distro
   val pythonPath: File
   val buildSystem: BuildSystem
+  val command: String
 
   init {
+    shell = try {
+      Shell.valueOf(setupScript.split(".").last())
+    } catch (e: Exception) {
+      sh
+    }
+    setupScriptFile = File(setupScript)
     val info = runCommand(shell.name, "-c",
       """. $setupScript && echo "
       |$$ROS_DISTRO
-      |$$PYTHONPATH"""".trimMargin()).lines().dropLastWhile { it.isBlank() }.takeLast(2)
+      |$$PYTHONPATH"""".trimMargin())
+      .lines().dropLastWhile { it.isBlank() }.takeLast(2)
     distro = Distro.valueOf(info.first())
     pythonPath = File(info.last())
-    buildSystem = when (distro) {
-      electric, fuerte -> rosbuild
-      groovy, hydro, indigo, jade, kinetic, lunar, melodic -> catkin
-      ardent, bouncy, crystal-> colcon
+    buildSystem = when (distro.version) {
+      0 -> rosbuild
+      1 -> catkin
+      else -> colcon
     }
-
+    command = when (distro.version) {
+      0, 1 -> "ros"
+      else -> "ros2 "
+    }
   }
 
   // http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT
@@ -101,11 +105,11 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
   }
 
   val pack = object : Listable(this) {
-    override fun toString() = this@Ros.toString() + if (isRos2(setupScript)) "pkg" else "pack"
+    override fun toString() = "${this@Ros}node" + if (1 < distro.version) "pkg" else "pack"
   }
 
   val service = object : Listable(this) {
-    override fun toString() = this@Ros.toString() + if (isRos2(setupScript)) "service" else "srv"
+    override fun toString() = "${this@Ros}node" + if (1 < distro.version) "service" else "srv"
   }
 
   val node = object : Listable(this) {
@@ -120,14 +124,14 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
     override fun toString() = "${this@Ros}msg"
   }
 
-  fun launch(pkg: String, launchFile: String) = object : Runnable {
+  fun launch(rosPackage: String, launchFile: String) = object : Runnable {
     override fun run() {
       runCommand(shell.name, "-c", toString())
     }
 
     private val rosWorkspace: File
       get() = try {
-        File(pkg).getContainingRosWorkspaceIfItExists()
+        File(rosPackage).getContainingRosWorkspaceIfItExists()
       } catch (notFound: FileNotFoundException) {
         File("")
       }
@@ -148,14 +152,14 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
       ${service.list} &&
       echo 'Available parameters:' &&
       ${param.list}' &&
-      ${this@Ros}launch $pkg $launchFile""".trimMargin()
+      ${this@Ros}launch $rosPackage $launchFile""".trimMargin()
   }
 
   val param = object : Listable(this) {
     override fun toString() = "${this@Ros}param"
   }
 
-  override fun toString() = if (isRos2(setupScript)) "ros2 " else "ros"
+  override fun toString() = command
 }
 
 fun runCommand(vararg commands: String): String {
@@ -168,5 +172,3 @@ fun runCommand(vararg commands: String): String {
   return proc.inputStream.bufferedReader().readText()
 }
 
-fun isRos2(distro: String) =
-  "ardent" in distro || "bouncy" in distro || "crystal" in distro

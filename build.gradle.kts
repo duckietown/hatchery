@@ -113,13 +113,14 @@ intellij {
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
 
-  setPlugins("name.kropp.intellij.makefile:1.6",   // Makefile support
+  setPlugins("name.kropp.intellij.makefile:1.6.1", // Makefile support
     "org.intellij.plugins.markdown:191.5849.16",   // Markdown support
-    "net.seesharpsoft.intellij.plugins.csv:2.2.1", // CSV file support
+    "net.seesharpsoft.intellij.plugins.csv:2.3.0", // CSV file support
     "com.intellij.ideolog:191.0.7.0",              // Log file support
     "BashSupport:1.7.6",                           // [Ba]sh   support
     "Docker:191.6183.53",                          // Docker   support
     "PsiViewer:191.4212",                          // PSI view support
+    "IntelliLang",
     "yaml")
 }
 
