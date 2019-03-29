@@ -65,14 +65,16 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
   val pythonPath: File
   val buildSystem: BuildSystem
   val command: String
-  val packages: Map<String, String>
-    get() = pack.list.call()
+  val env: Map<String, String>
+  val packages: Map<String, String> by lazy {
+   pack.list.call()
       .map {
         if (it.contains(" "))
           Pair(it.substringBefore(" "), it.substringAfter(" ") + "/package.xml")
         else
           Pair(it, "")
       }.toMap()
+  }
 
   init {
     shell = try {
@@ -81,13 +83,10 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
       sh
     }
     setupScriptFile = File(setupScript)
-    val info = runCommand(shell.name, "-c",
-      """. $setupScript && echo "
-      |$$ROS_DISTRO
-      |$$PYTHONPATH"""".trimMargin())
-      .lines().dropLastWhile { it.isBlank() }.takeLast(2)
-    distro = Distro.valueOf(info.first())
-    pythonPath = File(info.last())
+    env = runCommand(shell.name, "-c", ". $setupScript && env")
+      .lines().mapNotNull { it.split("=").zipWithNext().firstOrNull() }.toMap()
+    distro = Distro.valueOf(env["$ROS_DISTRO"]!!)
+    pythonPath = File(env["$PYTHONPATH"])
     buildSystem = when (distro.version) {
       0 -> rosbuild
       1 -> catkin
@@ -102,23 +101,23 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
   // http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT
   open class Listable(val ros: Ros) {
     val command: String
-      get() = "$this list"
+      get() = ". ${ros.setupScript} && $this list"
 
     val list: Callable<List<String>>
       get() = object : Callable<List<String>> {
         override fun call() = runCommand(ros.shell.name, "-c", command)
-          .lines().dropLastWhile { it.isBlank() }.takeLast(2)
+          .lines().dropLastWhile { it.isBlank() }
 
         override fun toString() = command
       }
   }
 
   val pack = object : Listable(this) {
-    override fun toString() = "${this@Ros}node" + if (1 < distro.version) "pkg" else "pack"
+    override fun toString() = "${this@Ros}" + if (1 < distro.version) "pkg" else "pack"
   }
 
   val service = object : Listable(this) {
-    override fun toString() = "${this@Ros}node" + if (1 < distro.version) "service" else "srv"
+    override fun toString() = "${this@Ros}" + if (1 < distro.version) "service" else "srv"
   }
 
   val node = object : Listable(this) {
@@ -180,4 +179,3 @@ fun runCommand(vararg commands: String): String {
   proc.waitFor(60, TimeUnit.SECONDS)
   return proc.inputStream.bufferedReader().readText()
 }
-

@@ -14,8 +14,8 @@ class RosSettings {
 
   var localRosPath = defaultRosSetupScript
     set(value) {
-      ros = Ros(localRosPath)
-      field = value
+        ros = Ros(value)
+        field = value
     }
 
   var ros = Ros(localRosPath)
