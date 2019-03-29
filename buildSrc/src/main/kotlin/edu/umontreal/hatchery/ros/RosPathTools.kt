@@ -159,7 +159,7 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
       echo 'Available services:' &&
       ${service.list} &&
       echo 'Available parameters:' &&
-      ${param.list}' &&
+      ${param.list} &&
       ${this@Ros}launch $rosPackage $launchFile""".trimMargin()
   }
 
