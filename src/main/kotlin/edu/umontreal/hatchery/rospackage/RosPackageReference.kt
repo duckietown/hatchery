@@ -11,21 +11,17 @@ class RosPackageReference(private val psiElement: XmlTag) : PsiReferenceBase<Xml
   override fun resolve() =
     psiElement.let { tag ->
       val packageName = tag.value.text
-      getLocalRosPackages().firstOrNull { it.containingDirectory.name == packageName }
+      getProjectLocalRosPackages().firstOrNull { it.containingDirectory.name == packageName }
         ?: if (RosConfig.settings.localRos.packages.containsKey(packageName)) psiElement else null
     }
 
   override fun getVariants() =
-    getLocalRosPackages().flatMap { file ->
+    getProjectLocalRosPackages().flatMap { file ->
       file.document?.rootTag?.subTags
         ?.filter { it.name == "name" }?.map { it.value.text } ?: listOf()
     }.toTypedArray()
 
-
-//  private fun getLocalRosPackages() =
-//    FileTypeIndex.getFiles(RosPackageFileType, GlobalSearchScope.allScope(psiElement.project))
-//      .map { it.toPsi(psiElement.project) }.filterIsInstance<XmlFile>()
-  private fun getLocalRosPackages() =
+  private fun getProjectLocalRosPackages() =
     FilenameIndex.getFilesByName(psiElement.project,
       RosPackageFileType.filename,
       GlobalSearchScope.allScope(psiElement.project)

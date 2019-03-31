@@ -83,7 +83,7 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
     }
     setupScriptFile = File(setupScript)
     // http://wiki.ros.org/ROS/EnvironmentVariables
-    env = runCommand(shell.name, "-c", ". $setupScript && env")
+    env = runCommandAndFetchOutput(emptyMap(), shell.name, "-c", ". $setupScript && env")
       .lines().mapNotNull { it.split("=").zipWithNext().firstOrNull() }.toMap()
     distro = Distro.valueOf(env["$ROS_DISTRO"]!!)
     pythonPath = File(env["$PYTHONPATH"])
@@ -98,19 +98,15 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
     }
   }
 
-  class Command(val shell: String, val command: String) : () -> String {
-    override fun invoke(): String = runCommand(shell, "-c", command)
+  fun runInBackground(command: String) = runCommandInBackground(env, shell.name, "-c", ". ${setupScript} && $command")
 
-    override fun toString() = command
-  }
+  fun getOutput(command: String) = runCommandAndFetchOutput(env, shell.name, "-c", ". ${setupScript} && $command")
 
-  open class Listable(val ros: Ros) {
-    val command = Command(ros.shell.name, ". ${ros.setupScript} && $this list")
-
+  abstract class Listable(val ros: Ros) {
     val list: Callable<List<String>> = object : Callable<List<String>> {
-      override fun call() = command().lines().dropLastWhile { it.isBlank() }
+      val command = "${this@Listable} list"
 
-      override fun toString() = command.toString()
+      override fun call() = ros.getOutput("$command").lines().dropLastWhile { it.isBlank() }
     }
   }
 
@@ -136,7 +132,7 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
 
   fun launch(rosPackage: String, launchFile: String) = object : Runnable {
     override fun run() {
-      runCommand(shell.name, "-c", toString())
+      runCommandAndFetchOutput(env, shell.name, "-c", toString())
     }
 
     private val rosWorkspace: File = try {
@@ -147,8 +143,8 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
 
     val rosDevelScriptPathRel = "${rosWorkspace.absolutePath}/devel/setup.$shell"
 
-    override fun toString() = """echo Sourcing $setupScript && . $setupScript &&
-      echo 'ROS workspace directory: ${rosWorkspace.absolutePath}' &&
+    override fun toString() =
+      """echo 'ROS workspace directory: ${rosWorkspace.absolutePath}' &&
       cd ${rosWorkspace.absolutePath} &&
       ${buildSystem.command} &&
       echo 'Sourcing ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel' &&
@@ -171,12 +167,16 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
   override fun toString() = command
 }
 
-fun runCommand(vararg commands: String): String {
+fun runCommandAndFetchOutput(env: Map<String, String>, vararg commands: String): String {
   val proc = ProcessBuilder(*commands)
+    .apply { environment().putAll(env) }
     .redirectOutput(ProcessBuilder.Redirect.PIPE)
     .redirectError(ProcessBuilder.Redirect.PIPE)
     .start()
 
-  proc.waitFor(60, TimeUnit.SECONDS)
+  proc.waitFor(10, TimeUnit.SECONDS)
   return proc.inputStream.bufferedReader().readText()
 }
+
+fun runCommandInBackground(env: Map<String, String>, vararg commands: String) =
+  ProcessBuilder(*commands).apply { environment().putAll(env) }.start()

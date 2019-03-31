@@ -2,13 +2,11 @@ package edu.umontreal.hatchery.rqt
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import edu.umontreal.hatchery.settings.RosConfig
 
-class RqtAction: AnAction {
-  constructor()
-  constructor(name: String): super("rqt_image_view $name")
-
+object RqtAction: AnAction() {
   override fun actionPerformed(e: AnActionEvent) {
     // TODO: Fix this hack - unsure how to get action ID, so we use description
-    ProcessBuilder(e.presentation.description).start()
+    RosConfig.settings.localRos.runInBackground(e.presentation.description)
   }
 }

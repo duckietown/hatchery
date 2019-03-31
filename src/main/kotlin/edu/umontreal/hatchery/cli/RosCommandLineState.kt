@@ -7,20 +7,19 @@ import com.intellij.execution.filters.TextConsoleBuilderFactory
 import com.intellij.execution.process.ColoredProcessHandler
 import com.intellij.execution.process.ProcessTerminatedListener
 import com.intellij.execution.runners.ExecutionEnvironment
+import edu.umontreal.hatchery.settings.RosConfig
 
 class RosCommandLineState : CommandLineState {
-  private val commands: Array<out String>
   private val commandLine: GeneralCommandLine
 
   constructor(env: ExecutionEnvironment, vararg commands: String) : super(env) {
-    this.commands = commands
-    this.commandLine = createCommandLine()
+    commandLine = createCommandLine(*commands)
     consoleBuilder = TextConsoleBuilderFactory.getInstance().createBuilder(env.project)
   }
 
-  private fun createCommandLine() =
+  private fun createCommandLine(vararg commands: String) =
     GeneralCommandLine(*commands)
-      .withEnvironment(System.getenv())
+      .withEnvironment(RosConfig.settings.localRos.env)
       .withParentEnvironmentType(SYSTEM)
 
   override fun startProcess() =

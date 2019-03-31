@@ -8,8 +8,8 @@ import com.intellij.openapi.project.Project
 import edu.umontreal.hatchery.cli.RosCommandLineState
 import edu.umontreal.hatchery.settings.RosConfig
 
-class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
-  constructor(project: Project, name: String):
+class RosLaunchRunConfig : LocatableConfigurationBase<RunProfileState> {
+  constructor(project: Project, name: String) :
     super(project, RosLaunchRunConfigFactory, name)
 
   internal var remoteAddress = RosConfig.settings.remoteAddress
@@ -22,6 +22,9 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
     RosLaunchSettingsEditor(project, rosPackagePath, rosLaunchPath)
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-    RosCommandLineState(environment, RosConfig.settings.localRos.shell.name, "-c", RosConfig.settings.localRos.launch(rosPackagePath, rosLaunchPath).toString())
+    RosConfig.settings.localRos.run {
+      RosCommandLineState(environment, shell.name, "-c", launch(rosPackagePath, rosLaunchPath).toString())
+
+    }
 //    RunAnythingRunProfileState(environment, RosConfig.settings.localRos.launch(rosPackagePath, rosLaunchPath).toString())
 }
