@@ -1,4 +1,4 @@
-@file:Suppress("EnumEntryName")
+@file:Suppress("EnumEntryName", "unused")
 
 package edu.umontreal.hatchery.ros
 
@@ -34,8 +34,8 @@ private val defaultRootDir =
     ?.let { File(it).parentFile?.parentFile }
     ?.absolutePath
 
-val defaultInstallDir
-  get() = defaultRootDir ?: if (File(baseRosPath).isDirectory)
+val defaultInstallDir =
+  defaultRootDir ?: if (File(baseRosPath).isDirectory)
     File(baseRosPath).listFiles().first().absolutePath
   else null
 
@@ -67,13 +67,12 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
   val command: String
   val env: Map<String, String>
   val packages: Map<String, String> by lazy {
-   pack.list.call()
-      .map {
-        if (it.contains(" "))
-          Pair(it.substringBefore(" "), it.substringAfter(" ") + "/package.xml")
-        else
-          Pair(it, "")
-      }.toMap()
+    pack.list.call().map {
+      if (it.contains(" "))
+        Pair(it.substringBefore(" "), it.substringAfter(" ") + "/package.xml")
+      else
+        Pair(it, "")
+    }.toMap()
   }
 
   init {
@@ -83,6 +82,7 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
       sh
     }
     setupScriptFile = File(setupScript)
+    // http://wiki.ros.org/ROS/EnvironmentVariables
     env = runCommand(shell.name, "-c", ". $setupScript && env")
       .lines().mapNotNull { it.split("=").zipWithNext().firstOrNull() }.toMap()
     distro = Distro.valueOf(env["$ROS_DISTRO"]!!)
@@ -98,38 +98,40 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
     }
   }
 
-  // http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT
+  class Command(val shell: String, val command: String) : () -> String {
+    override fun invoke(): String = runCommand(shell, "-c", command)
+
+    override fun toString() = command
+  }
+
   open class Listable(val ros: Ros) {
-    val command: String
-      get() = ". ${ros.setupScript} && $this list"
+    val command = Command(ros.shell.name, ". ${ros.setupScript} && $this list")
 
-    val list: Callable<List<String>>
-      get() = object : Callable<List<String>> {
-        override fun call() = runCommand(ros.shell.name, "-c", command)
-          .lines().dropLastWhile { it.isBlank() }
+    val list: Callable<List<String>> = object : Callable<List<String>> {
+      override fun call() = command().lines().dropLastWhile { it.isBlank() }
 
-        override fun toString() = command
-      }
+      override fun toString() = command.toString()
+    }
   }
 
   val pack = object : Listable(this) {
-    override fun toString() = "${this@Ros}" + if (1 < distro.version) "pkg" else "pack"
+    override fun toString() = "$ros" + if (1 < distro.version) "pkg" else "pack"
   }
 
   val service = object : Listable(this) {
-    override fun toString() = "${this@Ros}" + if (1 < distro.version) "service" else "srv"
+    override fun toString() = "$ros" + if (1 < distro.version) "service" else "srv"
   }
 
   val node = object : Listable(this) {
-    override fun toString() = "${this@Ros}node"
+    override fun toString() = "${ros}node"
   }
 
   val topic = object : Listable(this) {
-    override fun toString() = "${this@Ros}topic"
+    override fun toString() = "${ros}topic"
   }
 
   val msg = object : Listable(this) {
-    override fun toString() = "${this@Ros}msg"
+    override fun toString() = "${ros}msg"
   }
 
   fun launch(rosPackage: String, launchFile: String) = object : Runnable {
@@ -137,12 +139,11 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
       runCommand(shell.name, "-c", toString())
     }
 
-    private val rosWorkspace: File
-      get() = try {
-        File(rosPackage).getContainingRosWorkspaceIfItExists()
-      } catch (notFound: FileNotFoundException) {
-        File("")
-      }
+    private val rosWorkspace: File = try {
+      File(rosPackage).getContainingRosWorkspaceIfItExists()
+    } catch (notFound: FileNotFoundException) {
+      File("")
+    }
 
     val rosDevelScriptPathRel = "${rosWorkspace.absolutePath}/devel/setup.$shell"
 
@@ -164,7 +165,7 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
   }
 
   val param = object : Listable(this) {
-    override fun toString() = "${this@Ros}param"
+    override fun toString() = "${ros}param"
   }
 
   override fun toString() = command

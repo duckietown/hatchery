@@ -18,7 +18,7 @@ class RosSettingsPanel {
   private val localRosPathField = JTextField()
   private val localRosPackages: JBTable
     get() = JBTable(object : DefaultTableModel(
-      RosConfig.settings.ros.packages.map { arrayOf(it.key, it.value) }.toTypedArray(),
+      RosConfig.settings.localRos.packages.map { arrayOf(it.key, it.value) }.toTypedArray(),
       arrayOf("Package", "Path")
     ) {
       override fun isCellEditable(row: Int, column: Int) = false

@@ -8,17 +8,26 @@ import kotlin.reflect.KProperty
 class RosSettings {
   var localRunCommand: String = "roslaunch"
   var remoteAddress: String = ""
-  var remoteRosPath: String = defaultRosSetupScript
+
   var remoteRunCommand: String = "roslaunch"
   var sshCredentialsPath: String = ""
 
   var localRosPath = defaultRosSetupScript
     set(value) {
-        ros = Ros(value)
+        localRos = Ros(value)
         field = value
     }
 
-  var ros = Ros(localRosPath)
+  var localRos = Ros(localRosPath)
+    private set
+
+  var remoteRosPath: String = defaultRosSetupScript
+  set(value) {
+    remoteRos = Ros(value)
+    field = value
+  }
+
+  var remoteRos = Ros(localRosPath)
     private set
 
   // Force delegate to read the most current value by invoking as a function

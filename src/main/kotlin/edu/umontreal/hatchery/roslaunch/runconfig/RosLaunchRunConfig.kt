@@ -4,10 +4,8 @@ import com.intellij.execution.Executor
 import com.intellij.execution.configurations.LocatableConfigurationBase
 import com.intellij.execution.configurations.RunProfileState
 import com.intellij.execution.runners.ExecutionEnvironment
-import com.intellij.ide.actions.runAnything.execution.RunAnythingRunProfileState
 import com.intellij.openapi.project.Project
 import edu.umontreal.hatchery.cli.RosCommandLineState
-import edu.umontreal.hatchery.ros.Ros
 import edu.umontreal.hatchery.settings.RosConfig
 
 class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
@@ -24,6 +22,6 @@ class RosLaunchRunConfig: LocatableConfigurationBase<RunProfileState> {
     RosLaunchSettingsEditor(project, rosPackagePath, rosLaunchPath)
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-    RosCommandLineState(environment, RosConfig.settings.ros.shell.name, "-c", RosConfig.settings.ros.launch(rosPackagePath, rosLaunchPath).toString())
-//    RunAnythingRunProfileState(environment, RosConfig.settings.ros.launch(rosPackagePath, rosLaunchPath).toString())
+    RosCommandLineState(environment, RosConfig.settings.localRos.shell.name, "-c", RosConfig.settings.localRos.launch(rosPackagePath, rosLaunchPath).toString())
+//    RunAnythingRunProfileState(environment, RosConfig.settings.localRos.launch(rosPackagePath, rosLaunchPath).toString())
 }
