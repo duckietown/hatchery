@@ -85,7 +85,7 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
     // http://wiki.ros.org/ROS/EnvironmentVariables
     env = runCommandAndFetchOutput(emptyMap(), shell.name, "-c", ". $setupScript && env")
       .lines().mapNotNull { it.split("=").zipWithNext().firstOrNull() }.toMap()
-    distro = Distro.valueOf(env["$ROS_DISTRO"]!!)
+    distro = env["$ROS_DISTRO"]?.run { Distro.valueOf(this) } ?: Distro.kinetic
     pythonPath = File(env["$PYTHONPATH"])
     buildSystem = when (distro.version) {
       0 -> rosbuild
