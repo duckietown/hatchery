@@ -14,20 +14,20 @@ class RosSettings {
 
   var localRosPath = defaultRosSetupScript
     set(value) {
-        localRos = Ros(value)
-        field = value
+      localRos = Ros(value ?: "")
+      field = value
     }
 
-  var localRos = Ros(localRosPath)
+  var localRos = Ros()
     private set
 
-  var remoteRosPath: String = defaultRosSetupScript
-  set(value) {
-    remoteRos = Ros(value)
-    field = value
-  }
+  var remoteRosPath: String = defaultRosSetupScript ?: ""
+    set(value) {
+      remoteRos = Ros(value)
+      field = value
+    }
 
-  var remoteRos = Ros(localRosPath)
+  var remoteRos = Ros()
     private set
 
   // Force delegate to read the most current value by invoking as a function

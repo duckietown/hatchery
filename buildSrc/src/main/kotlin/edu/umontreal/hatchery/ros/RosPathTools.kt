@@ -40,7 +40,7 @@ val defaultInstallDir =
   else null
 
 val defaultRosSetupScript =
-  if (defaultInstallDir != null) "$defaultInstallDir/setup.$defaultShell" else ""
+  if (defaultInstallDir != null) "$defaultInstallDir/setup.$defaultShell" else null
 
 enum class Shell {
   bash, sh, zsh;
@@ -58,7 +58,7 @@ enum class BuildSystem(val command: String) {
   catkin("catkin_make"), rosbuild("rosmake"), colcon("colcon build");
 }
 
-class Ros(val setupScript: String = defaultRosSetupScript) {
+class Ros(val setupScript: String = defaultRosSetupScript!!) {
   val shell: Shell
   val setupScriptFile: File
   val distro: Distro
@@ -81,11 +81,14 @@ class Ros(val setupScript: String = defaultRosSetupScript) {
     } catch (e: Exception) {
       sh
     }
-    setupScriptFile = File(setupScript)
+    setupScriptFile = File(setupScript).apply {
+      if(!exists()) throw FileNotFoundException("No such file: $setupScript")
+    }
     // http://wiki.ros.org/ROS/EnvironmentVariables
-    env = runCommandAndFetchOutput(emptyMap(), shell.name, "-c", ". $setupScript && env")
+    env = if (System.getenv()["$ROS_ROOT"] == setupScript) System.getenv()
+    else runCommandAndFetchOutput(emptyMap(), shell.name, "-c", ". $setupScript && env")
       .lines().mapNotNull { it.split("=").zipWithNext().firstOrNull() }.toMap()
-    distro = env["$ROS_DISTRO"]?.run { Distro.valueOf(this) } ?: Distro.kinetic
+    distro = Distro.valueOf(env["$ROS_DISTRO"] ?: Distro.kinetic.name)
     pythonPath = File(env["$PYTHONPATH"])
     buildSystem = when (distro.version) {
       0 -> rosbuild
