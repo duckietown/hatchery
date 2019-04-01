@@ -10,10 +10,7 @@ WORKDIR /home/IdeaProjects/hatchery
 COPY . .
 
 ENV DUCKIETOWN_ROOT /home/software
-ENV ROS_ROOT /opt/ros/kinetic/share/ros
 
-#RUN ./gradlew test -i
-
-RUN ./gradlew buildPlugin --stacktrace
+RUN source /opt/ros/kinetic/setup.bash && ./gradlew buildPlugin --stacktrace
 
 CMD ./gradlew runIde
