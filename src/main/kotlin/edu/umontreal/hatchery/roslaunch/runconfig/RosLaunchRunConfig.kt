@@ -12,19 +12,24 @@ class RosLaunchRunConfig : LocatableConfigurationBase<RunProfileState> {
   constructor(project: Project, name: String) :
     super(project, RosLaunchRunConfigFactory, name)
 
-  internal var remoteAddress = RosConfig.settings.remoteAddress
-  internal var remoteRosPath = RosConfig.settings.remoteRosPath
-
   var rosLaunchPath = ""
   var rosPackagePath = ""
+
+  var destinationAddress = ""
+  var destinationPath = ""
+  var rosLaunchOptions: String = RosConfig.settings.defaultRosLaunchOptions
+  var rosLaunchArgs: String = ""
 
   override fun getConfigurationEditor() =
     RosLaunchSettingsEditor(project, rosPackagePath, rosLaunchPath)
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-    RosConfig.settings.localRos.run {
-      RosCommandLineState(environment, shell.name, "-c", launch(rosPackagePath, rosLaunchPath).toString())
-
-    }
+    RosCommandLineState(environment, RosConfig.settings.localRos.shell.name, "-c",
+      RosConfig.settings.localRos.launch(
+        rosPackagePath,
+        rosLaunchPath,
+        rosLaunchOptions,
+        rosLaunchArgs).toString()
+    )
 //    RunAnythingRunProfileState(environment, RosConfig.settings.localRos.launch(rosPackagePath, rosLaunchPath).toString())
 }

@@ -11,6 +11,6 @@ COPY . .
 
 ENV DUCKIETOWN_ROOT /home/software
 
-RUN . /opt/ros/kinetic/setup.sh && ./gradlew buildPlugin --stacktrace
+RUN ./gradlew buildPlugin --stacktrace
 
 CMD ./gradlew runIde

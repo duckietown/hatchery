@@ -10,6 +10,8 @@
 
     <description><![CDATA[<a href="https://github.com/duckietown/hatchery#hatchery">Hatchery</a> is plugin for developing applications for the <a href="https://ros.org">Robot Operating System</a> (ROS).]]></description>
 
+    <change-notes>New ROS menu, tool buttons, a settings page, support for ROS Launch run configurations, and improved parsing of .launch files.</change-notes>
+
     <resource-bundle>HatcheryBundle</resource-bundle>
     <application-components>
         <component>

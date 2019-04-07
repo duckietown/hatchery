@@ -6,7 +6,7 @@ import java.io.File
 import kotlin.reflect.KProperty
 
 class RosSettings {
-  var localRunCommand: String = "roslaunch"
+  var defaultRosLaunchOptions: String = ""
   var remoteAddress: String = ""
 
   var remoteRunCommand: String = "roslaunch"

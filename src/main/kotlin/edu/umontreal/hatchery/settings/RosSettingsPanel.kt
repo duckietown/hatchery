@@ -24,7 +24,7 @@ class RosSettingsPanel {
       override fun isCellEditable(row: Int, column: Int) = false
     })
 
-  private val localRunCommandField = JTextField()
+  private val rosLaunchOptionsField = JTextField()
     .apply { font = Font("monospaced", font.style, font.size) }
   private val remoteAddressField = JTextField()
   private val remoteRosPathField = JTextField()
@@ -32,13 +32,21 @@ class RosSettingsPanel {
     .apply { font = Font("monospaced", font.style, font.size) }
   private val sshCredentialsPathField = JTextField()
 
+  init {
+    listOf(remoteAddressField,
+      remoteRosPathField,
+      remoteRunCommandField,
+      sshCredentialsPathField)
+      .forEach { it.isEnabled = false }
+  }
+
   private fun prop(s: String) = ResourceBundle.getBundle("HatcheryBundle").getString(s)!!
 
   internal val rootPanel: JPanel
     get() = panel {
       row(prop("rosInstallationHeading")) {}
       row("ROS installation path:") { localRosPathField(grow) }
-      row("ROS run command:") { medium(localRunCommandField) }
+      row("Default ROS Launch options:") { medium(rosLaunchOptionsField) }
       row("Installed ROS packages") {}
       row { JBScrollPane(localRosPackages)(growX) }
       row(prop("remoteSettingsHeading")) { LineBorder.createGrayLineBorder() }
@@ -50,7 +58,7 @@ class RosSettingsPanel {
     }.also { it.border = IdeBorderFactory.createTitledBorder("Test") }
 
   internal var localRosPath by localRosPathField
-  internal var localRunCommand by localRunCommandField
+  internal var defaultRosLaunchOptions by rosLaunchOptionsField
   internal var remoteAddress by remoteAddressField
   internal var remoteRosPath by remoteRosPathField
   internal var remoteRunCommand by remoteRunCommandField
@@ -58,7 +66,7 @@ class RosSettingsPanel {
 
   fun reset(settings: RosSettings) {
     localRosPath = settings.localRosPath
-    localRunCommand = settings.localRunCommand
+    defaultRosLaunchOptions = settings.defaultRosLaunchOptions
     remoteRosPath = settings.remoteRosPath
     remoteAddress = settings.remoteAddress
     remoteRunCommand = settings.remoteRunCommand

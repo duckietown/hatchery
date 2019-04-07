@@ -10,7 +10,7 @@ import com.intellij.psi.xml.XmlTag
  * @see com.intellij.execution.application.ApplicationRunLineMarkerProvider
  */
 
-object RosLaunchRunLineMarkerContributor: RunLineMarkerContributor() {
+object RosLaunchRunLineMarkerContributor : RunLineMarkerContributor() {
   override fun getInfo(element: PsiElement) =
     if (isIdentifier(element))
       Info(AllIcons.RunConfigurations.TestState.Run, ExecutorAction.getActions()) { "Run ROSLaunch" }

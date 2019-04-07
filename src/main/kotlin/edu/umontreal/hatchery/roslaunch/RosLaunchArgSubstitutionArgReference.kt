@@ -13,9 +13,8 @@ class RosLaunchArgSubstitutionArgReference : PsiReferenceBase<XmlAttributeValue>
     val argName = attributeVal.substringAfter("$(arg ").substringBefore(")")
     val file = element.containingFile as? XmlFile
     val argTags = file?.rootTag?.findSubTags("arg")
-    val argTagMatch = argTags?.first { it.getAttribute("name")?.value == argName }
 
-    return argTagMatch
+    return argTags?.firstOrNull { it.getAttribute("name")?.value == argName }
   }
 
   override fun getVariants() = arrayOf<String>()

@@ -65,7 +65,7 @@ tasks {
   val rosTask by withRosTask()
 
   named("buildPlugin") { dependsOn("test") }
-  
+
   withType<Zip> {
     archiveFileName.set("hatchery.zip")
   }
@@ -115,9 +115,8 @@ intellij {
 
   setPlugins("name.kropp.intellij.makefile:1.6.1", // Makefile support
     "org.intellij.plugins.markdown:191.5849.16",   // Markdown support
-    "net.seesharpsoft.intellij.plugins.csv:2.3.0", // CSV file support
     "com.intellij.ideolog:191.0.7.0",              // Log file support
-    "BashSupport:1.7.6",                           // [Ba]sh   support
+    "BashSupport:1.7.7",                           // [Ba]sh   support
     "Docker:191.6183.53",                          // Docker   support
     "PsiViewer:191.4212",                          // PSI view support
     "IntelliLang",
@@ -147,11 +146,11 @@ dependencies {
   compile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
 
   // Python
-  compile("org.python:jython-standalone:2.7.1")
+  testCompile("org.python:jython-standalone:2.7.1")
 }
 
 envs {
-  bootstrapDirectory =  File(buildDir, "pythons")
+  bootstrapDirectory = File(buildDir, "pythons")
   envsDirectory = File(buildDir, "envs")
 
   conda("Miniconda2", "Miniconda2-latest", listOf("numpy", "pillow"))

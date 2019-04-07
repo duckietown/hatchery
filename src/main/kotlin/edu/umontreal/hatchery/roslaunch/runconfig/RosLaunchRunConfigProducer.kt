@@ -4,8 +4,9 @@ import com.intellij.execution.actions.ConfigurationContext
 import com.intellij.execution.actions.LazyRunConfigurationProducer
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
+import edu.umontreal.hatchery.settings.RosConfig
 
-object RosLaunchRunConfigProducer: LazyRunConfigurationProducer<RosLaunchRunConfig>() {
+object RosLaunchRunConfigProducer : LazyRunConfigurationProducer<RosLaunchRunConfig>() {
   override fun getConfigurationFactory() = RosLaunchRunConfigFactory
 
   override fun isConfigurationFromContext(config: RosLaunchRunConfig,
@@ -19,6 +20,7 @@ object RosLaunchRunConfigProducer: LazyRunConfigurationProducer<RosLaunchRunConf
       config.name = file?.nameWithoutExtension ?: return false
       config.rosLaunchPath = file.canonicalPath ?: ""
       config.rosPackagePath = file.parent?.parent?.canonicalPath ?: ""
+      config.rosLaunchOptions = RosConfig.settings.defaultRosLaunchOptions
     } ?: return false
 
     return true

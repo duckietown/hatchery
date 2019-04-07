@@ -28,11 +28,12 @@ object RosConfig : Configurable, PersistentStateComponent<RosSettings> {
   override fun createComponent() = panel.rootPanel
 
   override fun isModified() = panel.localRosPath != settings.localRosPath ||
-    panel.remoteAddress != settings.remoteAddress
+    panel.remoteAddress != settings.remoteAddress ||
+    panel.defaultRosLaunchOptions != settings.defaultRosLaunchOptions
 
   override fun apply() {
     settings.localRosPath = panel.localRosPath
-    settings.localRunCommand = panel.localRunCommand
+    settings.defaultRosLaunchOptions = panel.defaultRosLaunchOptions
     settings.remoteRosPath = panel.remoteRosPath
     settings.remoteAddress = panel.remoteAddress
     settings.remoteRunCommand = panel.remoteRunCommand

@@ -9,7 +9,7 @@ import java.util.*
  * Tests roslaunch functionality.
  */
 
-class RosLaunchTest: LightPlatformCodeInsightFixtureTestCase() {
+class RosLaunchTest : LightPlatformCodeInsightFixtureTestCase() {
   fun `test launch file detected`() {
     myFixture.configureByText(RosLaunchFileType, """
         <launch>
@@ -20,19 +20,20 @@ class RosLaunchTest: LightPlatformCodeInsightFixtureTestCase() {
   }
 
   fun testPythonInterpreter() {
-    val props = Properties()
-    props.setProperty("python.path", "/home/modules:scripts")
+    val props = Properties().apply {
+      setProperty("python.path", "/home/modules:scripts")
+    }
     PythonInterpreter.initialize(System.getProperties(), props, arrayOf(""))
-    val interp = PythonInterpreter()
+    PythonInterpreter().run {
+      exec("import sys")
+      exec("print sys")
 
-    interp.exec("import sys")
-    interp.exec("print sys")
+      set("a", PyInteger(42))
+      exec("print a")
+      exec("x = 2+2")
+      val x = get("x")
 
-    interp.set("a", PyInteger(42))
-    interp.exec("print a")
-    interp.exec("x = 2+2")
-    val x = interp.get("x")
-
-    println("x: $x")
+      println("x: $x")
+    }
   }
 }

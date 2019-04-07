@@ -58,6 +58,7 @@ enum class BuildSystem(val command: String) {
   catkin("catkin_make"), rosbuild("rosmake"), colcon("colcon build");
 }
 
+@Suppress("LeakingThis", "MemberVisibilityCanBePrivate")
 class Ros(val setupScript: String = defaultRosSetupScript!!) {
   val shell: Shell
   val setupScriptFile: File
@@ -101,15 +102,17 @@ class Ros(val setupScript: String = defaultRosSetupScript!!) {
     }
   }
 
-  fun runInBackground(command: String) = runCommandInBackground(env, shell.name, "-c", ". ${setupScript} && $command")
+  fun runInBackground(command: String) = runCommandInBackground(env, shell.name, "-c", ". $setupScript && $command")
 
-  fun getOutput(command: String) = runCommandAndFetchOutput(env, shell.name, "-c", ". ${setupScript} && $command")
+  fun getOutput(command: String) = runCommandAndFetchOutput(env, shell.name, "-c", ". $setupScript && $command")
 
   abstract class Listable(val ros: Ros) {
     val list: Callable<List<String>> = object : Callable<List<String>> {
       val command = "${this@Listable} list"
 
-      override fun call() = ros.getOutput("$command").lines().dropLastWhile { it.isBlank() }
+      override fun call() = ros.getOutput(command).lines().dropLastWhile { it.isBlank() }
+
+      override fun toString() = command
     }
   }
 
@@ -133,7 +136,10 @@ class Ros(val setupScript: String = defaultRosSetupScript!!) {
     override fun toString() = "${ros}msg"
   }
 
-  fun launch(rosPackage: String, launchFile: String) = object : Runnable {
+  fun launch(rosPackage: String,
+             launchFile: String,
+             options: String = "",
+             args: String = "") = object : Runnable {
     override fun run() {
       runCommandAndFetchOutput(env, shell.name, "-c", toString())
     }
@@ -144,14 +150,14 @@ class Ros(val setupScript: String = defaultRosSetupScript!!) {
       File("")
     }
 
-    val rosDevelScriptPathRel = "${rosWorkspace.absolutePath}/devel/setup.$shell"
+    val rosDevelScriptPath = "${rosWorkspace.absolutePath}/devel/setup.$shell"
 
     override fun toString() =
       """echo 'ROS workspace directory: ${rosWorkspace.absolutePath}' &&
       cd ${rosWorkspace.absolutePath} &&
       ${buildSystem.command} &&
-      echo 'Sourcing ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel' &&
-      . ${rosWorkspace.absolutePath}/$rosDevelScriptPathRel &&
+      echo 'Sourcing $rosDevelScriptPath' &&
+      . $rosDevelScriptPath &&
       echo 'Available nodes:' &&
       ${node.list} &&
       echo 'Available topics:' &&
@@ -160,7 +166,7 @@ class Ros(val setupScript: String = defaultRosSetupScript!!) {
       ${service.list} &&
       echo 'Available parameters:' &&
       ${param.list} &&
-      ${this@Ros}launch $rosPackage $launchFile""".trimMargin()
+      ${this@Ros}launch $options $launchFile $args""".trimMargin()
   }
 
   val param = object : Listable(this) {

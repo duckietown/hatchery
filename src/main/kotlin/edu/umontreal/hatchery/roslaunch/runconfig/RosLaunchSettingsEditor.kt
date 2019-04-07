@@ -11,13 +11,13 @@ import edu.umontreal.hatchery.roslaunch.RosLaunchFileType
 import edu.umontreal.hatchery.rospackage.RosPackageFileType
 import edu.umontreal.hatchery.util.medium
 import java.awt.Font
-import javax.swing.JTextArea
 import javax.swing.JTextField
+import javax.swing.text.JTextComponent
 import kotlin.reflect.KProperty
 
-class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosLaunchFile: String): SettingsEditor<RosLaunchRunConfig>() {
+class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosLaunchFile: String) : SettingsEditor<RosLaunchRunConfig>() {
   private val rosPackageBrowseFolderListener = TextBrowseFolderListener(
-    object: FileChooserDescriptor(false, true, false, false, false, false) {
+    object : FileChooserDescriptor(false, true, false, false, false, false) {
       override fun isFileVisible(vf: VirtualFile?, showHidden: Boolean) =
         super.isFileVisible(vf, showHidden) || vf?.fileType === RosPackageFileType
 
@@ -31,54 +31,63 @@ class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosL
       .apply { addBrowseFolderListener(rosPackageBrowseFolderListener) }
 
   private val rosLaunchBrowseFolderListener = TextBrowseFolderListener(
-    object: FileChooserDescriptor(true, false, false, false, false, false) {
+    object : FileChooserDescriptor(true, false, false, false, false, false) {
       override fun isFileSelectable(file: VirtualFile?) =
         super.isFileSelectable(file) && file?.fileType === RosLaunchFileType
     })
 
-  private val rosLaunchFileTextField =
+  private val rosLaunchFileTextField: TextFieldWithBrowseButton =
     TextFieldWithBrowseButton(JTextField(rosLaunchFile))
       .apply { addBrowseFolderListener(rosLaunchBrowseFolderListener) }
 
-  private val runCommandTextArea = JTextArea(rosLaunchFile)
-    .apply { font = Font("monospaced", font.style, font.size); lineWrap = true }
-  private val rosLaunchDestinationAddressField = JTextField(rosLaunchFile)
-  private val rosLaunchDestinationPathField = JTextField(rosLaunchFile)
+  private val rosLaunchOptionsField = JTextField(rosLaunchFile)
+    .apply { font = Font("monospaced", font.style, font.size) }
+  private val remoteAddressField = JTextField(rosLaunchFile)
+    .apply { isEnabled = false }
+  private val remotePathField = JTextField(rosLaunchFile)
+    .apply { isEnabled = false }
+  private val rosLaunchArgsField = JTextField(rosLaunchFile)
+    .apply { font = Font("monospaced", font.style, font.size) }
 
   private var rosPackageName by rosPackageNameTextField
   private var rosLaunchFile by rosLaunchFileTextField
-  private var runCommand by runCommandTextArea
-  private var remoteAddress by rosLaunchDestinationAddressField
-  private var remoteRosPath by rosLaunchDestinationPathField
+  private var rosLaunchOptions by rosLaunchOptionsField
+  private var rosLaunchArgs by rosLaunchArgsField
+  private var remoteAddress by remoteAddressField
+  private var remotePath by remotePathField
 
   override fun createEditor() = panel {
     row("ROS package:") { rosPackageNameTextField(grow) }
     row("Launch file:") { rosLaunchFileTextField(grow) }
-    row("Run command:") { runCommandTextArea(grow) }
-    row("Destination: ") { medium(rosLaunchDestinationAddressField) }
-    row("Destination path: ") { rosLaunchDestinationPathField(grow) }
+    row("Launch flags:") { rosLaunchOptionsField(grow) }
+    row("Launch args:") { rosLaunchArgsField(grow) }
+    row("Destination: ") { medium(remoteAddressField) }
+    row("Destination path: ") { remotePathField(grow) }
   }
 
   override fun applyEditorTo(config: RosLaunchRunConfig) {
     config.rosPackagePath = rosPackageName
     config.rosLaunchPath = rosLaunchFile
-    config.remoteAddress = remoteAddress
+    config.rosLaunchOptions = rosLaunchOptions
+    config.rosLaunchArgs = rosLaunchArgs
+    config.destinationAddress = remoteAddress
+    config.rosLaunchOptions = rosLaunchOptions
   }
 
   override fun resetEditorFrom(config: RosLaunchRunConfig) {
     rosPackageName = config.rosPackagePath
     rosLaunchFile = config.rosLaunchPath
-    remoteAddress = config.remoteAddress
-    remoteRosPath = config.remoteRosPath
+    rosLaunchOptions = config.rosLaunchOptions
+    rosLaunchArgs = config.rosLaunchArgs
+    remoteAddress = config.destinationAddress
+    remotePath = config.destinationPath
   }
 
   // Removal pending support for https://youtrack.jetbrains.com/issue/KT-8575
   private operator fun TextFieldWithBrowseButton.getValue(a: RosLaunchSettingsEditor, p: KProperty<*>) = text
+
   private operator fun TextFieldWithBrowseButton.setValue(a: RosLaunchSettingsEditor, p: KProperty<*>, s: String) = setText(s)
 
-  private operator fun JTextField.getValue(a: RosLaunchSettingsEditor, p: KProperty<*>) = text
-  private operator fun JTextField.setValue(a: RosLaunchSettingsEditor, p: KProperty<*>, s: String) = setText(s)
-
-  private operator fun JTextArea.getValue(a: RosLaunchSettingsEditor, p: KProperty<*>) = text
-  private operator fun JTextArea.setValue(a: RosLaunchSettingsEditor, p: KProperty<*>, s: String) = setText(s)
+  private operator fun JTextComponent.getValue(a: RosLaunchSettingsEditor, p: KProperty<*>) = text
+  private operator fun JTextComponent.setValue(a: RosLaunchSettingsEditor, p: KProperty<*>, s: String) = setText(s)
 }
