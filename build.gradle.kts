@@ -1,4 +1,3 @@
-import edu.umontreal.hatchery.withRosTask
 import org.ajoberstar.grgit.Grgit
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
@@ -35,7 +34,6 @@ idea {
 }
 
 val userHomeDir = System.getProperty("user.home")!!
-val buildSrcBuildDir = "${project.rootDir}/buildSrc/build/libs/buildSrc.jar"
 val sampleRepo = "https://github.com/duckietown/Software.git"
 val samplePath = "${project.buildDir}/Software"
 
@@ -62,8 +60,6 @@ tasks {
     channels(prop("publishChannel"))
   }
 
-  val rosTask by withRosTask()
-
   named("buildPlugin") { dependsOn("test") }
 
   withType<Zip> {
@@ -73,7 +69,7 @@ tasks {
   withType<RunIdeTask> {
     dependsOn("test")
 
-    if (!isPluginDev && !isCIBuild) dependsOn(rosTask, ":build_envs")
+    if (!isPluginDev && !isCIBuild) dependsOn(":build_envs")
 
     args = listOf(if (isPluginDev) projectDir.absolutePath else projectPath)
   }
@@ -123,8 +119,6 @@ intellij {
     "yaml")
 }
 
-sourceSets["main"].compileClasspath += files(buildSrcBuildDir)
-
 repositories {
   jcenter()
   maven("https://raw.githubusercontent.com/rosjava/rosjava_mvn_repo/master")
@@ -134,16 +128,14 @@ dependencies {
   // gradle-intellij-plugin doesn't attach sources properly for Kotlin :(
   compileOnly(kotlin("stdlib-jdk8"))
   // Share ROS libraries for identifying the ROS home directory
-  compile(fileTree(buildSrcBuildDir))
-  compileOnly(gradleApi())
   // Used for remote deployment over SCP
-  compile("com.hierynomus:sshj:0.27.0")
-  compile("com.jcraft:jzlib:1.1.3")
+//  compile("com.hierynomus:sshj:0.27.0")
+//  compile("com.jcraft:jzlib:1.1.3")
 
   // Useful ROS Dependencies
-  compile("org.ros.rosjava_core:rosjava:[0.3,)")
-  compile("org.ros.rosjava_messages:std_msgs:[0.5,)")
-  compile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
+  testCompile("org.ros.rosjava_core:rosjava:[0.3,)")
+  testCompile("org.ros.rosjava_messages:std_msgs:[0.5,)")
+  testCompile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
 
   // Python
   testCompile("org.python:jython-standalone:2.7.1")
