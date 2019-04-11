@@ -1,4 +1,4 @@
-package edu.umontreal.hatchery.rospackage
+package edu.umontreal.hatchery.rosmanifest
 
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.search.FilenameIndex
@@ -7,7 +7,7 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
 import edu.umontreal.hatchery.settings.RosConfig
 
-class RosPackageReference(private val psiElement: XmlTag) : PsiReferenceBase<XmlTag>(psiElement, false) {
+class RosManifestReference(private val psiElement: XmlTag) : PsiReferenceBase<XmlTag>(psiElement, false) {
   override fun resolve() =
     psiElement.let { tag ->
       val packageName = tag.value.text
@@ -23,7 +23,7 @@ class RosPackageReference(private val psiElement: XmlTag) : PsiReferenceBase<Xml
 
   private fun getProjectLocalRosPackages() =
     FilenameIndex.getFilesByName(psiElement.project,
-      RosPackageFileType.filename,
+      RosManifestFileType.filename,
       GlobalSearchScope.allScope(psiElement.project)
     ).filterIsInstance<XmlFile>()
 }

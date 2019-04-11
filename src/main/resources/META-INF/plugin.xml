@@ -22,21 +22,21 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="edu.umontreal.hatchery.xacro.XacroFileTypeFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.roslaunch.RosLaunchFileFactory"/>
-        <fileTypeFactory implementation="edu.umontreal.hatchery.rospackage.RosPackageFileFactory"/>
+        <fileTypeFactory implementation="edu.umontreal.hatchery.rosmanifest.RosManifestFileFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.rviz.RVizFileFactory"/>
         <fileTypeFactory implementation="edu.umontreal.hatchery.rosinterface.RosInterfaceFileFactory"/>
-        <!--<psi.fileReferenceHelper implementation="edu.umontreal.hatchery.rospackage.RosPackageFileReferenceHelper"/>-->
+        <psi.fileReferenceHelper implementation="edu.umontreal.hatchery.rosmanifest.RosManifestFileReferenceHelper"/>
 
-        <lang.parserDefinition language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.RosInterfaceParserDefinition"/>
-        <lang.syntaxHighlighterFactory language="ROSInterface" implementationClass="edu.umontreal.hatchery.rosinterface.RosInterfaceSyntaxHighlighterFactory"/>
+        <lang.parserDefinition language="RosInterface" implementationClass="edu.umontreal.hatchery.rosinterface.RosInterfaceParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="RosInterface" implementationClass="edu.umontreal.hatchery.rosinterface.RosInterfaceSyntaxHighlighterFactory"/>
 
-        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.rospackage.RosPackageReferenceContributor"/>
+        <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.rosmanifest.RosManifestReferenceContributor"/>
         <psi.referenceContributor language="XML" implementation="edu.umontreal.hatchery.roslaunch.RosLaunchReferenceContributor"/>
 
         <xml.schemaProvider implementation="edu.umontreal.hatchery.roslaunch.RosLaunchSchemaProvider"/>
-        <xml.schemaProvider implementation="edu.umontreal.hatchery.rospackage.RosPackageSchemaProvider"/>
+        <xml.schemaProvider implementation="edu.umontreal.hatchery.rosmanifest.RosManifestSchemaProvider"/>
 
-        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.rospackage.RosPackageLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.rosmanifest.RosManifestLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.RosLaunchLineMarkerProvider"/>
 
         <iconProvider implementation="edu.umontreal.hatchery.catkin.CatkinIconProvider" order="first"/>
@@ -48,7 +48,7 @@
 
         <moduleType id="DEMO_MODULE_TYPE" implementationClass="edu.umontreal.hatchery.modules.DemoModuleType"/>
 
-        <applicationService serviceImplementation="org.acejump.config.AceConfig"/>
+        <applicationService serviceImplementation="edu.umontreal.hatchery.settings.RosConfig" overrides="false"/>
         <applicationConfigurable groupId="tools" displayName="Hatchery" id="preferences.RosConfig" instance="edu.umontreal.hatchery.settings.RosConfig"/>
     </extensions>
 
@@ -57,27 +57,31 @@
         <group id="edu.umontreal.hatchery.RosActions" text="ROS" popup="true">
             <add-to-group group-id="MainMenu" relative-to-action="HelpMenu" anchor="before"/>
         </group>
-        <action id="rqt_bag" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿bag" description="rqt_bag" icon="icons/bag_16.png">
+        <action id="rqt_msg" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿msg" description="rqt_msg" icon="icons/rqtmsg.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_dep" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿dep" description="rqt_dep" icon="icons/robot_16.png">
+        <action id="rqt_bag" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿bag" description="rqt_bag" icon="icons/rqtbag.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_graph" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿graph" description="rqt_graph" icon="icons/graph_16.png">
+        <action id="rqt_dep" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿dep" description="rqt_dep" icon="icons/rqtdep.png">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_image_view" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿image＿view" description="rqt_image_view" icon="icons/image_16.png">
+        <action id="rqt_graph" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿graph" description="rqt_graph" icon="icons/rqtgraph.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_plot" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿plot" description="rqt_plot" icon="icons/bar_16.png">
+        <action id="rqt_image_view" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿image＿view" description="rqt_image_view" icon="icons/rqtimage.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="gazebo" class="edu.umontreal.hatchery.rqt.RqtAction" text="gazebo" description="gazebo" icon="icons/gazebo_16.png">
+        <action id="rqt_plot" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿plot" description="rqt_plot" icon="icons/rqtbar.svg">
+            <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
+            <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
+        </action>
+        <action id="gazebo" class="edu.umontreal.hatchery.rqt.RqtAction" text="gazebo" description="gazebo" icon="icons/gazebo.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>

@@ -1,4 +1,4 @@
-package edu.umontreal.hatchery.rospackage
+package edu.umontreal.hatchery.rosmanifest
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ProjectRootManager
@@ -7,8 +7,8 @@ import com.intellij.psi.PsiFileSystemItem
 import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceHelper
 
-object RosPackageFileReferenceHelper : FileReferenceHelper() {
-  override fun isMine(project: Project, file: VirtualFile) = file.fileType === RosPackageFileType
+object RosManifestFileReferenceHelper : FileReferenceHelper() {
+  override fun isMine(project: Project, file: VirtualFile) = file.fileType === RosManifestFileType
 
   override fun getContexts(project: Project, file: VirtualFile) = getRoots(project)
 

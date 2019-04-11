@@ -17,5 +17,5 @@ class RosInterfaceFile : PsiFileBase {
 
   override fun toString() = "ROS Interface File"
 
-  override fun getIcon(flags: Int) = Icons.robot
+  override fun getIcon(flags: Int) = Icons.ros_msg
 }

@@ -8,7 +8,7 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.layout.panel
 import edu.umontreal.hatchery.roslaunch.RosLaunchFileType
-import edu.umontreal.hatchery.rospackage.RosPackageFileType
+import edu.umontreal.hatchery.rosmanifest.RosManifestFileType
 import edu.umontreal.hatchery.util.medium
 import java.awt.Font
 import javax.swing.JTextField
@@ -19,7 +19,7 @@ class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosL
   private val rosPackageBrowseFolderListener = TextBrowseFolderListener(
     object : FileChooserDescriptor(false, true, false, false, false, false) {
       override fun isFileVisible(vf: VirtualFile?, showHidden: Boolean) =
-        super.isFileVisible(vf, showHidden) || vf?.fileType === RosPackageFileType
+        super.isFileVisible(vf, showHidden) || vf?.fileType === RosManifestFileType
 
       override fun isFileSelectable(file: VirtualFile?) =
         super.isFileSelectable(file) && file?.isDirectory ?: false &&
