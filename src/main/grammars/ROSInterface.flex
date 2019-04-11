@@ -22,6 +22,7 @@ END_OF_LINE_COMMENT=#[^\n\f]*
 SEPARATOR=[:=]
 TYPE_CHARACTER=[^:=#\ \n\t\f\\]
 KEY_CHARACTER=[^:=#\ \n\t\f\\]
+TRIPLE_DASH=---
 
 %state TYPE_STATE
 %state KEY_STATE
@@ -52,6 +53,6 @@ KEY_CHARACTER=[^:=#\ \n\t\f\\]
 
 <VALUE_STATE> {CRLF}({CRLF}|{WHITE_SPACE})+     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
-({CRLF}|{WHITE_SPACE})+                         { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+({CRLF}|{WHITE_SPACE}|{TRIPLE_DASH})+           { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
 .                                               { return TokenType.BAD_CHARACTER; }

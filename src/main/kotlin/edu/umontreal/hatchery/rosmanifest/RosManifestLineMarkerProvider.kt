@@ -14,11 +14,11 @@ object RosManifestLineMarkerProvider : RelatedItemLineMarkerProvider() {
   private const val TOOLTIP_TEXT = "ROS Package Dependency"
 
   override fun collectNavigationMarkers(element: PsiElement, results: MutableCollection<in RelatedItemLineMarkerInfo<PsiElement>>) {
-    if (element !is XmlTag || element.name in DEPEND_TAG_NAMES) return
+    if (element !is XmlTag || element.name !in DEPEND_TAG_NAMES) return
 
     val scope = GlobalSearchScope.allScope(element.project)
-    val files = FilenameIndex.getFilesByName(element.project, RosManifestFileType.filename, scope)
-    val directories = files.filter { it.containingDirectory.name == element.value.text }.map { it.containingDirectory }
+    val files = FilenameIndex.getFilesByName(element.project, RosManifestFileType.filename, scope).map { it.containingDirectory }
+    val directories = files.filter { it.name == element.value.text }
 
     if (directories.isEmpty()) return
 
