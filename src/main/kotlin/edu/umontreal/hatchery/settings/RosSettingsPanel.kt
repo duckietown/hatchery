@@ -1,21 +1,22 @@
 package edu.umontreal.hatchery.settings
 
+import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.IdeBorderFactory
 import com.intellij.ui.components.JBScrollPane
+import com.intellij.ui.components.JBTextField
 import com.intellij.ui.layout.panel
 import com.intellij.ui.table.JBTable
 import edu.umontreal.hatchery.util.medium
 import java.awt.Font
 import java.util.*
 import javax.swing.JPanel
-import javax.swing.JTextField
 import javax.swing.border.LineBorder
 import javax.swing.table.DefaultTableModel
 import javax.swing.text.JTextComponent
 import kotlin.reflect.KProperty
 
 class RosSettingsPanel {
-  private val localRosPathField = JTextField()
+  private val localRosPathField = JBTextField()
   private val localRosPackages: JBTable
     get() = JBTable(object : DefaultTableModel(
       RosConfig.settings.localRos.packages.map { arrayOf(it.key, it.value) }.toTypedArray(),
@@ -24,13 +25,13 @@ class RosSettingsPanel {
       override fun isCellEditable(row: Int, column: Int) = false
     })
 
-  private val rosLaunchOptionsField = JTextField()
+  private val rosLaunchOptionsField = JBTextField()
     .apply { font = Font("monospaced", font.style, font.size) }
-  private val remoteAddressField = JTextField()
-  private val remoteRosPathField = JTextField()
-  private val remoteRunCommandField = JTextField()
+  private val remoteAddressField = JBTextField()
+  private val remoteRosPathField = JBTextField()
+  private val remoteRunCommandField = JBTextField()
     .apply { font = Font("monospaced", font.style, font.size) }
-  private val sshCredentialsPathField = JTextField()
+  private val sshCredentialsPathField = JBTextField()
 
   init {
     listOf(remoteAddressField,
@@ -75,6 +76,8 @@ class RosSettingsPanel {
 
   // Removal pending support for https://youtrack.jetbrains.com/issue/KT-8575
   private operator fun JTextComponent.getValue(a: RosSettingsPanel, p: KProperty<*>) = text
-
   private operator fun JTextComponent.setValue(a: RosSettingsPanel, p: KProperty<*>, s: String) = setText(s)
+
+  private operator fun TextFieldWithBrowseButton.getValue(a: RosSettingsPanel, p: KProperty<*>) = text
+  private operator fun TextFieldWithBrowseButton.setValue(a: RosSettingsPanel, p: KProperty<*>, s: String) = setText(s)
 }

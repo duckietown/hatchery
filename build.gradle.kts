@@ -67,7 +67,7 @@ tasks {
   }
 
   withType<RunIdeTask> {
-    dependsOn("test")
+//    dependsOn("test")
 
     if (!isPluginDev && !isCIBuild) dependsOn(":build_envs")
 
@@ -150,4 +150,4 @@ envs {
 }
 
 group = "edu.umontreal"
-version = "0.3"
+version = "0.3.1"

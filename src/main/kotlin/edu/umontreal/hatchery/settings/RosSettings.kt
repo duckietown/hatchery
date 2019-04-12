@@ -1,7 +1,6 @@
 package edu.umontreal.hatchery.settings
 
 import edu.umontreal.hatchery.ros.Ros
-import edu.umontreal.hatchery.ros.defaultRosSetupScript
 import java.io.File
 import kotlin.reflect.KProperty
 
@@ -12,22 +11,22 @@ class RosSettings {
   var remoteRunCommand: String = "roslaunch"
   var sshCredentialsPath: String = ""
 
-  var localRosPath = defaultRosSetupScript
+  var localRosPath = ""
     set(value) {
       localRos = Ros(value ?: "")
       field = value
     }
 
-  var localRos = Ros()
+  lateinit var localRos: Ros
     private set
 
-  var remoteRosPath: String = defaultRosSetupScript ?: ""
+  var remoteRosPath: String = ""
     set(value) {
       remoteRos = Ros(value)
       field = value
     }
 
-  var remoteRos = Ros()
+  lateinit var remoteRos: Ros
     private set
 
   // Force delegate to read the most current value by invoking as a function

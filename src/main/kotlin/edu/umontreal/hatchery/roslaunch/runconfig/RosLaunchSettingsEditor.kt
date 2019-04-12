@@ -6,12 +6,12 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.TextBrowseFolderListener
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.ui.components.JBTextField
 import com.intellij.ui.layout.panel
 import edu.umontreal.hatchery.roslaunch.RosLaunchFileType
 import edu.umontreal.hatchery.rosmanifest.RosManifestFileType
 import edu.umontreal.hatchery.util.medium
 import java.awt.Font
-import javax.swing.JTextField
 import javax.swing.text.JTextComponent
 import kotlin.reflect.KProperty
 
@@ -27,7 +27,7 @@ class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosL
     })
 
   private val rosPackageNameTextField =
-    TextFieldWithBrowseButton(JTextField(rosPackageName))
+    TextFieldWithBrowseButton(JBTextField(rosPackageName))
       .apply { addBrowseFolderListener(rosPackageBrowseFolderListener) }
 
   private val rosLaunchBrowseFolderListener = TextBrowseFolderListener(
@@ -37,16 +37,16 @@ class RosLaunchSettingsEditor(val project: Project, rosPackageName: String, rosL
     })
 
   private val rosLaunchFileTextField: TextFieldWithBrowseButton =
-    TextFieldWithBrowseButton(JTextField(rosLaunchFile))
+    TextFieldWithBrowseButton(JBTextField(rosLaunchFile))
       .apply { addBrowseFolderListener(rosLaunchBrowseFolderListener) }
 
-  private val rosLaunchOptionsField = JTextField(rosLaunchFile)
+  private val rosLaunchOptionsField = JBTextField(rosLaunchFile)
     .apply { font = Font("monospaced", font.style, font.size) }
-  private val remoteAddressField = JTextField(rosLaunchFile)
+  private val remoteAddressField = JBTextField(rosLaunchFile)
     .apply { isEnabled = false }
-  private val remotePathField = JTextField(rosLaunchFile)
+  private val remotePathField = JBTextField(rosLaunchFile)
     .apply { isEnabled = false }
-  private val rosLaunchArgsField = JTextField(rosLaunchFile)
+  private val rosLaunchArgsField = JBTextField(rosLaunchFile)
     .apply { font = Font("monospaced", font.style, font.size) }
 
   private var rosPackageName by rosPackageNameTextField
