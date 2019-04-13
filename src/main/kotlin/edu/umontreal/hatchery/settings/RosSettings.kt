@@ -13,12 +13,19 @@ class RosSettings {
 
   var localRosPath = ""
     set(value) {
-      localRos = Ros(value ?: "")
+      ros = Ros(value)
       field = value
     }
 
-  lateinit var localRos: Ros
+  var ros: Ros? = null
+    get() {
+      if (field == null) field = Ros()
+      return field
+    }
     private set
+
+  val localRos: Ros
+    get() = ros!!
 
   var remoteRosPath: String = ""
     set(value) {

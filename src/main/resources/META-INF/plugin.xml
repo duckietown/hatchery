@@ -11,6 +11,7 @@
     <description><![CDATA[<a href="https://github.com/duckietown/hatchery#hatchery">Hatchery</a> is plugin for developing applications for the <a href="https://ros.org">Robot Operating System</a> (ROS).]]></description>
 
     <change-notes>
+        Fixes UninitializedPropertyAccessException when running rqt_plugins.
         Fixes FileNotFoundException in the automatic ROS environment detection phase. To configure the ROS environment, check Settings | Hatchery.
         Previously: New ROS menu, tool buttons, a settings page, support for ROS Launch run configurations, and improved parsing of .launch files.
     </change-notes>
