@@ -16,6 +16,10 @@ object CONST {
   val perms: EnumSet<PosixFilePermission> = EnumSet.of<PosixFilePermission>(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE, PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.GROUP_READ)
 }
 
+/**
+ * TODO: Integrate with [edu.umontreal.hatchery.ros.Distro.version]
+ */
+
 fun getVersion(project: Project) =
   project.projectFile?.parent?.parent
     ?.findChild("CMakeLists.txt")
