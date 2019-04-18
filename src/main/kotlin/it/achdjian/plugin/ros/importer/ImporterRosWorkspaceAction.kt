@@ -25,86 +25,86 @@ import javax.swing.Icon
 
 
 class ImporterRosWorkspaceAction : AnAction(AllIcons.ToolbarDecorator.Import), DumbAware {
-    override fun actionPerformed(event: AnActionEvent) {
-        startWizard()
-    }
+  override fun actionPerformed(event: AnActionEvent) {
+    startWizard()
+  }
 }
 
 class MyFileChooserDescriptor : FileChooserDescriptor(false, true, false, false, false, false) {
-    override fun getIcon(file: VirtualFile): Icon? {
-        if (isRosWS(file)) {
-            return IconLoader.getIcon("/icons/rosFolder.svg")
-        }
-        return super.getIcon(file)
+  override fun getIcon(file: VirtualFile): Icon? {
+    if (isRosWS(file)) {
+      return IconLoader.getIcon("/icons/rosFolder.svg")
     }
+    return super.getIcon(file)
+  }
 
-    override fun isFileSelectable(file: VirtualFile?): Boolean {
-        return file != null && (!file.isDirectory || file.children.size > 0)
-    }
+  override fun isFileSelectable(file: VirtualFile?): Boolean {
+    return file != null && (!file.isDirectory || file.children.size > 0)
+  }
 }
 
 fun isRosWS(file: VirtualFile): Boolean {
-    if (file.isDirectory) {
-        val src = file.findChild("src")
-        src?.let {
-            val cmakeLists = it.findChild("CMakeLists.txt")
-            if (cmakeLists != null && cmakeLists.exists())
-                return true
-        }
+  if (file.isDirectory) {
+    val src = file.findChild("src")
+    src?.let {
+      val cmakeLists = it.findChild("CMakeLists.txt")
+      if (cmakeLists != null && cmakeLists.exists())
+        return true
     }
-    return false
+  }
+  return false
 }
 
 fun startWizard() {
-    choseFile()?.let { chosenDir ->
-        CLionProjectWizardUtils.refreshProjectDir(chosenDir)
-        if (isRosWS(chosenDir)) {
-            chosenDir.findChild("src")?.findChild("CMakeLists.txt")?.let { cMakeList ->
-                val rosVersion = getRosVersionFromCMakeLists(cMakeList)
-                rosVersion?.let { version ->
-                    CMakeWorkspace.forceReloadOnOpening(cMakeList)
-                    val project = ProjectUtil.openOrImport(cMakeList.path, null as Project?, false)
-                    project?.let {
-                        val cMakeWorkspace = CMakeWorkspace.getInstance(it)
-                        val settings = cMakeWorkspace.settings
+  choseFile()?.let { chosenDir ->
+    CLionProjectWizardUtils.refreshProjectDir(chosenDir)
+    if (isRosWS(chosenDir)) {
+      chosenDir.findChild("src")?.findChild("CMakeLists.txt")?.let { cMakeList ->
+        val rosVersion = getRosVersionFromCMakeLists(cMakeList)
+        rosVersion?.let { version ->
+          CMakeWorkspace.forceReloadOnOpening(cMakeList)
+          val project = ProjectUtil.openOrImport(cMakeList.path, null as Project?, false)
+          project?.let {
+            val cMakeWorkspace = CMakeWorkspace.getInstance(it)
+            val settings = cMakeWorkspace.settings
 
-                        val releaseProfile = releaseProfile(version, File(chosenDir.path))
+            val releaseProfile = releaseProfile(version, File(chosenDir.path))
 
-                        settings.profiles = listOf(releaseProfile)
-                    }
-                } ?: undefinedRosEnvironment()
+            settings.profiles = listOf(releaseProfile)
+          }
+        } ?: undefinedRosEnvironment()
 
-            } ?: invalidRosEnvironment()
-        }
+      } ?: invalidRosEnvironment()
     }
+  }
 }
 
 fun undefinedRosEnvironment() {
-    val icon = IconLoader.findIcon("/icons/ros.svg")
-    Messages.showErrorDialog("Directory doesn't contains a recognized ROS environment", "Import ROS workspace");
+  val icon = IconLoader.findIcon("/icons/ros.svg")
+  Messages.showErrorDialog("Directory doesn't contains a recognized ROS environment", "Import ROS workspace");
 }
 
 fun invalidRosEnvironment() {
-    Messages.showErrorDialog("Directory doesn't contains a valid ROS environment", "Import ROS workspace");
+  Messages.showErrorDialog("Directory doesn't contains a valid ROS environment", "Import ROS workspace");
 }
 
 
 fun choseFile(): VirtualFile? {
-    val fileChooserDescriptor = MyFileChooserDescriptor()
-    fileChooserDescriptor.isHideIgnored = true
-    fileChooserDescriptor.title = "Select Directory to import"
-    val lastImportedLocation = PropertiesComponent.getInstance().getValue("last.imported.location")
-    var files: VirtualFile? = null
-    lastImportedLocation?.let {
-        files = LocalFileSystem.getInstance().refreshAndFindFileByPath(lastImportedLocation)
-    }
-    val fileChooser = FileChooserFactory.getInstance().createFileChooser(fileChooserDescriptor, null, null)
-    val filesChose = fileChooser.choose(null, files)
-    if (filesChose.isEmpty()) {
-        return null
-    } else {
-        PropertiesComponent.getInstance().setValue("last.imported.location", filesChose[0].path)
-        return filesChose[0]
-    }
+  val fileChooserDescriptor = MyFileChooserDescriptor()
+  fileChooserDescriptor.isHideIgnored = true
+  fileChooserDescriptor.title = "Select Directory to import"
+  val lastImportedLocation = PropertiesComponent.getInstance().getValue("last.imported.location")
+  var files: VirtualFile? = null
+  lastImportedLocation?.let {
+    files = LocalFileSystem.getInstance().refreshAndFindFileByPath(lastImportedLocation)
+  }
+  val fileChooser = FileChooserFactory.getInstance().createFileChooser(fileChooserDescriptor, null, null)
+  val filesChose = fileChooser.choose(null, files)
+  if (filesChose.isEmpty()) {
+    return null
+  } else {
+    PropertiesComponent.getInstance().setValue("last.imported.location", filesChose[0].path)
+    return filesChose[0]
+  }
 }
 
