@@ -23,7 +23,7 @@ class NodeConfigurationFactoryCMake(private val configurationType: NodeConfigura
 class NodeConfigurationTypeCMake : CMakeRunConfigurationType(IDs.ID, IDs.FACTORY, IDs.DISPLAY_NAME, IDs.DESCRIPTION, ICON_NODE) {
   override fun createEditor(project: Project) = NodeRunEditorCMake(project, CMakeBuildConfigurationHelper(project))
   override fun createRunConfiguration(project: Project, configurationFactory: ConfigurationFactory) =
-    NodeConfigurationCMake(project, confFactory, "ROS")
+    NodeConfigurationCMake(project, configurationFactory, "ROS")
 
   var confFactory = NodeConfigurationFactoryCMake(this)
 }
