@@ -111,16 +111,15 @@ class ButtonTitledBorder(title: String, val parent: Component, val statusChange:
   }
 
   private fun dispatchMouseEvent(event: MouseEvent) {
-
     val button = titledSeparator.button
 
     if (button.visibleRect.contains(Point(event.point.x - outsideInsets.left, event.point.y - (deltaButtonY + outsideInsets.top)))) {
-      if (close) {
+      close = if (close) {
         titledSeparator.buttonOpen()
-        close = false
+        false
       } else {
         titledSeparator.buttonClose()
-        close = true
+        true
       }
       parent.repaint()
       statusChange(close)

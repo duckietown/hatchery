@@ -14,16 +14,10 @@ import java.nio.file.Paths
 
 fun getResourceAsString(resourceName: String): String {
   val resource = RosEnvironments::class.java.classLoader.getResourceAsStream(resourceName)
-  return resource?.let {
-    FileUtil.loadTextAndClose(resource)
-  } ?: ""
-
+  return resource?.let { FileUtil.loadTextAndClose(resource) } ?: ""
 }
 
-fun createMainCMakeLists(): String {
-  return getResourceAsString("templates/CMakeLists.txt")
-}
-
+fun createMainCMakeLists() = getResourceAsString("templates/CMakeLists.txt")
 
 fun releaseProfile(version: RosVersion, baseDir: File): CMakeSettings.Profile {
   val buildDir = File(baseDir, "build")
@@ -50,8 +44,5 @@ fun getRosVersionFromCMakeLists(file: VirtualFile): RosVersionImpl? {
 
 fun getCMakeListsTarget(file: VirtualFile): Path? {
   val path = Paths.get(file.path)
-  if (Files.isSymbolicLink(path)) {
-    return Files.readSymbolicLink(path)
-  }
-  return null
+  return if (Files.isSymbolicLink(path)) Files.readSymbolicLink(path) else null
 }

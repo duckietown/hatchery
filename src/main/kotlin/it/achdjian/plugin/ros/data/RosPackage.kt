@@ -16,7 +16,6 @@ class RosPackage(val path: Path, val env: Map<String, String>) {
     val log = Logger.getInstance(RosPackage::class.java)
   }
 
-
   val name: String
   val version: String
   val description: String
@@ -37,11 +36,9 @@ class RosPackage(val path: Path, val env: Map<String, String>) {
     name = getNodeValue(xPath, "/package/name", doc)
     version = getNodeValue(xPath, "/package/version", doc)
     description = getNodeValue(xPath, "/package/description", doc)
-
   }
 
   fun getNodes(): List<RosNode> = rosNodes ?: searchRosNodes()
-
 
   private fun searchRosNodes(): List<RosNode> {
     val foundNodes = ArrayList<RosNode>()

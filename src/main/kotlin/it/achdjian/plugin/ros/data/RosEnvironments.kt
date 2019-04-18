@@ -16,7 +16,6 @@ class RosEnvironments(customVerison: RosCustomVersion) {
   private val defaultVersionsName: List<String>
 
   init {
-
     if (Files.exists(Paths.get("/opt/ros"))) {
       val defaultVersions = Files.list(Paths.get("/opt/ros")).collect(Collectors.toList())?.let { it }
         ?: ArrayList()
@@ -59,8 +58,6 @@ class RosEnvironments(customVerison: RosCustomVersion) {
 
   private fun scan(versions: Map<String, String>): List<RosVersionImpl> =
     versions.map { RosVersionImpl(it.value, it.key) }.toList()
-
-
 }
 
 fun getRosEnvironment() = ApplicationManager.getApplication().getComponent(RosEnvironments::class.java)

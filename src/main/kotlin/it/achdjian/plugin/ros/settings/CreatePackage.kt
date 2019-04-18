@@ -19,10 +19,7 @@ interface CreatePackage {
 }
 
 class NullCreatePackage : CreatePackage {
-  override fun createPackage(path: VirtualFile, name: String, dependencies: List<String>) {
-
-  }
-
+  override fun createPackage(path: VirtualFile, name: String, dependencies: List<String>) { }
 }
 
 class CatkinCreatePackage(path: String, val rosVersion: RosVersionImpl) : CreatePackage {

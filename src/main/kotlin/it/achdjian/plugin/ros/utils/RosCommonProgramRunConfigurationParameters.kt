@@ -6,7 +6,6 @@ import com.intellij.util.execution.ParametersListUtil.DEFAULT_LINE_PARSER
 import org.jdom.Element
 
 class RosCommonProgramRunConfigurationParameters(private val prj: Project) : CommonProgramRunConfigurationParameters {
-
   companion object {
     const val ARGUMENTS_TAG = "arguments"
     const val WORKING_DIR = "workingDir"
@@ -18,7 +17,6 @@ class RosCommonProgramRunConfigurationParameters(private val prj: Project) : Com
   private var workingDir: String? = null
   private var env: MutableMap<String, String> = HashMap()
   private var setPassParentEnvs: Boolean = false
-
 
   override fun getWorkingDirectory(): String? = workingDir
 
@@ -68,9 +66,7 @@ class RosCommonProgramRunConfigurationParameters(private val prj: Project) : Com
     val contentEnv = Element(ENVIRONMENT)
     contentEnv.addContent(env.map { entry -> createDomEnvironmentEntry(entry) })
     parentElement.setAttribute(PASS_PARENT_ENV, setPassParentEnvs.toString())
-
   }
-
 
   private fun createDomEnvironmentEntry(entry: Map.Entry<String, String>): Element {
     val element = Element(entry.key)

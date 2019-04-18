@@ -19,26 +19,19 @@ class LaunchLauncher(private val launchConfiguration: LaunchConfiguration, envir
     val rosVersion = getVersion(environment.project)
     rosVersion?.let {
       val environmentVariables = getEnvironmentVariables(environment.project, it.env)
-      val cmdLine = GeneralCommandLine(it.rosLaunch)
-      if (launchConfiguration.verbose) {
-        cmdLine.addParameter("-v")
+      val cmdLine = GeneralCommandLine(it.rosLaunch).apply {
+        if (launchConfiguration.verbose) addParameter("-v")
+        if (launchConfiguration.wait) addParameter("--wait")
+        if (launchConfiguration.screen) addParameter("--screen")
+//      if (launchConfiguration.log) cmdLine.addParameter("--log")
+//      cmdLine.addParameter("--master-logger-level=${launchConfiguration.logLevel}")
+        addParameter(launchFile.path)
+        withWorkDirectory(getBaseDir(this@LaunchLauncher.environment.project)?.path)
+        withEnvironment(environmentVariables)
+        withEnvironment("PYTHONUNBUFFERED", "1")
+        val rosMasterUri = "http://${launchConfiguration.rosMasterAddr}:${launchConfiguration.rosMasterPort}"
+        withEnvironment("ROS_MASTER_URI", rosMasterUri)
       }
-      if (launchConfiguration.wait) {
-        cmdLine.addParameter("--wait")
-      }
-      if (launchConfiguration.screen) {
-        cmdLine.addParameter("--screen")
-      }
-//            if (launchConfiguration.log) {
-//                cmdLine.addParameter("--log")
-//            }
-//            cmdLine.addParameter("--master-logger-level=${launchConfiguration.logLevel}")
-      cmdLine.addParameter(launchFile.path)
-      cmdLine.withWorkDirectory(getBaseDir(environment.project)?.path)
-      cmdLine.withEnvironment(environmentVariables)
-      cmdLine.withEnvironment("PYTHONUNBUFFERED", "1")
-      val rosMasterUri = "http://${launchConfiguration.rosMasterAddr}:${launchConfiguration.rosMasterPort}"
-      cmdLine.withEnvironment("ROS_MASTER_URI", rosMasterUri)
       val handler = KillableColoredProcessHandler(cmdLine)
       handler
     } ?: NopProcessHandler()

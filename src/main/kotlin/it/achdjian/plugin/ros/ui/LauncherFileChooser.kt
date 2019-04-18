@@ -17,9 +17,7 @@ class LauncherFileChooser(browseDialogTitle: String,
   init {
     childComponent.setHistorySize(-1)
     childComponent.setMinimumAndPreferredWidth(0)
-    if (historyProvider != null) {
-      SwingHelper.addHistoryOnExpansion(childComponent, historyProvider)
-    }
+    if (historyProvider != null) SwingHelper.addHistoryOnExpansion(childComponent, historyProvider)
     installFileCompletionAndBrowseDialog(
       project = project,
       component = this,

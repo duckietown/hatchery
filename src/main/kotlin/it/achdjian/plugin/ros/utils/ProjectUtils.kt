@@ -16,18 +16,14 @@ object CONST {
   val perms: EnumSet<PosixFilePermission> = EnumSet.of<PosixFilePermission>(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE, PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.GROUP_READ)
 }
 
-
 fun getVersion(project: Project) =
-  project.projectFile
-    ?.parent
-    ?.parent
+  project.projectFile?.parent?.parent
     ?.findChild("CMakeLists.txt")
     ?.let {
       getRosVersionFromCMakeLists(it)
     }
 
 fun getBaseDir(project: Project) = project.projectFile?.parent?.parent?.parent
-
 
 fun getPackages(project: Project): List<RosPackage> {
   val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.getPackages.${project.name}")
@@ -50,13 +46,11 @@ fun getPackages(project: Project): List<RosPackage> {
 fun getEnvironmentVariables(project: Project, env: Map<String, String>): Map<String, String> {
   val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.getEnvironmentVariables.${project.name}")
 
-
   val newEnv = HashMap<String, String>()
 
   val base = FileSystems.getDefault().getPath(project.projectFile?.parent?.parent?.parent?.path)
   base?.let { basePath ->
-    basePath
-      .resolve("devel")
+    basePath.resolve("devel")
       ?.resolve("setup.bash")
       ?.let {
         log.trace("setup.bash at $it")

@@ -68,23 +68,13 @@ class Row(val text: String? = null) {
     component = textWithBrowserButton
   }
 
-  fun label(): JLabel {
-    if (text != null)
-      return JLabel(text)
-    else
-      return JLabel()
-  }
+  fun label() = if (text != null) JLabel(text) else JLabel()
 }
 
 class RowDocumentListener(val changeUpdate: (doc: DocumentEvent?) -> Unit) : DocumentListener {
-  override fun changedUpdate(doc: DocumentEvent?) {
-    changeUpdate(doc)
-  }
+  override fun changedUpdate(doc: DocumentEvent?) = changeUpdate(doc)
 
-  override fun insertUpdate(p0: DocumentEvent?) {
-  }
+  override fun insertUpdate(p0: DocumentEvent?) {}
 
-  override fun removeUpdate(p0: DocumentEvent?) {
-  }
-
+  override fun removeUpdate(p0: DocumentEvent?) {}
 }

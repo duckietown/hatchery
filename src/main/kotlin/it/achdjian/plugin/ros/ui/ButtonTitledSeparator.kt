@@ -25,13 +25,10 @@ import javax.swing.*
 import javax.swing.border.Border
 
 class ButtonTitledSeparator constructor(val text: String) : JPanel() {
-
-
   val label: JBLabel = object : JBLabel() {
-    override fun getFont(): Font {
-      return UIUtil.getTitledBorderFont()
-    }
+    override fun getFont() = UIUtil.getTitledBorderFont()
   }
+
   val separator = JSeparator(SwingConstants.HORIZONTAL)
   private val closeImg: ImageIcon
   private val openImg: ImageIcon
@@ -53,7 +50,6 @@ class ButtonTitledSeparator constructor(val text: String) : JPanel() {
 
 
   private fun createButton(imgSize: Int): JButton {
-
     val button = JButton(closeImg)
     button.border = BorderFactory.createEmptyBorder()
     button.isContentAreaFilled = false

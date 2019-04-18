@@ -20,7 +20,6 @@ import org.jdom.Element
 class NodeConfigurationCMake(project: Project, configurationFactory: ConfigurationFactory, targetName: String) :
   CMakeAppRunConfiguration(project, configurationFactory, targetName), CidrExecutableDataHolder {
 
-
   companion object {
     const val PACKAGE_TAG = "rosPackageName"
     const val NODE_TAG = "rosNodeName"
@@ -33,7 +32,6 @@ class NodeConfigurationCMake(project: Project, configurationFactory: Configurati
     const val CONFIG_TAG = "config"
   }
 
-
   var rosPackageName: String? = null
   var rosNodeName: String? = null
   var rosMasterAddr = "localhost"
@@ -41,10 +39,8 @@ class NodeConfigurationCMake(project: Project, configurationFactory: Configurati
 
   override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> = NodeRunEditorCMake(project, CMakeRunConfigurationType.getHelper(project))
 
-  override fun getState(executor: Executor, environment: ExecutionEnvironment): CidrCommandLineState? {
-    return CidrCommandLineState(environment, NodeLauncherCMake(this, project, environment))
-  }
-
+  override fun getState(executor: Executor, environment: ExecutionEnvironment) =
+    CidrCommandLineState(environment, NodeLauncherCMake(this, project, environment))
 
   @Throws(InvalidDataException::class)
   override fun readExternal(parentElement: Element) {
@@ -93,8 +89,5 @@ class NodeConfigurationCMake(project: Project, configurationFactory: Configurati
     programParameters?.let {
       parentElement.setAttribute(PARAMS, it)
     }
-
   }
-
-
 }

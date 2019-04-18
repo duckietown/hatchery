@@ -26,7 +26,7 @@ class NodeLauncherCMake(private val nodeConfiguration: NodeConfigurationCMake, p
       .flatMap { it.getNodes() }
       .firstOrNull { it.name == nodeConfiguration.rosNodeName }
     node?.let {
-      myConfiguration.executableData = ExecutableData(it.path.toString())
+      nodeConfiguration.executableData = ExecutableData(it.path.toString())
     }
     return super.createProcess(state)
   }
@@ -39,7 +39,7 @@ class NodeLauncherCMake(private val nodeConfiguration: NodeConfigurationCMake, p
       .flatMap { it.getNodes() }
       .firstOrNull { it.name == nodeConfiguration.rosNodeName }
     node?.let {
-      myConfiguration.executableData = ExecutableData(it.path.toString())
+      nodeConfiguration.executableData = ExecutableData(it.path.toString())
     }
     return super.createDebugProcess(state, session)
   }

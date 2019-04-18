@@ -30,5 +30,4 @@ class PackagesPanel() : JPanel() {
   }
 
   fun selected(): List<String> = status.entries.stream().filter { it.value }.map { it.key }.collect(Collectors.toList())
-
 }

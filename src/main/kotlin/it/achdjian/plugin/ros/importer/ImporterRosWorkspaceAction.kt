@@ -23,7 +23,6 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import javax.swing.Icon
 
-
 class ImporterRosWorkspaceAction : AnAction(AllIcons.ToolbarDecorator.Import), DumbAware {
   override fun actionPerformed(event: AnActionEvent) {
     startWizard()
@@ -31,16 +30,11 @@ class ImporterRosWorkspaceAction : AnAction(AllIcons.ToolbarDecorator.Import), D
 }
 
 class MyFileChooserDescriptor : FileChooserDescriptor(false, true, false, false, false, false) {
-  override fun getIcon(file: VirtualFile): Icon? {
-    if (isRosWS(file)) {
-      return IconLoader.getIcon("/icons/rosFolder.svg")
-    }
-    return super.getIcon(file)
-  }
+  override fun getIcon(file: VirtualFile): Icon? =
+    if (isRosWS(file)) IconLoader.getIcon("/icons/rosFolder.svg") else super.getIcon(file)
 
-  override fun isFileSelectable(file: VirtualFile?): Boolean {
-    return file != null && (!file.isDirectory || file.children.size > 0)
-  }
+  override fun isFileSelectable(file: VirtualFile?) =
+    file != null && (!file.isDirectory || file.children.isNotEmpty())
 }
 
 fun isRosWS(file: VirtualFile): Boolean {
@@ -80,7 +74,6 @@ fun startWizard() {
 }
 
 fun undefinedRosEnvironment() {
-  val icon = IconLoader.findIcon("/icons/ros.svg")
   Messages.showErrorDialog("Directory doesn't contains a recognized ROS environment", "Import ROS workspace");
 }
 
@@ -88,23 +81,21 @@ fun invalidRosEnvironment() {
   Messages.showErrorDialog("Directory doesn't contains a valid ROS environment", "Import ROS workspace");
 }
 
-
 fun choseFile(): VirtualFile? {
   val fileChooserDescriptor = MyFileChooserDescriptor()
   fileChooserDescriptor.isHideIgnored = true
   fileChooserDescriptor.title = "Select Directory to import"
   val lastImportedLocation = PropertiesComponent.getInstance().getValue("last.imported.location")
-  var files: VirtualFile? = null
-  lastImportedLocation?.let {
-    files = LocalFileSystem.getInstance().refreshAndFindFileByPath(lastImportedLocation)
-  }
+  val files = lastImportedLocation?.let {
+    LocalFileSystem.getInstance().refreshAndFindFileByPath(lastImportedLocation)
+  }?.let { arrayOf(it) } ?: arrayOf()
   val fileChooser = FileChooserFactory.getInstance().createFileChooser(fileChooserDescriptor, null, null)
-  val filesChose = fileChooser.choose(null, files)
-  if (filesChose.isEmpty()) {
-    return null
+  val filesChose = fileChooser.choose(null, *files)
+  return if (filesChose.isEmpty()) {
+    null
   } else {
     PropertiesComponent.getInstance().setValue("last.imported.location", filesChose[0].path)
-    return filesChose[0]
+    filesChose[0]
   }
 }
 

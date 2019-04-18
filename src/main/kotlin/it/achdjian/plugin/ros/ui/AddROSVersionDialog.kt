@@ -40,16 +40,13 @@ class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(
   override fun createCenterPanel(): JComponent? {
     val layout = GridBagLayout()
     val mainPanel = JPanel(layout)
-
     val version = JLabel("ROS version name")
-
     val pathLabel = JLabel("Path")
 
     versionName.addKeyListener(NameKeyListener {
       if (versionPath.text.isNotEmpty() && versionName.text.isNotEmpty())
         isOKActionEnabled = true
     })
-
 
     versionPath.childComponent.textEditor.addKeyListener(NameKeyListener {
       if (versionPath.text.isNotEmpty() && versionName.text.isNotEmpty())
@@ -68,7 +65,6 @@ class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(
       if (it.path.isNotEmpty() && versionName.text.isNotEmpty())
         isOKActionEnabled = true
       it.path
-
     }
 
     val c = GridBagConstraints()

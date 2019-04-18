@@ -44,7 +44,7 @@ data class RosVersionImpl(var path: String, var name: String) : RosVersion {
   private val initWorkspaceCmd = findInitCmd(env["PATH"] ?: "")
   val envPath: List<String>
   val rosLaunch: String
-    get() = path + "/bin/roslaunch"
+    get() = "$path/bin/roslaunch"
   private val createPackage: CreatePackage
 
   init {
@@ -113,16 +113,12 @@ class PackagesComparator : Comparator<RosPackage> {
     val isTopA = isTop(a.name)
     val isTopB = isTop(b.name)
 
-    if (isTopA && isTopB) {
-      return a.name.compareTo(b.name)
+    return when {
+      isTopA && isTopB -> a.name.compareTo(b.name)
+      isTopA && !isTopB -> -1
+      !isTopA && isTopB -> 1
+      else -> a.name.compareTo(b.name)
     }
-    if (isTopA && !isTopB) {
-      return -1
-    }
-    if (!isTopA && isTopB) {
-      return 1
-    }
-    return a.name.compareTo(b.name)
   }
 
 

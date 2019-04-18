@@ -34,12 +34,9 @@ class RosSettings : BaseComponent, Configurable {
 
   private val model = RosTablePackageModel()
 
-  override fun initComponent() {
-    updateVersionSelector()
-  }
+  override fun initComponent() = updateVersionSelector()
 
-  override fun apply() {
-  }
+  override fun apply() {}
 
   override fun createComponent(): JComponent {
     val layout = GridBagLayout()

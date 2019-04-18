@@ -22,7 +22,6 @@ import it.achdjian.plugin.ros.utils.getPackages
 class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHelper) : CMakeAppRunConfigurationSettingsEditor(project, helper) {
   companion object {
     private val LOG = Logger.getInstance(NodeRunEditorCMake::class.java)
-
   }
 
   private val comboPackages = ComboBox<RosPackage>()
@@ -32,7 +31,6 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
   private val rosMasterAddr = JBTextField("127.0.0.1")
   private val rosMasterPort = IntegerField("11311", 0, 65535)
   private val allTarget = helper.createBuildAllVirtualTarget()
-
 
   init {
     comboPackages.renderer = RosPackageListCellRenderer()
@@ -45,7 +43,6 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
       comboNodes.removeAllItems()
       selected.getNodes().forEach { comboNodes.addItem(it) }
     }
-
 
     val selected = comboPackages.selectedItem as RosPackage
     selected.getNodes().forEach { comboNodes.addItem(it) }
@@ -113,7 +110,5 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
     row {
       programParametersPanel(grow)
     }
-
   }
-
 }

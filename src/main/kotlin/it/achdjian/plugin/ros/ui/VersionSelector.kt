@@ -23,11 +23,9 @@ class VersionSelector : ComboBox<Any>() {
       addItem(it.name)
     }
   }
-
 }
 
 class VersionSelectorRenderer : JLabel(), ListCellRenderer<Any?> {
-
   companion object {
     const val SEPARATOR_STRING = "SEPARATOR"
   }

@@ -54,8 +54,7 @@ class RosTablePackageModel : TableModel {
 
   override fun getColumnClass(p0: Int): Class<*> = String::class.java
 
-  override fun setValueAt(p0: Any?, p1: Int, p2: Int) {
-  }
+  override fun setValueAt(p0: Any?, p1: Int, p2: Int) { }
 
   override fun getColumnCount() = 3
 

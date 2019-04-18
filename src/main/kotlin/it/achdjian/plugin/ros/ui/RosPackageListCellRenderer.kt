@@ -8,5 +8,4 @@ class RosPackageListCellRenderer : ColoredListCellRenderer<RosPackage>() {
   override fun customizeCellRenderer(list: JList<out RosPackage>, value: RosPackage?, index: Int, selected: Boolean, hasFocus: Boolean) {
     value?.let { append(it.name) }
   }
-
 }

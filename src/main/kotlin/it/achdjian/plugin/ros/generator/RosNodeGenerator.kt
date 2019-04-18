@@ -25,7 +25,6 @@ import javax.swing.JPanel
 
 
 class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
-
   companion object {
     private val LOG = Logger.getInstance(RosNodeGenerator::class.java)
   }
@@ -103,5 +102,4 @@ class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
       cmakeLists
     })
   }
-
 }
