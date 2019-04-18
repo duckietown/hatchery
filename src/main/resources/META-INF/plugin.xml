@@ -21,6 +21,15 @@
         <component>
             <implementation-class>edu.umontreal.hatchery.settings.RosConfig</implementation-class>
         </component>
+        <component>
+            <implementation-class>it.achdjian.plugin.ros.data.RosEnvironments</implementation-class>
+        </component>
+        <component>
+            <implementation-class>it.achdjian.plugin.ros.data.RosCustomVersion</implementation-class>
+        </component>
+        <component>
+            <implementation-class>it.achdjian.plugin.ros.settings.RosSettings</implementation-class>
+        </component>
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -56,6 +65,13 @@
 
         <applicationService serviceImplementation="edu.umontreal.hatchery.settings.RosConfig" overrides="false"/>
         <applicationConfigurable groupId="tools" displayName="Hatchery" id="preferences.RosConfig" instance="edu.umontreal.hatchery.settings.RosConfig"/>
+
+
+        <configurationType implementation="it.achdjian.plugin.ros.launch.LaunchConfigurationType" id="it.achdjian.plugin.ros.launch.conf.type"/>
+        <configurationType implementation="it.achdjian.plugin.ros.node.NodeConfigurationTypeCMake" id="it.achdjian.plugin.ros.node.conf.type"/>
+        <directoryProjectGenerator implementation="it.achdjian.plugin.ros.generator.RosNodeGenerator"/>
+        <applicationConfigurable order="last" id="ROS.plugin.achdjian.it" instance="it.achdjian.plugin.ros.settings.RosSettings" displayName="ROS config" groupId="build"/>
+
     </extensions>
 
     <actions>
@@ -91,5 +107,15 @@
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
+
+        <group id="ROS.WelcomeScreen.Actions">
+            <action id="ImportROSWorkspace" class="it.achdjian.plugin.ros.importer.ImporterRosWorkspaceAction" text="Import ROS workspace"/>
+            <add-to-group group-id="WelcomeScreen.QuickStart" anchor="after" relative-to-action="ImportCMakeProject"/>
+        </group>
+
+        <group id="ROS.FileMenu.Before">
+            <action id="CPP.ImportROSWorkspace" class="it.achdjian.plugin.ros.importer.ImporterRosWorkspaceAction" text="Import ROS workspace ... "/>
+            <add-to-group group-id="FileOpenGroup" anchor="after" relative-to-action="CPP.ImportCMakeProject"/>
+        </group>
     </actions>
 </idea-plugin>
