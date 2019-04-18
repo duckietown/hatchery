@@ -23,11 +23,13 @@ object CONST {
 fun getVersion(project: Project) =
   project.projectFile?.parent?.parent
     ?.findChild("CMakeLists.txt")
-    ?.let {
-      getRosVersionFromCMakeLists(it)
-    }
+    ?.let { getRosVersionFromCMakeLists(it) }
 
 fun getBaseDir(project: Project) = project.projectFile?.parent?.parent?.parent
+
+/**
+ * TODO: Integrate with [edu.umontreal.hatchery.ros.Ros.packages]
+ */
 
 fun getPackages(project: Project): List<RosPackage> {
   val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.getPackages.${project.name}")
@@ -36,8 +38,7 @@ fun getPackages(project: Project): List<RosPackage> {
     val path = FileSystems.getDefault().getPath(project.projectFilePath)
     log.trace("$path")
     val baseSearch = path.parent.parent
-    Files
-      .walk(baseSearch)
+    Files.walk(baseSearch)
       .filter { it.fileName.toString() == "package.xml" }
       .peek { log.trace("found package $it") }
       .map { RosPackage(it.parent, getEnvironmentVariables(project, version.env)) }
@@ -47,9 +48,12 @@ fun getPackages(project: Project): List<RosPackage> {
   return packages
 }
 
+/**
+ * TODO: Integrate with [edu.umontreal.hatchery.ros.Ros.env]
+ */
+
 fun getEnvironmentVariables(project: Project, env: Map<String, String>): Map<String, String> {
   val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.getEnvironmentVariables.${project.name}")
-
   val newEnv = HashMap<String, String>()
 
   val base = FileSystems.getDefault().getPath(project.projectFile?.parent?.parent?.parent?.path)

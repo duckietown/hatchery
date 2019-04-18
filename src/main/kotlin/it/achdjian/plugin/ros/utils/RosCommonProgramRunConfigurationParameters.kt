@@ -68,9 +68,6 @@ class RosCommonProgramRunConfigurationParameters(private val prj: Project) : Com
     parentElement.setAttribute(PASS_PARENT_ENV, setPassParentEnvs.toString())
   }
 
-  private fun createDomEnvironmentEntry(entry: Map.Entry<String, String>): Element {
-    val element = Element(entry.key)
-    element.text = entry.value
-    return element
-  }
+  private fun createDomEnvironmentEntry(entry: Map.Entry<String, String>) =
+    Element(entry.key).apply { text = entry.value }
 }

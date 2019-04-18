@@ -30,7 +30,6 @@ class CatkinCreatePackage(path: String, val rosVersion: RosVersionImpl) : Create
   private val executable = File(path, "catkin_create_pkg")
 
   override fun createPackage(path: VirtualFile, name: String, dependencies: List<String>) {
-
     var cmd = "${executable.absolutePath} --rosdistro ${rosVersion.name}  $name"
     LOG.trace("cmd = $cmd")
     dependencies.forEach { cmd += " $it" }

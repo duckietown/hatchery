@@ -33,16 +33,8 @@ fun releaseProfile(version: RosVersion, baseDir: File): CMakeSettings.Profile {
     "")
 }
 
-fun getRosVersionFromCMakeLists(file: VirtualFile): RosVersionImpl? {
-  val cMakeListsTarget = getCMakeListsTarget(file)
-  cMakeListsTarget?.let {
-    val state = getRosEnvironment()
-    return state.getOwnerVersion(it)
-  } ?: return null
-}
+fun getRosVersionFromCMakeLists(file: VirtualFile): RosVersionImpl? =
+  getCMakeListsTarget(file)?.let { getRosEnvironment().getOwnerVersion(it) }
 
-
-fun getCMakeListsTarget(file: VirtualFile): Path? {
-  val path = Paths.get(file.path)
-  return if (Files.isSymbolicLink(path)) Files.readSymbolicLink(path) else null
-}
+fun getCMakeListsTarget(file: VirtualFile): Path? =
+  Paths.get(file.path).let { if (Files.isSymbolicLink(it)) Files.readSymbolicLink(it) else null }

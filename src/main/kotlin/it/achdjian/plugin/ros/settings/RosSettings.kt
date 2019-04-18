@@ -51,7 +51,6 @@ class RosSettings : BaseComponent, Configurable {
     }
     val preferredSize = versionSelector.preferredSize
 
-
     val detailsButton = FixedSizeButton()
     detailsButton.icon = IconLoader.findIcon("/icons/ros.svg")
     detailsButton.preferredSize = Dimension(preferredSize.height, preferredSize.height)
@@ -121,7 +120,6 @@ class RosSettings : BaseComponent, Configurable {
       versionSelector.addItem(it.name)
     }
   }
-
 
   override fun getDisplayName() = "ROS"
 }

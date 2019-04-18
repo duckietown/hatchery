@@ -37,7 +37,8 @@ class NodeConfigurationCMake(project: Project, configurationFactory: Configurati
   var rosMasterAddr = "localhost"
   var rosMasterPort = 11311
 
-  override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> = NodeRunEditorCMake(project, CMakeRunConfigurationType.getHelper(project))
+  override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> =
+    NodeRunEditorCMake(project, CMakeRunConfigurationType.getHelper(project))
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
     CidrCommandLineState(environment, NodeLauncherCMake(this, project, environment))

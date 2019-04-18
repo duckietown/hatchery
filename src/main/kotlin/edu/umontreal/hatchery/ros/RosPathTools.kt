@@ -100,7 +100,8 @@ fun getSetupScriptInProject() =
   }.flatten().firstOrNull()
 
 @Suppress("LeakingThis", "MemberVisibilityCanBePrivate")
-class Ros(val setupScript: String = defaultRosSetupScript ?: getSetupScriptInProject() ?: "") {
+class Ros(val setupScript: String = defaultRosSetupScript
+  ?: getSetupScriptInProject() ?: "") {
   val shell: Shell
   val setupScriptFile: File?
   val distro: Distro

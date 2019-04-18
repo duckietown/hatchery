@@ -44,6 +44,5 @@ class NodeLauncherCMake(private val nodeConfiguration: NodeConfigurationCMake, p
     return super.createDebugProcess(state, session)
   }
 
-
   override fun getProject() = prj
 }

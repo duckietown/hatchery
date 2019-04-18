@@ -37,7 +37,7 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
     comboNodes.renderer = RosNodeListCellRenderer()
     packages.forEach { comboPackages.addItem(it) }
     comboPackages.addActionListener { actionEvent ->
-      LOG.trace("ActionEvent: ${actionEvent}")
+      LOG.trace("ActionEvent: $actionEvent")
       val selected = comboPackages.selectedItem as RosPackage
       LOG.trace("selected: ${selected.name}")
       comboNodes.removeAllItems()
@@ -79,7 +79,6 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
     comboNodes.selectedItem?.let {
       configuration.rosNodeName = (it as RosNode).name
       configuration.executableData = ExecutableData(it.path.toString())
-
     }
 
     configuration.workingDirectory = programParametersPanel.programParametersComponent.component.text
