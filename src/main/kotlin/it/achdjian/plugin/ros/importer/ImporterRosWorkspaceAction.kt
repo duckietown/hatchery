@@ -18,9 +18,6 @@ import com.jetbrains.cidr.cpp.cmake.workspace.CMakeWorkspace
 import it.achdjian.plugin.ros.utils.getRosVersionFromCMakeLists
 import it.achdjian.plugin.ros.utils.releaseProfile
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 import javax.swing.Icon
 
 class ImporterRosWorkspaceAction : AnAction(AllIcons.ToolbarDecorator.Import), DumbAware {

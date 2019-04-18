@@ -12,8 +12,10 @@ import com.jetbrains.cidr.execution.ExecutableData
 import com.jetbrains.cidr.execution.debugger.CidrDebugProcess
 import it.achdjian.plugin.ros.utils.getPackages
 
-class NodeLauncherCMake(private val nodeConfiguration: NodeConfigurationCMake, private val prj: Project, environment: ExecutionEnvironment) :
-  CMakeLauncher(environment, nodeConfiguration) {
+class NodeLauncherCMake(
+  private val nodeConfiguration: NodeConfigurationCMake,
+  private val prj: Project, environment: ExecutionEnvironment
+) : CMakeLauncher(environment, nodeConfiguration) {
   companion object {
     private val LOG = Logger.getInstance(NodeLauncherCMake::class.java)
   }

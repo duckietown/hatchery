@@ -3,7 +3,6 @@ package it.achdjian.plugin.ros.launch
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.components.fields.IntegerField
@@ -11,7 +10,6 @@ import com.intellij.ui.layout.panel
 import it.achdjian.plugin.ros.ui.LauncherFileChooser
 import java.io.File
 import javax.swing.JCheckBox
-
 
 object LaunchFileChooserDescriptor : FileChooserDescriptor(true, false, false, false, false, false)
 

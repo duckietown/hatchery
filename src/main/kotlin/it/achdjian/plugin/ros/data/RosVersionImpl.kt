@@ -8,7 +8,6 @@ import it.achdjian.plugin.ros.settings.CreatePackage
 import it.achdjian.plugin.ros.settings.createPackageFactory
 import it.achdjian.plugin.ros.settings.diffEnvironment
 import it.achdjian.plugin.ros.settings.findInitCmd
-import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
 

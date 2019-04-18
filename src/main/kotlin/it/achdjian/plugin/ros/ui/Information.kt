@@ -1,4 +1,4 @@
-package it.achdjian.plagin.ros.ui
+package it.achdjian.plugin.ros.ui
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project

@@ -12,7 +12,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.jetbrains.cidr.cpp.cmake.projectWizard.generators.CMakeAbstractCPPProjectGenerator
 import com.jetbrains.cidr.cpp.cmake.projectWizard.generators.settings.CMakeProjectSettings
 import com.jetbrains.cidr.cpp.cmake.workspace.CMakeWorkspace
-import it.achdjian.plagin.ros.ui.panel
+import it.achdjian.plugin.ros.ui.panel
 import it.achdjian.plugin.ros.data.RosVersion
 import it.achdjian.plugin.ros.data.RosVersionNull
 import it.achdjian.plugin.ros.data.getRosEnvironment
@@ -22,7 +22,6 @@ import java.io.File
 import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
-
 
 class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
   companion object {

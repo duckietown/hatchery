@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package it.achdjian.plagin.ros.ui
+package it.achdjian.plugin.ros.ui
 
 import com.intellij.ui.components.JBLabel
 import com.intellij.util.ui.JBUI

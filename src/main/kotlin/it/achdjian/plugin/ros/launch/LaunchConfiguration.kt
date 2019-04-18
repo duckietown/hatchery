@@ -14,9 +14,8 @@ import com.intellij.openapi.vfs.VirtualFileManager
 import org.jdom.Element
 
 class LaunchConfiguration(project: Project, configurationFactory: ConfigurationFactory, targetName: String) :
-  LocatableConfigurationBase<RunProfileState>(project, configurationFactory, targetName), RunConfigurationWithSuppressedDefaultDebugAction {
-
-
+  LocatableConfigurationBase<RunProfileState>(project, configurationFactory, targetName),
+  RunConfigurationWithSuppressedDefaultDebugAction {
   companion object {
     const val PATH_TAG = "path"
     const val ROS_MASTER_ADDR_TAG = "ros_master_addr"

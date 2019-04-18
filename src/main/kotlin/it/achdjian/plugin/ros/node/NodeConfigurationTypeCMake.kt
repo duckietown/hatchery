@@ -1,15 +1,11 @@
 package it.achdjian.plugin.ros.node
 
 import com.intellij.execution.configurations.ConfigurationFactory
-import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.execution.configurations.RunConfigurationSingletonPolicy
-import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
-import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration
 import com.jetbrains.cidr.cpp.execution.CMakeBuildConfigurationHelper
 import com.jetbrains.cidr.cpp.execution.CMakeRunConfigurationType
 import it.achdjian.plugin.ros.ui.ICON_NODE
-
 
 object IDs {
   const val ID = "ROS.rosNode"

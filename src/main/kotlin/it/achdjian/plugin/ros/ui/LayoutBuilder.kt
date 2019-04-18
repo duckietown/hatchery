@@ -1,4 +1,4 @@
-package it.achdjian.plagin.ros.ui
+package it.achdjian.plugin.ros.ui
 
 import javax.swing.JComponent
 import javax.swing.JPanel

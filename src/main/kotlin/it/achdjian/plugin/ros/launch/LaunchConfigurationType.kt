@@ -4,12 +4,8 @@ import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.execution.configurations.ConfigurationTypeBase
 import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.execution.configurations.RunConfigurationSingletonPolicy
-import com.intellij.icons.AllIcons
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.IconLoader
-import com.intellij.openapi.util.NotNullLazyValue
 import it.achdjian.plugin.ros.ui.ICON_LAUNCH
-import javax.swing.Icon
 
 object IDs {
   val ID = "ROS.launch"

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.achdjian.plagin.ros.ui
+package it.achdjian.plugin.ros.ui
 
 import com.intellij.ui.IdeBorderFactory
 import com.intellij.util.ui.DialogUtil

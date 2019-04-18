@@ -1,9 +1,8 @@
-package it.achdjian.plagin.ros.ui
+package it.achdjian.plugin.ros.ui
 
 import java.awt.Container
 import java.awt.Dimension
 import java.awt.GridLayout
-
 
 class GridLayout2(row: Int, col: Int) : GridLayout(row, col, 20, 20) {
 
