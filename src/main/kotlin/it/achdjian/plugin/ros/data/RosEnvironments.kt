@@ -5,7 +5,7 @@ import com.intellij.openapi.diagnostic.Logger
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.stream.Collectors
+import kotlin.streams.toList
 
 class RosEnvironments(customVerison: RosCustomVersion) {
   companion object {
@@ -17,29 +17,21 @@ class RosEnvironments(customVerison: RosCustomVersion) {
 
   init {
     if (Files.exists(Paths.get("/opt/ros"))) {
-      val defaultVersions = Files.list(Paths.get("/opt/ros")).collect(Collectors.toList())?.let { it }
-        ?: ArrayList()
+      val defaultVersions = Files.list(Paths.get("/opt/ros")).toList()
       defaultVersionsName = defaultVersions.map { it.fileName.toString() }
 
-      LOG.trace("default version name: ")
-      defaultVersionsName.forEach { LOG.trace(it) }
+      LOG.trace("defaultVersionsName: " + defaultVersionsName.joinToString(","))
 
       val versions = HashMap<String, String>()
       defaultVersions.associateByTo(versions, { it.fileName.toString() }, { it.toString() })
 
-      LOG.trace("defaultVersionToRemove")
-      customVerison.defaultVersionToRemove.forEach { LOG.trace(it) }
+      LOG.trace("defaultVersionToRemove:" + customVerison.defaultVersionToRemove.joinToString("m"))
       customVerison.defaultVersionToRemove.forEach { versions.remove(it) }
 
-      LOG.trace("custom versions")
-      customVerison.versions.forEach { LOG.trace(it.key) }
+      LOG.trace("custom versions:" + customVerison.versions)
+      customVerison.versions.forEach { (key, value) -> versions[key] = value }
 
-      customVerison
-        .versions
-        .forEach { (key, value) -> versions[key] = value }
-
-      LOG.trace("ROS versions")
-      customVerison.versions.forEach { LOG.trace("${it.key} --> ${it.value}") }
+      LOG.trace("ROS versions:" + customVerison.versions)
       this.versions.addAll(scan(versions))
     } else {
       defaultVersionsName = listOf()
