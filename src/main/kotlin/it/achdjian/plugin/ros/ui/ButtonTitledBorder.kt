@@ -95,18 +95,19 @@ class ButtonTitledBorder(title: String, val parent: Component, val statusChange:
     return minSize
   }
 
-  override fun getBorderInsets(c: Component?, insets: Insets): Insets {
-    insets.top += (getTitledSeparator(c!!).preferredSize.getHeight() - ButtonTitledSeparator.TOP_INSET.toDouble() - ButtonTitledSeparator.BOTTOM_INSET.toDouble()).toInt()
-    insets.top += UIUtil.DEFAULT_VGAP
-    insets.top += insideInsets.top
-    insets.left += insideInsets.left
-    insets.bottom += insideInsets.bottom
-    insets.right += insideInsets.right
-    insets.top += outsideInsets.top
-    insets.left += outsideInsets.left
-    insets.bottom += outsideInsets.bottom
-    insets.right += outsideInsets.right
-    return insets
+  override fun getBorderInsets(c: Component?, insets: Insets) = insets.apply {
+    top += (getTitledSeparator(c!!).preferredSize.getHeight() -
+      ButtonTitledSeparator.TOP_INSET.toDouble() -
+      ButtonTitledSeparator.BOTTOM_INSET.toDouble()).toInt()
+    top += UIUtil.DEFAULT_VGAP
+    top += insideInsets.top
+    left += insideInsets.left
+    bottom += insideInsets.bottom
+    right += insideInsets.right
+    top += outsideInsets.top
+    left += outsideInsets.left
+    bottom += outsideInsets.bottom
+    right += outsideInsets.right
   }
 
   private fun dispatchMouseEvent(event: MouseEvent) {
