@@ -82,13 +82,10 @@ data class RosVersionImpl(var path: String, var name: String) : RosVersion {
     val packagesPath = env["ROS_PACKAGE_PATH"]
     LOG.trace("packagePath: $packagesPath")
     packagesPath?.let { path ->
-      Files
-        .list(Paths.get(path))
+      Files.list(Paths.get(path))
         .filter { toFilter -> toFilter.resolve("package.xml").toFile().exists() }
         .map { path -> RosPackage(path, env) }
-        .forEach { rosPackage ->
-          packages.add(rosPackage)
-        }
+        .forEach { rosPackage -> packages.add(rosPackage) }
     }
     packages.sortWith(PackagesComparator())
     return packages

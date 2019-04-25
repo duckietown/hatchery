@@ -21,18 +21,16 @@ class LayoutBuilder {
   fun build(panel: JPanel) {
     var colSize = 1
 
-    if (rows.any())
-      colSize = 2
+    if (rows.any()) colSize = 2
 
     panel.layout = GridLayout2(rows.size, colSize)
 
-    if (colSize == 1) {
+    if (colSize == 1)
       rows.forEach { panel.add(it.component) }
-    } else {
+    else
       rows.forEach {
         panel.add(it.label())
         panel.add(it.component)
       }
-    }
   }
 }

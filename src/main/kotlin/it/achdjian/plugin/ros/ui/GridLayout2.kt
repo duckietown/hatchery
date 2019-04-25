@@ -5,18 +5,14 @@ import java.awt.Dimension
 import java.awt.GridLayout
 
 class GridLayout2(row: Int, col: Int) : GridLayout(row, col, 20, 20) {
-
   override fun preferredLayoutSize(parent: Container): Dimension {
     synchronized(parent.treeLock) {
       val insets = parent.insets
       val nComponents = parent.componentCount
       var nRows = rows
       var nCols = columns
-      if (nRows > 0) {
-        nCols = (nComponents + nRows - 1) / nRows
-      } else {
-        nRows = (nComponents + nCols - 1) / nCols
-      }
+      if (nRows > 0) nCols = (nComponents + nRows - 1) / nRows
+      else nRows = (nComponents + nCols - 1) / nCols
       val w = IntArray(nCols)
       val h = IntArray(nRows)
       for (i in 0 until nComponents) {
@@ -24,12 +20,8 @@ class GridLayout2(row: Int, col: Int) : GridLayout(row, col, 20, 20) {
         val c = i % nCols
         val comp = parent.getComponent(i)
         val d = comp.preferredSize
-        if (w[c] < d.width) {
-          w[c] = d.width
-        }
-        if (h[r] < d.height) {
-          h[r] = d.height
-        }
+        if (w[c] < d.width) w[c] = d.width
+        if (h[r] < d.height) h[r] = d.height
       }
       val nw = w.sum()
       val nh = h.sum()
@@ -38,8 +30,7 @@ class GridLayout2(row: Int, col: Int) : GridLayout(row, col, 20, 20) {
     }
   }
 
-
-  override fun minimumLayoutSize(parent: Container): Dimension {
+  override fun minimumLayoutSize(parent: Container): Dimension =
     synchronized(parent.treeLock) {
       val insets = parent.insets
       val nComponents = parent.componentCount
@@ -69,22 +60,16 @@ class GridLayout2(row: Int, col: Int) : GridLayout(row, col, 20, 20) {
       return Dimension(insets.left + insets.right + nw + (nCols - 1) * hgap,
         insets.top + insets.bottom + nh + (nRows - 1) * vgap)
     }
-  }
 
-  override fun layoutContainer(parent: Container) {
+  override fun layoutContainer(parent: Container) =
     synchronized(parent.treeLock) {
       val insets = parent.insets
       val nComponents = parent.componentCount
       var nRows = rows
       var nCols = columns
-      if (nComponents == 0) {
-        return
-      }
-      if (nRows > 0) {
-        nCols = (nComponents + nRows - 1) / nRows
-      } else {
-        nRows = (nComponents + nCols - 1) / nCols
-      }
+      if (nComponents == 0) return
+      if (nRows > 0) nCols = (nComponents + nRows - 1) / nRows
+      else nRows = (nComponents + nCols - 1) / nCols
       val hgap = hgap
       val vgap = vgap
       val w = IntArray(nCols)
@@ -94,12 +79,8 @@ class GridLayout2(row: Int, col: Int) : GridLayout(row, col, 20, 20) {
         val c = i % nCols
         val comp = parent.getComponent(i)
         val d = comp.preferredSize
-        if (w[c] < d.width) {
-          w[c] = d.width
-        }
-        if (h[r] < d.height) {
-          h[r] = d.height
-        }
+        if (w[c] < d.width) w[c] = d.width
+        if (h[r] < d.height) h[r] = d.height
       }
       var x = insets.left
       for (c in 0 until nCols) {
@@ -115,5 +96,4 @@ class GridLayout2(row: Int, col: Int) : GridLayout(row, col, 20, 20) {
         x += w[c] + hgap
       }
     }
-  }
 }

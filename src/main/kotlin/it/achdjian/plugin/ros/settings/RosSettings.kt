@@ -46,9 +46,7 @@ class RosSettings : BaseComponent, Configurable {
     updateVersionSelector()
     ComboboxSpeedSearch(versionSelector)
     versionSelector.putClientProperty(VersionSelector.TABLE_CELL_EDITOR, true)
-    versionSelector.addActionListener {
-      updateTable()
-    }
+    versionSelector.addActionListener { updateTable() }
     val preferredSize = versionSelector.preferredSize
 
     val detailsButton = FixedSizeButton()
@@ -106,19 +104,14 @@ class RosSettings : BaseComponent, Configurable {
     val state = getRosEnvironment()
     LOG.trace("selected version: ${versionSelector.selectedItem}")
     state.versions.forEach { rosVersion ->
-      if (rosVersion.name == versionSelector.selectedItem) {
+      if (rosVersion.name == versionSelector.selectedItem)
         model.updateVersions(rosVersion)
-      }
     }
   }
 
   private fun updateVersionSelector() {
-    val state = getRosEnvironment()
     versionSelector.removeAllItems()
-    versionSelector
-    state.versions.forEach {
-      versionSelector.addItem(it.name)
-    }
+    getRosEnvironment().versions.forEach { versionSelector.addItem(it.name) }
   }
 
   override fun getDisplayName() = "ROS"

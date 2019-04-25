@@ -21,21 +21,18 @@ class Row(val text: String? = null) {
   var component: JComponent? = null
 
   fun checkBox(text: String, actionListener: (event: ItemEvent) -> Unit) {
-    val checkBox = JCheckBox(BundleBase.replaceMnemonicAmpersand(text))
-    checkBox.addItemListener(actionListener)
-    component = checkBox
+    component = JCheckBox(BundleBase.replaceMnemonicAmpersand(text)).apply {
+      addItemListener(actionListener)
+    }
   }
 
-  fun comboBox(options: Array<String>, selected: String? = null, actionListener: (event: ItemEvent) -> Unit) {
-    val comboBox = ComboBox(options)
-    comboBox.addItemListener(actionListener)
-    if (selected != null)
-      comboBox.selectedItem = selected
-    component = comboBox
-  }
-
-  fun comboBox(options: List<String>, selected: String? = null, actionListener: (event: ItemEvent) -> Unit) {
-    comboBox(options.toTypedArray(), selected, actionListener)
+  fun comboBox(options: List<String>,
+               selected: String? = null,
+               actionListener: (event: ItemEvent) -> Unit) {
+    component = ComboBox(options.toTypedArray()).apply {
+      addItemListener(actionListener)
+      if (selected != null) selectedItem = selected
+    }
   }
 
   fun textArea(text: String?, changeUpdate: (doc: DocumentEvent?) -> Unit) {
@@ -45,19 +42,22 @@ class Row(val text: String? = null) {
     component = textArea
   }
 
-  fun textFieldWithHistoryWithBrowseButton(project: Project?,
-                                           value: String?,
-                                           browseDialogTitle: String,
-                                           fileChooserDescriptor: FileChooserDescriptor,
-                                           historyProvider: (() -> List<String>)? = null,
-                                           fileChosen: ((chosenFile: VirtualFile) -> String)? = null) {
+  fun textFieldWithHistoryWithBrowseButton(
+    project: Project?,
+    value: String?,
+    browseDialogTitle: String,
+    fileChooserDescriptor: FileChooserDescriptor,
+    historyProvider: (() -> List<String>)? = null,
+    fileChosen: ((chosenFile: VirtualFile) -> String)? = null
+  ) {
     val textWithBrowserButton = TextFieldWithHistoryWithBrowseButton()
-    val textFieldWithHistory = textWithBrowserButton.childComponent
-    textFieldWithHistory.setHistorySize(-1)
-    textFieldWithHistory.setMinimumAndPreferredWidth(0)
-    if (historyProvider != null) {
-      SwingHelper.addHistoryOnExpansion(textFieldWithHistory, historyProvider)
+    textWithBrowserButton.childComponent.apply {
+      setHistorySize(-1)
+      setMinimumAndPreferredWidth(0)
+      if (historyProvider != null)
+        SwingHelper.addHistoryOnExpansion(this, historyProvider)
     }
+
     installFileCompletionAndBrowseDialog(
       project,
       textWithBrowserButton,

@@ -4,6 +4,7 @@ import com.intellij.execution.ui.CommonProgramParametersPanel
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.ui.ColoredListCellRenderer
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.components.fields.IntegerField
 import com.intellij.ui.layout.panel
@@ -15,9 +16,8 @@ import com.jetbrains.cidr.execution.BuildTargetData
 import com.jetbrains.cidr.execution.ExecutableData
 import it.achdjian.plugin.ros.data.RosNode
 import it.achdjian.plugin.ros.data.RosPackage
-import it.achdjian.plugin.ros.ui.RosNodeListCellRenderer
-import it.achdjian.plugin.ros.ui.RosPackageListCellRenderer
 import it.achdjian.plugin.ros.utils.getPackages
+import javax.swing.JList
 
 class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHelper) : CMakeAppRunConfigurationSettingsEditor(project, helper) {
   companion object {
@@ -33,8 +33,26 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
   private val allTarget = helper.createBuildAllVirtualTarget()
 
   init {
-    comboPackages.renderer = RosPackageListCellRenderer()
-    comboNodes.renderer = RosNodeListCellRenderer()
+    comboPackages.renderer = object : ColoredListCellRenderer<RosPackage>() {
+      override fun customizeCellRenderer(
+        list: JList<out RosPackage>,
+        value: RosPackage,
+        index: Int,
+        selected: Boolean,
+        hasFocus: Boolean) {
+        append(value.name)
+      }
+    }
+    comboNodes.renderer = object : ColoredListCellRenderer<RosNode>() {
+      override fun customizeCellRenderer(
+        list: JList<out RosNode>,
+        rosNode: RosNode,
+        index: Int,
+        selected: Boolean,
+        hasFocus: Boolean) {
+        append(rosNode.name)
+      }
+    }
     packages.forEach { comboPackages.addItem(it) }
     comboPackages.addActionListener { actionEvent ->
       LOG.trace("ActionEvent: $actionEvent")
@@ -70,12 +88,11 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
     comboPackages.selectedItem?.let {
       configuration.rosPackageName = (it as RosPackage).name
       configuration.envs = it.env
-      rosMasterAddr.text?.let {
-        if (it.isNotEmpty()) {
-          configuration.envs["ROS_MASTER_URI"] = "http://$it:${rosMasterPort.text}"
-        }
+      rosMasterAddr.text?.let { ip ->
+        if (ip.isNotEmpty()) configuration.envs["ROS_MASTER_URI"] = "http://$ip:${rosMasterPort.text}"
       }
     }
+
     comboNodes.selectedItem?.let {
       configuration.rosNodeName = (it as RosNode).name
       configuration.executableData = ExecutableData(it.path.toString())
@@ -91,23 +108,12 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
   }
 
   override fun createEditor() = panel {
-    row("Package") {
-      comboPackages(grow)
-    }
-
-    row("Node") {
-      comboNodes(grow)
-    }
+    row("Package") { comboPackages(grow) }
+    row("Node") { comboNodes(grow) }
     titledRow("ROS MASTER") {
-      row("ROS MASTER address") {
-        rosMasterAddr(grow)
-      }
-      row("ROS MASTER port") {
-        rosMasterPort(grow)
-      }
+      row("ROS MASTER address") { rosMasterAddr(grow) }
+      row("ROS MASTER port") { rosMasterPort(grow) }
     }
-    row {
-      programParametersPanel(grow)
-    }
+    row { programParametersPanel(grow) }
   }
 }

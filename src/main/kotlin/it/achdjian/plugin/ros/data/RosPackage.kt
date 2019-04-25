@@ -43,17 +43,17 @@ class RosPackage(val path: Path, val env: Map<String, String>) {
   private fun searchRosNodes(): List<RosNode> {
     val foundNodes = ArrayList<RosNode>()
     catkinFindLibexec(name, env).forEach { libExecPath ->
-      Files.walk(libExecPath).filter { !Files.isDirectory(it) }.filter { Files.isExecutable(it) }.map { RosNode(it) }.forEach { foundNodes.add(it) }
+      Files.walk(libExecPath)
+        .filter { !Files.isDirectory(it) && Files.isExecutable(it) }
+        .map { RosNode(it) }
+        .forEach { foundNodes.add(it) }
     }
-    this.rosNodes = foundNodes
+    rosNodes = foundNodes
     return foundNodes
   }
 
   private fun getNodeValue(xPath: XPath, xpath: String, doc: Document): String {
     val nodes = xPath.evaluate(xpath, doc, XPathConstants.NODESET) as NodeList
-    return if (nodes.length > 0)
-      nodes.item(0).textContent.trim()
-    else
-      ""
+    return if (nodes.length > 0) nodes.item(0).textContent.trim() else ""
   }
 }

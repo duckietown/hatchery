@@ -21,12 +21,11 @@ import java.io.File
 import javax.swing.Icon
 
 class ImporterRosWorkspaceAction : AnAction(AllIcons.ToolbarDecorator.Import), DumbAware {
-  override fun actionPerformed(event: AnActionEvent) {
-    startWizard()
-  }
+  override fun actionPerformed(event: AnActionEvent) = startWizard()
 }
 
-class MyFileChooserDescriptor : FileChooserDescriptor(false, true, false, false, false, false) {
+class RosWorkspaceChooserDescriptor :
+  FileChooserDescriptor(false, true, false, false, false, false) {
   override fun getIcon(file: VirtualFile): Icon? =
     if (isRosWS(file)) IconLoader.getIcon("/icons/rosFolder.svg") else super.getIcon(file)
 
@@ -34,17 +33,11 @@ class MyFileChooserDescriptor : FileChooserDescriptor(false, true, false, false,
     file != null && (!file.isDirectory || file.children.isNotEmpty())
 }
 
-fun isRosWS(file: VirtualFile): Boolean {
-  if (file.isDirectory) {
-    val src = file.findChild("src")
-    src?.let {
-      val cmakeLists = it.findChild("CMakeLists.txt")
-      if (cmakeLists != null && cmakeLists.exists())
-        return true
-    }
-  }
-  return false
-}
+fun isRosWS(file: VirtualFile) =
+  file.isDirectory &&
+    file.findChild("src")
+      ?.findChild("CMakeLists.txt")
+      ?.exists() ?: false
 
 fun startWizard() {
   choseFile()?.let { chosenDir ->
@@ -58,28 +51,23 @@ fun startWizard() {
           project?.let {
             val cMakeWorkspace = CMakeWorkspace.getInstance(it)
             val settings = cMakeWorkspace.settings
-
             val releaseProfile = releaseProfile(version, File(chosenDir.path))
-
             settings.profiles = listOf(releaseProfile)
           }
         } ?: undefinedRosEnvironment()
-
       } ?: invalidRosEnvironment()
     }
   }
 }
 
-fun undefinedRosEnvironment() {
-  Messages.showErrorDialog("Directory doesn't contains a recognized ROS environment", "Import ROS workspace");
-}
+fun undefinedRosEnvironment() =
+  Messages.showErrorDialog("Directory doesn't contains a recognized ROS environment", "Import ROS workspace")
 
-fun invalidRosEnvironment() {
-  Messages.showErrorDialog("Directory doesn't contains a valid ROS environment", "Import ROS workspace");
-}
+fun invalidRosEnvironment() =
+  Messages.showErrorDialog("Directory doesn't contains a valid ROS environment", "Import ROS workspace")
 
 fun choseFile(): VirtualFile? {
-  val fileChooserDescriptor = MyFileChooserDescriptor()
+  val fileChooserDescriptor = RosWorkspaceChooserDescriptor()
   fileChooserDescriptor.isHideIgnored = true
   fileChooserDescriptor.title = "Select Directory to import"
   val lastImportedLocation = PropertiesComponent.getInstance().getValue("last.imported.location")
@@ -87,12 +75,7 @@ fun choseFile(): VirtualFile? {
     LocalFileSystem.getInstance().refreshAndFindFileByPath(lastImportedLocation)
   }?.let { arrayOf(it) } ?: arrayOf()
   val fileChooser = FileChooserFactory.getInstance().createFileChooser(fileChooserDescriptor, null, null)
-  val filesChose = fileChooser.choose(null, *files)
-  return if (filesChose.isEmpty()) {
-    null
-  } else {
-    PropertiesComponent.getInstance().setValue("last.imported.location", filesChose[0].path)
-    filesChose[0]
-  }
+  val filesChosen = fileChooser.choose(null, *files)
+  return if (filesChosen.isEmpty()) null
+  else filesChosen[0].apply { PropertiesComponent.getInstance().setValue("last.imported.location", path) }
 }
-

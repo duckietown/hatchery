@@ -11,10 +11,6 @@ import it.achdjian.plugin.ros.utils.getEnvironmentVariables
 import it.achdjian.plugin.ros.utils.getVersion
 
 class LaunchLauncher(private val launchConfiguration: LaunchConfiguration, environment: ExecutionEnvironment) : CommandLineState(environment) {
-  companion object {
-    private val LOG = Logger.getInstance(LaunchLauncher::class.java)
-  }
-
   override fun startProcess() = launchConfiguration.path?.let { launchFile ->
     val rosVersion = getVersion(environment.project)
     rosVersion?.let {
@@ -32,8 +28,7 @@ class LaunchLauncher(private val launchConfiguration: LaunchConfiguration, envir
         val rosMasterUri = "http://${launchConfiguration.rosMasterAddr}:${launchConfiguration.rosMasterPort}"
         withEnvironment("ROS_MASTER_URI", rosMasterUri)
       }
-      val handler = KillableColoredProcessHandler(cmdLine)
-      handler
+      KillableColoredProcessHandler(cmdLine)
     } ?: NopProcessHandler()
   } ?: NopProcessHandler()
 }

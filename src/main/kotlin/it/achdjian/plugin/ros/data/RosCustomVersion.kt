@@ -5,14 +5,10 @@ import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 
 @State(name = "ROS.configuration", storages = [(Storage("ROS.xml"))])
-data class RosCustomVersion(var versions: MutableMap<String, String>) : PersistentStateComponent<RosCustomVersion> {
+data class RosCustomVersion(var versions: MutableMap<String, String> = HashMap()) : PersistentStateComponent<RosCustomVersion> {
   var defaultVersionToRemove = HashSet<String>()
 
-  constructor() : this(HashMap())
-
-  override fun getState(): RosCustomVersion? {
-    return this
-  }
+  override fun getState() = this
 
   override fun loadState(state: RosCustomVersion) {
     versions.clear()

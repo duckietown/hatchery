@@ -34,20 +34,13 @@ class RosTablePackageModel : TableModel {
   }
 
 
-  override fun getRowCount(): Int {
-    return rosVersion?.packages?.size ?: 0
-  }
+  override fun getRowCount() = rosVersion?.packages?.size ?: 0
 
-  override fun getColumnName(colId: Int): String {
-    val name = when (colId) {
-      0 -> "Name"
-      1 -> "Version"
-      2 -> "Description"
-      else -> {
-        ""
-      }
-    }
-    return name
+  override fun getColumnName(colId: Int) = when (colId) {
+    0 -> "Name"
+    1 -> "Version"
+    2 -> "Description"
+    else -> ""
   }
 
   override fun isCellEditable(p0: Int, p1: Int) = false

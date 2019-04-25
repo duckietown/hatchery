@@ -16,35 +16,22 @@ class NodeLauncherCMake(
   private val nodeConfiguration: NodeConfigurationCMake,
   private val prj: Project, environment: ExecutionEnvironment
 ) : CMakeLauncher(environment, nodeConfiguration) {
-  companion object {
-    private val LOG = Logger.getInstance(NodeLauncherCMake::class.java)
-  }
+  @Throws(ExecutionException::class)
+  override fun createProcess(state: CommandLineState) =
+    prepareNodeConfig().run { super.createProcess(state) }
 
   @Throws(ExecutionException::class)
-  override fun createProcess(state: CommandLineState): ProcessHandler {
-    val packages = getPackages(project)
-    val node = packages
+  override fun createDebugProcess(state: CommandLineState, session: XDebugSession) =
+    prepareNodeConfig().run { super.createDebugProcess(state, session) }
+
+  private fun prepareNodeConfig() =
+    getPackages(project)
       .filter { it.name == nodeConfiguration.rosPackageName }
       .flatMap { it.getNodes() }
       .firstOrNull { it.name == nodeConfiguration.rosNodeName }
-    node?.let {
-      nodeConfiguration.executableData = ExecutableData(it.path.toString())
-    }
-    return super.createProcess(state)
-  }
-
-  @Throws(ExecutionException::class)
-  override fun createDebugProcess(state: CommandLineState, session: XDebugSession): CidrDebugProcess {
-    val packages = getPackages(project)
-    val node = packages
-      .filter { it.name == nodeConfiguration.rosPackageName }
-      .flatMap { it.getNodes() }
-      .firstOrNull { it.name == nodeConfiguration.rosNodeName }
-    node?.let {
-      nodeConfiguration.executableData = ExecutableData(it.path.toString())
-    }
-    return super.createDebugProcess(state, session)
-  }
+      ?.also {
+        nodeConfiguration.executableData = ExecutableData(it.path.toString())
+      }
 
   override fun getProject() = prj
 }

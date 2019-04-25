@@ -8,18 +8,18 @@ import java.nio.file.Path
 
 fun catkinFindLibexec(packageName: String, env: Map<String, String>): List<Path> {
   val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.Catkin.catkinFindLibexec")
-  val processBuilder = ProcessBuilder().command("catkin_find", "--first-only", "--without-underlays", "--libexec", packageName)
-  processBuilder.environment().putAll(env)
-  val process = processBuilder.start()
+  val process =
+    ProcessBuilder()
+      .command("catkin_find", "--first-only", "--without-underlays", "--libexec", packageName)
+      .run {
+        environment().putAll(env)
+        start()
+      }
 
-  val pathList = ArrayList<Path>()
-  val reader = BufferedReader(InputStreamReader(process.inputStream))
   log.trace("find libexec for $packageName")
-  while (true) {
-    val line = reader.readLine() ?: break
-    log.trace(line)
-    pathList.add(FileSystems.getDefault().getPath(line))
-  }
-
-  return pathList
+  return BufferedReader(InputStreamReader(process.inputStream)).lineSequence()
+    .map {
+      log.trace(it)
+      FileSystems.getDefault().getPath(it)
+    }.toList()
 }

@@ -74,7 +74,6 @@ class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
 
   override fun createCMakeFile(name: String, dir: VirtualFile): VirtualFile = createStructure(name, dir)
 
-
   override fun generateProject(project: Project, baseDir: VirtualFile, cmakeSetting: CMakeProjectSettings, module: Module) {
     //super.generateProject(project, path, cmakeSetting, module)
     val cmakeFile = createCMakeFile(project.name, baseDir)
