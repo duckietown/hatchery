@@ -90,7 +90,7 @@ enum class Distro(val version: Int) {
 }
 
 enum class BuildSystem(val command: String) {
-  catkin("catkin_make"), rosbuild("rosmake"), colcon("colcon build");
+  catkin_tools("catkin build"), catkin("catkin_make"), rosbuild("rosmake"), colcon("colcon build");
 }
 
 fun getSetupScriptInProject() =
@@ -194,12 +194,22 @@ class Ros(val setupScript: String = defaultRosSetupScript ?: getSetupScriptInPro
       File("")
     }
 
+    private val workspaceBuildSystem = if (buildSystem == catkin) {
+      if (rosWorkspace.isDirectory && File("${rosWorkspace.absolutePath}${pathSeparator}.catkin_tools").isDirectory) {
+        catkin_tools
+      } else {
+        catkin
+      }
+    } else {
+      buildSystem
+    }
+
     val rosDevelScriptPath = "${rosWorkspace.absolutePath}${pathSeparator}devel${pathSeparator}setup.$shell"
 
     override fun toString() =
       """echo 'ROS workspace directory: ${rosWorkspace.absolutePath}' &&
       cd ${rosWorkspace.absolutePath} &&
-      ${buildSystem.command} &&
+      ${workspaceBuildSystem.command} &&
       echo 'Sourcing $rosDevelScriptPath' &&
       . $rosDevelScriptPath &&
       echo 'Available nodes:' &&
