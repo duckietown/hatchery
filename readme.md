@@ -168,6 +168,7 @@ We are currently working to expand support for the following features:
 * [Université de Montréal](https://en.diro.umontreal.ca/home/) - For supplying hardware and research facilities.
 * [Duckietown](https://duckietown.org) - An open, inexpensive and flexible platform for autonomy education and research.
 * [Liam Paull](https://github.com/liampaull) - For academic advice and guidance.
+* [Michalis Famelis](https://michalis.famelis.info/) - For academic advice and guidance.
 * [Rusi Hristov](https://github.com/rusi) - For technical advice and guidance.
 * [nuTonomy](https://www.nutonomy.com/) - For sponsoring development on the AI-DO 2018 competition.
 * [JetBrains](https://www.jetbrains.com/) - For [collaboration](https://research.jetbrains.org/duckietown) and [TeamCity](https://www.jetbrains.com/teamcity/) build services.
