@@ -112,7 +112,7 @@ It also supports refactoring and navigation in the following file types:
 
 - [x] Implement preliminary project structure and XML support
 - [x] Write an MVP/POC app that supports file renaming and refactoring
-- [ ] Add support for project templates and skeleton project creation
+- [x] Add support for project templates and skeleton project creation
 - [x] Add support for deploying a project from the local machine to the remote
 - [ ] Add support for monitoring and tracking running code, viewing logs
     - [ ] Save to local disk
