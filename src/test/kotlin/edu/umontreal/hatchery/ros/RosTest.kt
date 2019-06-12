@@ -41,14 +41,12 @@ private fun startChatter() {
   val listenerConfig = NodeConfiguration.newPublic(Inet4Address.getLocalHost().hostAddress)
   listenerConfig.masterUri = mRosCore?.uri
   listenerConfig.setNodeName("Listener")
-  val listener = Listener()
-  e.execute(listener, listenerConfig)
+  e.execute(Listener(), listenerConfig)
 
   println("Starting talker node...")
   //NodeConfiguration talkerConfig = NodeConfiguration.newPublic(Inet4Address.getLocalHost().getHostAddress());
   val talkerConfig = NodeConfiguration.newPublic("ev3dev")
   talkerConfig.masterUri = mRosCore!!.uri
   talkerConfig.setNodeName("Talker")
-  val talker = Talker()
-  e.execute(talker, talkerConfig)
+  e.execute(Talker(), talkerConfig)
 }
