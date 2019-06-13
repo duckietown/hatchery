@@ -112,7 +112,6 @@ intellij {
   setPlugins("name.kropp.intellij.makefile:1.6.1", // Makefile support
     "org.intellij.plugins.markdown:191.5849.16",   // Markdown support
     "com.intellij.ideolog:191.0.7.0",              // Log file support
-    "BashSupport:1.7.7",                           // [Ba]sh   support
     "Docker:191.6183.53",                          // Docker   support
     "PsiViewer:191.4212",                          // PSI view support
     "IntelliLang",
