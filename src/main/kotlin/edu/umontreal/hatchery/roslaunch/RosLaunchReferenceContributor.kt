@@ -11,6 +11,7 @@ object RosLaunchReferenceContributor : PsiReferenceContributor() {
   private const val findSubstitution = "\\\$\\(find [\\w]*\\)[\\w/\\.]*"
   private const val argSubstitution = "\\\$\\(arg [\\w]*\\)"
   private const val dirnameSubstitution = "\\\$\\(dirname\\)[\\w/\\.]*"
+  private const val pythonFileSubstitution = "[A-Za-z0-9_]*\\.py"
 
   private fun matcher(pattern: String) = XmlPatterns.xmlAttributeValue().withValue(StandardPatterns.string().matches(pattern))!!
 
@@ -25,5 +26,6 @@ object RosLaunchReferenceContributor : PsiReferenceContributor() {
       bind(findSubstitution) { RosLaunchFindSubstitutionArgReference(it) }
       bind(argSubstitution) { RosLaunchArgSubstitutionArgReference(it) }
       bind(dirnameSubstitution) { RosLaunchDirnameSubstitutionArgReference(it) }
+      bind(pythonFileSubstitution) { RosLaunchSourceFileReference(it) }
     }
 }

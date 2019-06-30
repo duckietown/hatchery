@@ -41,4 +41,7 @@ object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
   private fun isRosLaunchFileSubstitution(element: PsiElement): Boolean =
     (element as? XmlAttributeValue)?.value?.startsWith("$(find ") ?: false
+
+  private fun isRosLaunchSourceFile(element: PsiElement): Boolean =
+    (element as? XmlAttributeValue)?.value?.matches(Regex("[A-Za-z0-9_]*\\.py")) ?: false
 }
