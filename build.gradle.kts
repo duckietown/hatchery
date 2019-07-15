@@ -116,6 +116,7 @@ intellij {
     "Docker:192.5728.12",                            // Docker   support
     "PsiViewer:192-SNAPSHOT",                          // PSI view support
     "IntelliLang",
+    "java",
     "yaml")
 }
 
