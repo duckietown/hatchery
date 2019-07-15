@@ -112,7 +112,7 @@ It also supports refactoring and navigation in the following file types:
 
 - [x] Implement preliminary project structure and XML support
 - [x] Write an MVP/POC app that supports file renaming and refactoring
-- [ ] Add support for project templates and skeleton project creation
+- [x] Add support for project templates and skeleton project creation
 - [x] Add support for deploying a project from the local machine to the remote
 - [ ] Add support for monitoring and tracking running code, viewing logs
     - [ ] Save to local disk
@@ -170,6 +170,7 @@ We are currently working to expand support for the following features:
 * [Liam Paull](https://github.com/liampaull) - For academic advice and guidance.
 * [Michalis Famelis](https://michalis.famelis.info/) - For academic advice and guidance.
 * [Rusi Hristov](https://github.com/rusi) - For technical advice and guidance.
+* [Paolo Achdjian](https://github.com/paoloach) - For contributing code from a [ROS-plugin](https://github.com/paoloach/ROS-JetBrains-Plugin).
 * [nuTonomy](https://www.nutonomy.com/) - For sponsoring development on the AI-DO 2018 competition.
 * [JetBrains](https://www.jetbrains.com/) - For [collaboration](https://research.jetbrains.org/duckietown) and [TeamCity](https://www.jetbrains.com/teamcity/) build services.
 * [Open Robotics](https://www.openrobotics.org/) - For [ROS](https://www.ros.org) development and technical support.

@@ -6,7 +6,6 @@ import org.ros.node.AbstractNodeMain
 import org.ros.node.ConnectedNode
 
 class Listener: AbstractNodeMain() {
-
   override fun getDefaultNodeName() = GraphName.of("rosjava_tutorial/listener")!!
 
   override fun onStart(connectedNode: ConnectedNode?) {

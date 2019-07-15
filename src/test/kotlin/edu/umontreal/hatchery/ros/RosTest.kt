@@ -6,49 +6,28 @@ import org.ros.RosCore
 import org.ros.node.DefaultNodeMainExecutor
 import org.ros.node.NodeConfiguration
 import java.net.Inet4Address
-import java.net.UnknownHostException
-import java.util.concurrent.TimeUnit
-
-private var mRosCore: RosCore? = null
-
-const val IP = "localhost"
+import java.util.concurrent.TimeUnit.*
 
 fun main() {
-
   System.setProperty("javax.net.debug", "all")
+  val hostAddress = Inet4Address.getLocalHost().hostAddress
+  println("Host address: $hostAddress")
 
-  mRosCore = RosCore.newPublic(IP, 11311)
-  mRosCore!!.start()
-
-  try {
-    mRosCore!!.awaitStart(5, TimeUnit.SECONDS)
-  } catch (e: InterruptedException) {
-    e.printStackTrace()
+  val rosCore = RosCore.newPublic("localhost", 11311).apply {
+    start()
+    awaitStart(5, SECONDS)
   }
 
-  println("Ros core started")
+  fun makeConfig(name: String) =
+    NodeConfiguration.newPublic(hostAddress).apply {
+      masterUri = rosCore.uri
+      println("Starting $name node...")
+      setNodeName(name)
+    }
 
-  startChatter()
+  val nodeExecutor = DefaultNodeMainExecutor.newDefault()
+  nodeExecutor.execute(Listener(), makeConfig("Listener"))
+  nodeExecutor.execute(Talker(), makeConfig("Talker"))
 
   while (true) { }
-}
-
-@Throws(UnknownHostException::class)
-private fun startChatter() {
-  val e = DefaultNodeMainExecutor.newDefault()
-
-  println("Starting listener node...")
-  val listenerConfig = NodeConfiguration.newPublic(Inet4Address.getLocalHost().hostAddress)
-  listenerConfig.masterUri = mRosCore?.uri
-  listenerConfig.setNodeName("Listener")
-  val listener = Listener()
-  e.execute(listener, listenerConfig)
-
-  println("Starting talker node...")
-  //NodeConfiguration talkerConfig = NodeConfiguration.newPublic(Inet4Address.getLocalHost().getHostAddress());
-  val talkerConfig = NodeConfiguration.newPublic("ev3dev")
-  talkerConfig.masterUri = mRosCore!!.uri
-  talkerConfig.setNodeName("Talker")
-  val talker = Talker()
-  e.execute(talker, talkerConfig)
 }

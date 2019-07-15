@@ -104,7 +104,7 @@ tasks {
 
 intellij {
   type = "CL"
-  version = "CL-LATEST-EAP-SNAPSHOT"
+  version = "CL-192-EAP-SNAPSHOT"
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
