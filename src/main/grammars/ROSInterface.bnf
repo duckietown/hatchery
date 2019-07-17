@@ -12,7 +12,7 @@
   tokenTypeClass="edu.umontreal.hatchery.psi.RosInterfaceTokenType"
 }
 
-rosInterfaceFile ::= (property|COMMENT)*
+rosInterfaceFile ::= (property|COMMENT|CRLF)*
 
 property ::= (TYPE KEY SEPARATOR VALUE)|(TYPE KEY) {
     pin=3
