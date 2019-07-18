@@ -48,7 +48,7 @@ enum class RosEnv {
   ROS_PARALLEL_JOBS, ROS_LANG_DISABLE, ROS_OS_OVERRIDE
 }
 
-val pathSeparator = File.separator ?: "/"
+val pathSeparator = "/"
 
 val defaultRosInstallPath =
   if (System.getProperty("os.name").toLowerCase().startsWith("windows"))
