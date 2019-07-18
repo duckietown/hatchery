@@ -72,9 +72,7 @@ val defaultRosSetupScript =
         setupScript.nameWithoutExtension == "setup" &&
           setupScript.extension in Shell.values().map { it.name }
       }.toList()
-    }.flatten()
-      .sortedBy { it.extension != "sh" }
-      .firstOrNull()?.absolutePath
+    }.flatten().minBy { it.extension != "sh" }?.absolutePath
   else null
 
 enum class Shell {
