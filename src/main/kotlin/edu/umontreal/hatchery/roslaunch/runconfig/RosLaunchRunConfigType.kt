@@ -12,5 +12,5 @@ object RosLaunchRunConfigType : ConfigurationType {
 
   override fun getDisplayName() = "ROS Launch"
 
-  override fun getConfigurationFactories() = arrayOf(RosLaunchRunConfigFactory)
+  override fun getConfigurationFactories() = arrayOf(LaunchConfigurationFactory)
 }

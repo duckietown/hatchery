@@ -17,13 +17,13 @@ import kotlin.reflect.KProperty
 
 class RosSettingsPanel {
   private val localRosPathField = JBTextField()
-  private val localRosPackages: JBTable
-    get() = JBTable(object : DefaultTableModel(
-      RosConfig.settings.localRos.packages.map { arrayOf(it.key, it.value) }.toTypedArray(),
-      arrayOf("Package", "Path")
-    ) {
-      override fun isCellEditable(row: Int, column: Int) = false
-    })
+//  private val localRosPackages: JBTable
+//    get() = JBTable(object : DefaultTableModel(
+//      RosConfig.settings.localRos.packages.map { arrayOf(it.key, it.value) }.toTypedArray(),
+//      arrayOf("Package", "Path")
+//    ) {
+//      override fun isCellEditable(row: Int, column: Int) = false
+//    })
 
   private val rosLaunchOptionsField = JBTextField()
     .apply { font = Font("monospaced", font.style, font.size) }
@@ -48,8 +48,8 @@ class RosSettingsPanel {
       row(prop("rosInstallationHeading")) {}
       row("ROS installation path:") { localRosPathField(grow) }
       row("Default ROS Launch options:") { medium(rosLaunchOptionsField) }
-      row("Installed ROS packages") {}
-      row { JBScrollPane(localRosPackages)(growX) }
+//      row("Installed ROS packages") {}
+//      row { JBScrollPane(localRosPackages)(growX) }
       row(prop("remoteSettingsHeading")) { LineBorder.createGrayLineBorder() }
       row("Remote address:") { medium(remoteAddressField) }
       row("Remote ROS installation Path:") { remoteRosPathField(grow) }

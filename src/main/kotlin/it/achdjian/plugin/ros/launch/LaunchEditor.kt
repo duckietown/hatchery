@@ -7,6 +7,7 @@ import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.components.fields.IntegerField
 import com.intellij.ui.layout.panel
+import edu.umontreal.hatchery.roslaunch.runconfig.LaunchConfiguration
 import it.achdjian.plugin.ros.ui.LauncherFileChooser
 import java.io.File
 import javax.swing.JCheckBox

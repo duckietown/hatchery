@@ -24,17 +24,17 @@ class NameKeyListener(val action: () -> Unit) : KeyListener {
 class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(null, true) {
   constructor() : this("", "")
 
-  private var versionName = JTextField()
-  private val versionPath = TextFieldWithHistoryWithBrowseButton()
+  private var distroName = JTextField()
+  private val distroPath = TextFieldWithHistoryWithBrowseButton()
   val name: String
-    get() = versionName.text?.let { it } ?: "no name"
+    get() = distroName.text?.let { it } ?: "no name"
   val path: String
-    get() = versionPath.text?.let { it } ?: ""
+    get() = distroPath.text?.let { it } ?: ""
 
   init {
-    title = "Add ROS version"
-    versionName.text = startName
-    versionPath.text = startPath
+    title = "Add ROS distro"
+    distroName.text = startName
+    distroPath.text = startPath
     init()
 
     isOKActionEnabled = false
@@ -43,29 +43,29 @@ class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(
   override fun createCenterPanel(): JComponent? {
     val layout = GridBagLayout()
     val mainPanel = JPanel(layout)
-    val version = JLabel("ROS version name")
+    val version = JLabel("ROS distro name")
     val pathLabel = JLabel("Path")
 
-    versionName.addKeyListener(NameKeyListener {
-      if (versionPath.text.isNotEmpty() && versionName.text.isNotEmpty())
+    distroName.addKeyListener(NameKeyListener {
+      if (distroPath.text.isNotEmpty() && distroName.text.isNotEmpty())
         isOKActionEnabled = true
     })
 
-    versionPath.childComponent.textEditor.addKeyListener(NameKeyListener {
-      if (versionPath.text.isNotEmpty() && versionName.text.isNotEmpty())
+    distroPath.childComponent.textEditor.addKeyListener(NameKeyListener {
+      if (distroPath.text.isNotEmpty() && distroName.text.isNotEmpty())
         isOKActionEnabled = true
     })
 
-    val editor = versionPath.childComponent.textEditor
+    val editor = distroPath.childComponent.textEditor
 
     installFileCompletionAndBrowseDialog(
       null,
-      versionPath,
+      distroPath,
       editor,
-      "ROS version versionPath",
+      "ROS distro distroPath",
       FileChooserDescriptorFactory.createSingleFolderDescriptor(),
       TextComponentAccessor.TEXT_FIELD_WITH_HISTORY_WHOLE_TEXT) {
-      if (it.path.isNotEmpty() && versionName.text.isNotEmpty())
+      if (it.path.isNotEmpty() && distroName.text.isNotEmpty())
         isOKActionEnabled = true
       it.path
     }
@@ -79,7 +79,7 @@ class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(
     c.fill = GridBagConstraints.HORIZONTAL
     c.gridx = 1
     c.weightx = 1.0
-    mainPanel.add(versionName, c)
+    mainPanel.add(distroName, c)
     c.fill = GridBagConstraints.NONE
     c.gridx = 0
     c.gridy = 1
@@ -88,7 +88,7 @@ class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(
     c.fill = GridBagConstraints.HORIZONTAL
     c.gridx = 1
     c.weightx = 1.0
-    mainPanel.add(versionPath, c)
+    mainPanel.add(distroPath, c)
 
     return mainPanel
   }

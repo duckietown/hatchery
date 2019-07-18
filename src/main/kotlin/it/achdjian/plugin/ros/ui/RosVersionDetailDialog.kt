@@ -23,7 +23,7 @@ class RosVersionDetailDialog : DialogWrapper(null, true) {
   private var mainPanel: JPanel? = null
 
   init {
-    title = "ROS VERSION"
+    title = "ROS Distros"
     init()
   }
 

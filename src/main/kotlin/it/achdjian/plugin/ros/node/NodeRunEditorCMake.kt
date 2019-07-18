@@ -62,8 +62,8 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
       selected.getNodes().forEach { comboNodes.addItem(it) }
     }
 
-    val selected = comboPackages.selectedItem as RosPackage
-    selected.getNodes().forEach { comboNodes.addItem(it) }
+    val selected = comboPackages.selectedItem as RosPackage?
+    selected?.getNodes()?.forEach { comboNodes.addItem(it) }
   }
 
   override fun resetEditorFrom(cmakeConfiguration: CMakeAppRunConfiguration) {

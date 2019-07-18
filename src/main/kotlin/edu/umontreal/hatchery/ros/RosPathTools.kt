@@ -20,7 +20,7 @@ fun File.getContainingRosWorkspaceIfItExists(query: File? = null): File = when {
   toPath().nameCount == 0 -> throw FileNotFoundException("No workspace found!")
   parent == "src" -> parentFile.parentFile
   isDirectory && name.endsWith("_ws") -> this
-  parent == "_ws" -> parentFile
+  parent.endsWith("_ws") -> parentFile
   else -> parentFile.getContainingRosWorkspaceIfItExists(query ?: this)
 }
 
@@ -98,8 +98,7 @@ fun getSetupScriptInProject() =
   }.flatten().firstOrNull()
 
 @Suppress("LeakingThis", "MemberVisibilityCanBePrivate")
-class Ros(val setupScript: String = defaultRosSetupScript
-  ?: getSetupScriptInProject() ?: "") {
+class Ros(val setupScript: String? = defaultRosSetupScript ?: getSetupScriptInProject()) {
   val shell: Shell
   val setupScriptFile: File?
   val distro: Distro
@@ -120,11 +119,7 @@ class Ros(val setupScript: String = defaultRosSetupScript
   }
 
   init {
-    shell = try {
-      Shell.valueOf(setupScript.split(".").last())
-    } catch (e: Exception) {
-      sh
-    }
+    shell = Shell.valueOf(setupScript!!.split(".").elementAtOrNull(1)!!)
     setupScriptFile = File(setupScript).let { if (it.exists()) it else null }
     // http://wiki.ros.org/ROS/EnvironmentVariables
     env = if (System.getenv()["$ROS_ROOT"] == setupScript) System.getenv()
@@ -181,14 +176,15 @@ class Ros(val setupScript: String = defaultRosSetupScript
 
   fun launch(rosPackage: String,
              launchFile: String,
+             customEnv: Map<String, String> = emptyMap(),
              options: String = "",
              args: String = "") = object : Runnable {
     override fun run() {
-      runCommandAndFetchOutput(env, shell.name, "-c", toString())
+      runCommandAndFetchOutput(env.toMutableMap().apply { putAll(customEnv) }, shell.name, "-c", toString())
     }
 
     private val rosWorkspace: File = try {
-      File(rosPackage).getContainingRosWorkspaceIfItExists()
+      File(launchFile).getContainingRosWorkspaceIfItExists()
     } catch (notFound: FileNotFoundException) {
       File("")
     }

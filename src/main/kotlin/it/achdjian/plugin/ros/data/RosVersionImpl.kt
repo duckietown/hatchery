@@ -4,6 +4,8 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.xmlb.annotations.Transient
+import edu.umontreal.hatchery.ros.Ros
+import edu.umontreal.hatchery.settings.RosSettings
 import it.achdjian.plugin.ros.settings.CreatePackage
 import it.achdjian.plugin.ros.settings.createPackageFactory
 import it.achdjian.plugin.ros.settings.diffEnvironment
@@ -38,7 +40,7 @@ data class RosVersionImpl(var path: String, var name: String) : RosVersion {
       return splittedPath
     }
   }
-
+  
   override val env = diffEnvironment(Paths.get(path))
   private val initWorkspaceCmd = findInitCmd(env["PATH"] ?: "")
   val envPath: List<String>

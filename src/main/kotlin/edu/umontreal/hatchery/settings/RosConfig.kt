@@ -21,7 +21,7 @@ object RosConfig : Configurable, PersistentStateComponent<RosSettings> {
     settings = state
   }
 
-  private val panel = RosSettingsPanel()
+  private val panel by lazy { RosSettingsPanel() }
 
   override fun getDisplayName() = "Hatchery"
 

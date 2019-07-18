@@ -1,4 +1,4 @@
-package it.achdjian.plugin.ros.launch
+package edu.umontreal.hatchery.roslaunch.runconfig
 
 import com.intellij.execution.Executor
 import com.intellij.execution.configurations.ConfigurationFactory
@@ -13,7 +13,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
 import edu.umontreal.hatchery.cli.RosCommandLineState
 import edu.umontreal.hatchery.settings.RosConfig
-import it.achdjian.plugin.ros.utils.getBaseDir
+import it.achdjian.plugin.ros.launch.LaunchEditor
 import org.jdom.Element
 
 class LaunchConfiguration(project: Project, configurationFactory: ConfigurationFactory, targetName: String) :
@@ -31,8 +31,7 @@ class LaunchConfiguration(project: Project, configurationFactory: ConfigurationF
   }
 
   var path: VirtualFile? = null
-  var rosMasterAddr = RosConfig.settings.localRos.env["ROS_MASTER_URI"]
-    ?: "localhost"
+  var rosMasterAddr = RosConfig.settings.localRos.env["ROS_MASTER_URI"] ?: "localhost"
   var rosMasterPort = 11311
   var screen = false
   var log = false

@@ -4,24 +4,18 @@ import com.intellij.execution.actions.ConfigurationContext
 import com.intellij.execution.actions.LazyRunConfigurationProducer
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
-import edu.umontreal.hatchery.settings.RosConfig
 
-object RosLaunchRunConfigProducer : LazyRunConfigurationProducer<RosLaunchRunConfig>() {
-  override fun getConfigurationFactory() = RosLaunchRunConfigFactory
+object RosLaunchRunConfigProducer : LazyRunConfigurationProducer<LaunchConfiguration>() {
+  override fun getConfigurationFactory() = LaunchConfigurationFactory
 
-  override fun isConfigurationFromContext(config: RosLaunchRunConfig,
+  override fun isConfigurationFromContext(config: LaunchConfiguration,
                                           context: ConfigurationContext) =
     context.location?.virtualFile?.extension == ".launch"
 
-  override fun setupConfigurationFromContext(config: RosLaunchRunConfig,
+  override fun setupConfigurationFromContext(config: LaunchConfiguration,
                                              context: ConfigurationContext,
                                              source: Ref<PsiElement>): Boolean {
-    context.location?.virtualFile.also { file ->
-      config.name = file?.nameWithoutExtension ?: return false
-      config.rosLaunchPath = file.canonicalPath ?: ""
-      config.rosPackagePath = file.parent?.parent?.canonicalPath ?: ""
-      config.rosLaunchOptions = RosConfig.settings.defaultRosLaunchOptions
-    } ?: return false
+    context.location?.virtualFile?.also { config.path = it } ?: return false
 
     return true
   }
