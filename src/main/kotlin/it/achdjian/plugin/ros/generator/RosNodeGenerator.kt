@@ -37,13 +37,9 @@ class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
   override fun getSettingsPanel(): JComponent {
     val versionsName = state.versions.map { it.name }
 
-    val panel = JPanel()
-    panel.layout = BoxLayout(panel, BoxLayout.Y_AXIS)
-
     state.versions.firstOrNull()?.let {
       showPackages(it.name)
     }
-
 
     val optionPanel = panel("ROS version") {
       row("ROS version") {
@@ -53,15 +49,15 @@ class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
       }
     }
 
-    panel.add(optionPanel)
-    panel.add(packagesPanel)
-
-    return panel
+    return JPanel().apply {
+      layout = BoxLayout(this, BoxLayout.Y_AXIS)
+      add(optionPanel)
+      add(packagesPanel)
+    }
   }
 
   private fun showPackages(versionName: String) {
-    version = state.versions.find { version -> version.name == versionName }
-      ?: RosVersionNull
+    version = state.versions.find { version -> version.name == versionName } ?: RosVersionNull
     packagesPanel.setPackages(version.searchPackages())
   }
 

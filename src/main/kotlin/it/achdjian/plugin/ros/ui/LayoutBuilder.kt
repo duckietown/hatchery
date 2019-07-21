@@ -25,12 +25,10 @@ class LayoutBuilder {
 
     panel.layout = GridLayout2(rows.size, colSize)
 
-    if (colSize == 1)
-      rows.forEach { panel.add(it.component) }
-    else
-      rows.forEach {
-        panel.add(it.label())
-        panel.add(it.component)
-      }
+    if (colSize == 1) rows.forEach { panel.add(it.component) }
+    else rows.forEach {
+      panel.add(it.label())
+      panel.add(it.component)
+    }
   }
 }

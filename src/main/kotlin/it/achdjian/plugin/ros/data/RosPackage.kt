@@ -24,15 +24,10 @@ class RosPackage(val path: Path, val env: Map<String, String>) {
   init {
     log.trace("package at $path, with ${env.size} environment")
     val packageFile = path.resolve("package.xml")
-    val documentBuilder = DocumentBuilderFactory.newInstance()
-    val builder = documentBuilder.newDocumentBuilder()
-    val doc = builder.parse(packageFile.toFile())
+    val doc = DocumentBuilderFactory.newInstance()
+      .newDocumentBuilder().parse(packageFile.toFile())
 
-    val xpFactory = XPathFactory.newInstance()
-    val xPath = xpFactory.newXPath()
-
-    val xpathName = "/package/name"
-
+    val xPath = XPathFactory.newInstance().newXPath()
     name = getNodeValue(xPath, "/package/name", doc)
     version = getNodeValue(xPath, "/package/version", doc)
     description = getNodeValue(xPath, "/package/description", doc)

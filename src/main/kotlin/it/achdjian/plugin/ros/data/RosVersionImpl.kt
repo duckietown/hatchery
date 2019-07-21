@@ -119,6 +119,5 @@ class PackagesComparator : Comparator<RosPackage> {
     }
   }
 
-
   private fun isTop(name: String) = name == "roscpp" || name == "rosmsg" || name == "rospy"
 }
