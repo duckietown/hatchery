@@ -46,7 +46,7 @@ val defaultProjectPath = samplePath.let {
 }
 
 val projectPath = File(properties["roject"] as? String
-  ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath).absolutePath!!
+  ?: System.getenv()["DUCKIETOWN_ROOT"] ?: defaultProjectPath).absolutePath
 
 val isCIBuild = hasProperty("CI")
 val isPluginDev = hasProperty("luginDev")
@@ -109,14 +109,13 @@ intellij {
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
 
-  setPlugins("name.kropp.intellij.makefile:1.6.1", // Makefile support
-//    "org.intellij.plugins.markdown:191.5849.16",   // Markdown support
-    "com.intellij.ideolog:192.0.12.0",              // Log file support
-    "BashSupport:1.7.11.192",                        // [Ba]sh   support
-    "Docker:192.5728.12",                            // Docker   support
-    "PsiViewer:192-SNAPSHOT",                          // PSI view support
-    "IntelliLang",
-    "yaml")
+  setPlugins("name.kropp.intellij.makefile:1.6.1",          // Makefile support
+             "com.intellij.ideolog:192.0.12.0",             // Log file support
+             "BashSupport:1.7.12.192",                      // [Ba]sh   support
+             "Docker:192.5728.74",                          // Docker   support
+             "PsiViewer:192-SNAPSHOT",                      // PSI view support
+             "IntelliLang",
+             "yaml")
 }
 
 repositories {

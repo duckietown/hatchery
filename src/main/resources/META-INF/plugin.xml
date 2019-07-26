@@ -77,27 +77,27 @@
         <group id="edu.umontreal.hatchery.RosActions" text="ROS" popup="true">
             <add-to-group group-id="MainMenu" relative-to-action="HelpMenu" anchor="before"/>
         </group>
-        <action id="rqt_msg" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿msg" description="rqt_msg" icon="icons/rqtmsg.svg">
+        <action id="rqt_msg" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt__msg" description="rqt_msg" icon="icons/rqtmsg.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_bag" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿bag" description="rqt_bag" icon="icons/rqtbag.svg">
+        <action id="rqt_bag" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt__bag" description="rqt_bag" icon="icons/rqtbag.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_dep" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿dep" description="rqt_dep" icon="icons/links.svg">
+        <action id="rqt_dep" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt__dep" description="rqt_dep" icon="icons/links.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_graph" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿graph" description="rqt_graph" icon="icons/rqtgraph.svg">
+        <action id="rqt_graph" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt__graph" description="rqt_graph" icon="icons/rqtgraph.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_image_view" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿image＿view" description="rqt_image_view" icon="icons/rqtimage.svg">
+        <action id="rqt_image_view" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt__image__view" description="rqt_image_view" icon="icons/rqtimage.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
-        <action id="rqt_plot" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt＿plot" description="rqt_plot" icon="icons/rqtbar.svg">
+        <action id="rqt_plot" class="edu.umontreal.hatchery.rqt.RqtAction" text="rqt__plot" description="rqt_plot" icon="icons/rqtbar.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="edu.umontreal.hatchery.RosActions"/>
         </action>
