@@ -19,5 +19,5 @@ fun findFilesByRelativePath(project: Project, fileRelativePath: String): List<Ps
   }
 
   FileTypeIndex.processFiles(fileType, fileProcessor, projectScope)
-  return files.mapNotNull { psiMgr.run { findFile(it) ?: findDirectory(it) } }
+  return files.map { psiMgr.run { findFile(it) ?: findDirectory(it) } }
 }

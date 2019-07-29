@@ -44,31 +44,25 @@ class NodeConfigurationCMake(project: Project, configurationFactory: Configurati
     CidrCommandLineState(environment, NodeLauncherCMake(this, project, environment))
 
   @Throws(InvalidDataException::class)
-  override fun readExternal(parentElement: Element) {
-    val config = parentElement.getAttributeValue(CONFIG_TAG)?.let { it }
-      ?: "Release"
-    val target = parentElement.getAttributeValue(TARGET_TAG)?.let { it }
-      ?: "all"
-    val prj = parentElement.getAttributeValue(PROJECT_TAG)?.let { it }
-      ?: "Project"
-    parentElement.getAttributeValue(PACKAGE_TAG)?.let { rosPackageName = it }
-    parentElement.getAttributeValue(NODE_TAG)?.let { rosNodeName = it }
-    parentElement.getAttributeValue(ROS_MASTER_ADDR_TAG)?.let { rosMasterAddr = it }
-    parentElement.getAttributeValue(ROS_MASTER_PORT_TAG)?.let { rosMasterPort = it.toInt() }
-    parentElement.getAttributeValue(WORKING_DIR)?.let { workingDirectory = it }
-    parentElement.getAttributeValue(PARAMS)?.let { programParameters = it }
-    getPackages(project).firstOrNull { it.name == rosPackageName }?.let {
-      envs.putAll(it.env)
-      it.getNodes().firstOrNull { node -> node.name == rosNodeName }?.let { node ->
-        executableData = ExecutableData(it.path.toString())
+  override fun readExternal(parentElement: Element) = parentElement.run {
+    val config = getAttributeValue(CONFIG_TAG)?.let { it } ?: "Release"
+    val target = getAttributeValue(TARGET_TAG)?.let { it } ?: "all"
+    val prj = getAttributeValue(PROJECT_TAG)?.let { it } ?: "Project"
+    getAttributeValue(PACKAGE_TAG)?.let { rosPackageName = it }
+    getAttributeValue(NODE_TAG)?.let { rosNodeName = it }
+    getAttributeValue(ROS_MASTER_ADDR_TAG)?.let { rosMasterAddr = it }
+    getAttributeValue(ROS_MASTER_PORT_TAG)?.let { rosMasterPort = it.toInt() }
+    getAttributeValue(WORKING_DIR)?.let { workingDirectory = it }
+    getAttributeValue(PARAMS)?.let { programParameters = it }
+    getPackages(project).firstOrNull { it.name == rosPackageName }?.let { pkg ->
+      envs.putAll(pkg.env)
+      pkg.getNodes().firstOrNull { node -> node.name == rosNodeName }?.let {
+        executableData = ExecutableData(pkg.path.toString())
       }
     }
-    if (rosMasterAddr.isNotEmpty()) {
-      envs["ROS_MASTER_URI"] = "http://$rosMasterAddr:$rosMasterPort"
-    }
+    if (rosMasterAddr.isNotEmpty()) envs["ROS_MASTER_URI"] = "http://$rosMasterAddr:$rosMasterPort"
     targetAndConfigurationData = BuildTargetAndConfigurationData(prj, target, config)
     setExplicitBuildTargetName("all")
-
   }
 
   @Throws(WriteExternalException::class)
@@ -84,11 +78,7 @@ class NodeConfigurationCMake(project: Project, configurationFactory: Configurati
     rosNodeName?.let { parentElement.setAttribute(NODE_TAG, it) }
     parentElement.setAttribute(ROS_MASTER_ADDR_TAG, rosMasterAddr)
     parentElement.setAttribute(ROS_MASTER_PORT_TAG, rosMasterPort.toString())
-    workingDirectory?.let {
-      parentElement.setAttribute(WORKING_DIR, it)
-    }
-    programParameters?.let {
-      parentElement.setAttribute(PARAMS, it)
-    }
+    workingDirectory?.let { parentElement.setAttribute(WORKING_DIR, it) }
+    programParameters?.let { parentElement.setAttribute(PARAMS, it) }
   }
 }

@@ -6,7 +6,7 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.CollectionListModel
 import com.intellij.ui.ColoredListCellRenderer
 import com.intellij.ui.ListSpeedSearch
-import com.intellij.ui.SimpleTextAttributes.GRAYED_SMALL_ATTRIBUTES
+import com.intellij.ui.SimpleTextAttributes.GRAYED_ATTRIBUTES
 import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.components.JBList
 import it.achdjian.plugin.ros.data.RosCustomVersion
@@ -47,8 +47,8 @@ class RosVersionDetailDialog : DialogWrapper(null, true) {
           hasFocus: Boolean) =
           value.let {
             icon = IconLoader.findIcon("/icons/ros.svg")
-            append(it.name)
-            append(it.path, GRAYED_SMALL_ATTRIBUTES)
+            append(" ${it.name} ")
+            append(" ${it.path} ", GRAYED_ATTRIBUTES)
           }
       }
     versionList.selectionMode = ListSelectionModel.SINGLE_SELECTION

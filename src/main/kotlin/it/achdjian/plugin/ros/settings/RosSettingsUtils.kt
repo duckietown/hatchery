@@ -25,8 +25,8 @@ fun diffEnvironment(rosVersion: Path): Map<String, String> {
   log.trace("Diff env:")
   env.forEach { (key, value) -> log.trace("$key=$value") }
   if (!env.containsKey("ROS_PACKAGE_PATH"))
-    env["ROS_PACKAGE_PATH"] = actualEnv["ROS_PACKAGE_PATH"]
-  env["PATH"] = newEnv["PATH"]
+    env["ROS_PACKAGE_PATH"] = actualEnv["ROS_PACKAGE_PATH"].toString()
+  env["PATH"] = newEnv["PATH"].toString()
   return env
 }
 

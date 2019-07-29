@@ -47,25 +47,25 @@ class RosSettings : BaseComponent, Configurable {
     ComboboxSpeedSearch(versionSelector)
     versionSelector.putClientProperty(VersionSelector.TABLE_CELL_EDITOR, true)
     versionSelector.addActionListener { updateTable() }
-    val preferredSize = versionSelector.preferredSize
 
-    val detailsButton = FixedSizeButton()
-    detailsButton.icon = IconLoader.findIcon("/icons/ros.svg")
-    detailsButton.preferredSize = Dimension(preferredSize.height, preferredSize.height)
-    detailsButton.addActionListener {
-      ApplicationManager.getApplication().invokeLater {
-        val dialog = RosVersionDetailDialog()
-        dialog.show()
-        if (dialog.isOK) {
-          modified = true
-          updateVersionSelector()
+    val prefSize = versionSelector.preferredSize
+    val detailsButton = FixedSizeButton().apply {
+      icon = IconLoader.findIcon("/icons/ros.svg")
+      preferredSize = Dimension(prefSize.height, prefSize.height)
+      addActionListener {
+        ApplicationManager.getApplication().invokeLater {
+          val dialog = RosVersionDetailDialog()
+          dialog.show()
+          if (dialog.isOK) {
+            modified = true
+            updateVersionSelector()
+          }
         }
       }
     }
 
     val packageTable = JBTable(model)
     updateTable()
-
 
     val c = GridBagConstraints()
     c.fill = GridBagConstraints.HORIZONTAL

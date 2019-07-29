@@ -45,12 +45,9 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
     }
     comboNodes.renderer = object : ColoredListCellRenderer<RosNode>() {
       override fun customizeCellRenderer(
-        list: JList<out RosNode>,
-        rosNode: RosNode,
-        index: Int,
-        selected: Boolean,
-        hasFocus: Boolean) {
-        append(rosNode.name)
+        list: JList<out RosNode>, rosNode: RosNode?, index: Int,
+        selected: Boolean, hasFocus: Boolean) {
+        if (rosNode != null) append(rosNode.name)
       }
     }
     packages.forEach { comboPackages.addItem(it) }
