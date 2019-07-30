@@ -41,75 +41,9 @@ fun getPackages(project: Project): List<RosPackage> {
     Files.walk(baseSearch)
       .filter { it.fileName.toString() == "package.xml" }
       .peek { log.trace("found package $it") }
-      .map { RosPackage(it.parent, getEnvironmentVariables(project, version.env)) }
+      .map { RosPackage(it.parent, mapOf()) }
       .forEach { packages.add(it) }
     packages.addAll(version.searchPackages())
   }
   return packages
-}
-
-/**
- * TODO: Integrate with [edu.umontreal.hatchery.ros.Ros.env]
- */
-
-fun getEnvironmentVariables(project: Project, env: Map<String, String>): Map<String, String> {
-  val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.getEnvironmentVariables.${project.name}")
-  val newEnv = HashMap<String, String>()
-
-  val base = FileSystems.getDefault().getPath(project.projectFile?.parent?.parent?.parent?.path)
-  base?.let { basePath ->
-    basePath.resolve("devel")
-      ?.resolve("setup.bash")
-      ?.let {
-        log.trace("setup.bash at $it")
-        newEnv.putAll(getEnvironment(basePath, it.toString(), env))
-      }
-  }
-
-  return newEnv
-}
-
-
-fun getEnvironment(basePath: Path, setupFile: String, env: Map<String, String> = emptyMap()): Map<String, String> {
-  val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.getEnvironment")
-  log.trace("getEnvironment($setupFile)")
-  val checkEnvFile = "#!/bin/bash\nsource $setupFile\nenv"
-  val tempFile = Files.createTempFile("checkSetup", ".bash", PosixFilePermissions.asFileAttribute(CONST.perms))
-  Files.write(tempFile, checkEnvFile.toByteArray())
-  val processBuilder = ProcessBuilder().command(tempFile.toString()).directory(basePath.toFile())
-  processBuilder.environment().putAll(env)
-  val process = processBuilder.start()
-  process.waitFor()
-  val newEnv = HashMap<String, String>()
-  if (process.exitValue() != 0) {
-    val errorReader = BufferedReader(InputStreamReader(process.errorStream))
-    while (true) {
-      val errorLine = errorReader.readLine() ?: break
-      log.warn(errorLine)
-    }
-  } else {
-    val reader = BufferedReader(InputStreamReader(process.inputStream))
-    log.trace(tempFile.toString())
-    while (true) {
-      val line = reader.readLine() ?: break
-      val assignment = line.indexOfFirst { it == '=' }
-      if (assignment > 0) {
-        var value = line.substring(assignment + 1)
-        val key = line.substring(0, assignment)
-        if (value.isNotEmpty()) {
-          if (value[0] == '\"') {
-            value = value.drop(1)
-          }
-          if (value.last() == '\"') {
-            value = value.dropLast(1)
-          }
-        }
-        newEnv[key] = value
-        log.trace("$key=$value")
-      } else {
-        log.debug("Not parsed: $line")
-      }
-    }
-  }
-  return newEnv
 }

@@ -174,8 +174,7 @@ class Ros(val setupScript: String? = defaultRosSetupScript ?: getSetupScriptInPr
     override fun toString() = "${ros}msg"
   }
 
-  fun launch(rosPackage: String,
-             launchFile: String,
+  fun launch(launchFile: String,
              customEnv: Map<String, String> = emptyMap(),
              options: String = "",
              args: String = "") = object : Runnable {

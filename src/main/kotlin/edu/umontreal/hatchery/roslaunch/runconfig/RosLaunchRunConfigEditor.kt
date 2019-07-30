@@ -1,4 +1,4 @@
-package it.achdjian.plugin.ros.launch
+package edu.umontreal.hatchery.roslaunch.runconfig
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.SettingsEditor
@@ -7,15 +7,13 @@ import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.components.fields.IntegerField
 import com.intellij.ui.layout.panel
-import edu.umontreal.hatchery.roslaunch.runconfig.LaunchConfiguration
 import it.achdjian.plugin.ros.ui.LauncherFileChooser
 import java.io.File
 import javax.swing.JCheckBox
 
-object LaunchFileChooserDescriptor : FileChooserDescriptor(true, false, false, false, false, false)
-
-class LaunchEditor(project: Project) : SettingsEditor<LaunchConfiguration>() {
-  private val browseButton = LauncherFileChooser("Launch file", project, LaunchFileChooserDescriptor)
+class RosLaunchRunConfigEditor(project: Project) : SettingsEditor<RosLaunchRunConfiguration>() {
+  private val fileDescriptor = FileChooserDescriptor(true, false, false, false, false, false)
+  private val browseButton = LauncherFileChooser("Launch file", project, fileDescriptor)
   private val rosMasterAddr = JBTextField("127.0.0.1")
   private val rosMasterPort = IntegerField("11311", 0, 65535)
   private val screen = JCheckBox("Force output of all local nodes to screen")
@@ -35,25 +33,25 @@ class LaunchEditor(project: Project) : SettingsEditor<LaunchConfiguration>() {
     rosMasterPort.value = 11311
   }
 
-  override fun applyEditorTo(launchConfiguration: LaunchConfiguration) {
-    launchConfiguration.path = VfsUtil.findFileByIoFile(File(browseButton.text), true)
-    launchConfiguration.rosMasterAddr = rosMasterAddr.text
-    launchConfiguration.rosMasterPort = rosMasterPort.value
-    launchConfiguration.screen = screen.isSelected
+  override fun applyEditorTo(rosLaunchRunConfiguration: RosLaunchRunConfiguration) {
+    rosLaunchRunConfiguration.path = VfsUtil.findFileByIoFile(File(browseButton.text), true)
+    rosLaunchRunConfiguration.rosMasterAddr = rosMasterAddr.text
+    rosLaunchRunConfiguration.rosMasterPort = rosMasterPort.value
+    rosLaunchRunConfiguration.screen = screen.isSelected
 //  launchConfiguration.log=log.isSelected
-    launchConfiguration.wait = wait.isSelected
-    launchConfiguration.verbose = verbose.isSelected
+    rosLaunchRunConfiguration.wait = wait.isSelected
+    rosLaunchRunConfiguration.verbose = verbose.isSelected
 //  launchConfiguration.logLevel=loggerLevel.selectedItem as String
   }
 
-  override fun resetEditorFrom(launchConfiguration: LaunchConfiguration) {
-    launchConfiguration.path?.let { path -> browseButton.text = path.path }
-    rosMasterAddr.text = launchConfiguration.rosMasterAddr
-    rosMasterPort.value = launchConfiguration.rosMasterPort
-    screen.isSelected = launchConfiguration.screen
+  override fun resetEditorFrom(rosLaunchRunConfiguration: RosLaunchRunConfiguration) {
+    rosLaunchRunConfiguration.path?.let { path -> browseButton.text = path.path }
+    rosMasterAddr.text = rosLaunchRunConfiguration.rosMasterAddr
+    rosMasterPort.value = rosLaunchRunConfiguration.rosMasterPort
+    screen.isSelected = rosLaunchRunConfiguration.screen
 //  log.isSelected = launchConfiguration.log
-    wait.isSelected = launchConfiguration.wait
-    verbose.isSelected = launchConfiguration.verbose
+    wait.isSelected = rosLaunchRunConfiguration.wait
+    verbose.isSelected = rosLaunchRunConfiguration.verbose
 //  loggerLevel.selectedItem = launchConfiguration.logLevel
   }
 

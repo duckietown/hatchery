@@ -1,7 +1,7 @@
 package it.achdjian.plugin.ros.settings
 
 import com.intellij.openapi.diagnostic.Logger
-import it.achdjian.plugin.ros.utils.getEnvironment
+import edu.umontreal.hatchery.settings.RosConfig
 import java.io.File
 import java.nio.file.Path
 
@@ -20,7 +20,7 @@ fun diffEnvironment(rosVersion: Path): Map<String, String> {
 
   val actualEnv = System.getenv()
 
-  val newEnv = getEnvironment(rosVersion, rosVersion.toAbsolutePath().toString() + "/setup.bash")
+  val newEnv = RosConfig.settings.ros?.env ?: mapOf()
   val env = HashMap(diff(newEnv, actualEnv))
   log.trace("Diff env:")
   env.forEach { (key, value) -> log.trace("$key=$value") }

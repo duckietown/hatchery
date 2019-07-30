@@ -5,6 +5,7 @@ import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.configurations.GeneralCommandLine.ParentEnvironmentType.SYSTEM
 import com.intellij.execution.filters.TextConsoleBuilderFactory
 import com.intellij.execution.process.ColoredProcessHandler
+import com.intellij.execution.process.KillableColoredProcessHandler
 import com.intellij.execution.process.ProcessTerminatedListener
 import com.intellij.execution.runners.ExecutionEnvironment
 import edu.umontreal.hatchery.settings.RosConfig
@@ -23,5 +24,5 @@ class RosCommandLineState : CommandLineState {
       .withParentEnvironmentType(SYSTEM)
 
   override fun startProcess() =
-    ColoredProcessHandler(commandLine).apply { ProcessTerminatedListener.attach(this) }
+    KillableColoredProcessHandler(commandLine).apply { ProcessTerminatedListener.attach(this) }
 }

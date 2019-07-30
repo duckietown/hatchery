@@ -12,16 +12,14 @@ import com.intellij.psi.TokenType;
 %unicode
 %function advance
 %type IElementType
-%eof{  return;
-%eof}
 
-CRLF=[\n\f]
+CRLF=\R
 WHITE_SPACE=[\ \t]
-VALUE_CHARACTER=[^\n\f#]
-END_OF_LINE_COMMENT=#[^\n\f]*
+VALUE_CHARACTER=[^\r\n\f#]
+END_OF_LINE_COMMENT=#[^\r\n\f]*
 SEPARATOR=[:=]
-TYPE_CHARACTER=[^:=#\ \n\t\f\\]
-KEY_CHARACTER=[^:=#\ \n\t\f\\]
+TYPE_CHARACTER=[^:=#\ \r\n\t\f\\]
+KEY_CHARACTER=[^:=#\ \r\n\t\f\\]
 TRIPLE_DASH=---
 
 %state TYPE_STATE
@@ -55,4 +53,4 @@ TRIPLE_DASH=---
 
 ({CRLF}|{WHITE_SPACE}|{TRIPLE_DASH})+           { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
-.                                               { return TokenType.BAD_CHARACTER; }
+[^]                                             { return TokenType.BAD_CHARACTER; }

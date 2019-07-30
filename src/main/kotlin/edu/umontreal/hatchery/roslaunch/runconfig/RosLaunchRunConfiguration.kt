@@ -13,10 +13,9 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
 import edu.umontreal.hatchery.cli.RosCommandLineState
 import edu.umontreal.hatchery.settings.RosConfig
-import it.achdjian.plugin.ros.launch.LaunchEditor
 import org.jdom.Element
 
-class LaunchConfiguration(project: Project, configurationFactory: ConfigurationFactory, targetName: String) :
+class RosLaunchRunConfiguration(project: Project, configurationFactory: ConfigurationFactory, targetName: String) :
   LocatableConfigurationBase<RunProfileState>(project, configurationFactory, targetName),
   RunConfigurationWithSuppressedDefaultDebugAction {
   companion object {
@@ -39,18 +38,15 @@ class LaunchConfiguration(project: Project, configurationFactory: ConfigurationF
   var verbose = false
   var logLevel = "info"
 
-  override fun getConfigurationEditor() = LaunchEditor(project)
-  override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-    RosCommandLineState(environment, RosConfig.settings.localRos.shell.name, "-c",
-      RosConfig.settings.localRos.launch(
-        "",
-        path?.path ?: "",
-        mapOf("ROS_MASTER_URI" to "http://$rosMasterAddr:$rosMasterPort",
-          "PYTHONUNBUFFERED" to "1"),
-        getParameters(),
-        "").toString())
+  override fun getConfigurationEditor() = RosLaunchRunConfigEditor(project)
 
-  private fun getParameters() = "--master-logger-level=${logLevel}" +
+  override fun getState(executor: Executor, exeEnv: ExecutionEnvironment) =
+    RosCommandLineState(exeEnv, RosConfig.settings.localRos.shell.name, "-c",
+      RosConfig.settings.localRos.launch(launchFile = path?.path ?: "",
+        customEnv = mapOf("ROS_MASTER_URI" to "http://$rosMasterAddr:$rosMasterPort",
+          "PYTHONUNBUFFERED" to "1"), options = getParameters(), args = "").toString())
+
+  private fun getParameters() = "--master-logger-level=$logLevel" +
     if (verbose) "-v " else "" +
       if (wait) "--wait " else "" +
         if (screen) "--screen " else "" +
@@ -58,17 +54,19 @@ class LaunchConfiguration(project: Project, configurationFactory: ConfigurationF
 
   @Throws(InvalidDataException::class)
   override fun readExternal(parentElement: Element) {
-    super.readExternal(parentElement)
-    parentElement.getAttributeValue(PATH_TAG)?.let {
-      path = VirtualFileManager.getInstance().findFileByUrl(it)
+    with(parentElement) {
+      super.readExternal(this)
+      getAttributeValue(PATH_TAG)?.let {
+        path = VirtualFileManager.getInstance().findFileByUrl(it)
+      }
+      getAttributeValue(ROS_MASTER_ADDR_TAG)?.let { rosMasterAddr = it }
+      getAttributeValue(ROS_MASTER_PORT_TAG)?.let { rosMasterPort = it.toInt() }
+      getAttributeValue(SCREEN_TAG)?.let { screen = it.toBoolean() }
+      getAttributeValue(LOG_TAG)?.let { log = it.toBoolean() }
+      getAttributeValue(WAIT_TAG)?.let { wait = it.toBoolean() }
+      getAttributeValue(VERBOSE_TAG)?.let { verbose = it.toBoolean() }
+      getAttributeValue(LOG_LEVEL_TAG)?.let { logLevel = it }
     }
-    parentElement.getAttributeValue(ROS_MASTER_ADDR_TAG)?.let { rosMasterAddr = it }
-    parentElement.getAttributeValue(ROS_MASTER_PORT_TAG)?.let { rosMasterPort = it.toInt() }
-    parentElement.getAttributeValue(SCREEN_TAG)?.let { screen = it.toBoolean() }
-    parentElement.getAttributeValue(LOG_TAG)?.let { log = it.toBoolean() }
-    parentElement.getAttributeValue(WAIT_TAG)?.let { wait = it.toBoolean() }
-    parentElement.getAttributeValue(VERBOSE_TAG)?.let { verbose = it.toBoolean() }
-    parentElement.getAttributeValue(LOG_LEVEL_TAG)?.let { logLevel = it }
   }
 
   @Throws(WriteExternalException::class)

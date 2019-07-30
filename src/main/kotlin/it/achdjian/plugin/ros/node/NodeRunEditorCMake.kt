@@ -36,11 +36,11 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
     comboPackages.renderer = object : ColoredListCellRenderer<RosPackage>() {
       override fun customizeCellRenderer(
         list: JList<out RosPackage>,
-        value: RosPackage,
+        value: RosPackage?,
         index: Int,
         selected: Boolean,
         hasFocus: Boolean) {
-        append(value.name)
+        if(value != null) append(value.name)
       }
     }
     comboNodes.renderer = object : ColoredListCellRenderer<RosNode>() {
@@ -59,8 +59,7 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
       selected.getNodes().forEach { comboNodes.addItem(it) }
     }
 
-    val selected = comboPackages.selectedItem as RosPackage?
-    selected?.getNodes()?.forEach { comboNodes.addItem(it) }
+    (comboPackages.selectedItem as RosPackage?)?.getNodes()?.forEach { comboNodes.addItem(it) }
   }
 
   override fun resetEditorFrom(cmakeConfiguration: CMakeAppRunConfiguration) {
