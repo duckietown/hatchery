@@ -15,7 +15,7 @@
  */
 package it.achdjian.plugin.ros.ui
 
-import com.intellij.ui.IdeBorderFactory
+import com.intellij.ui.IdeBorderFactory.*
 import com.intellij.util.ui.DialogUtil
 import com.intellij.util.ui.JBInsets
 import com.intellij.util.ui.UIUtil
@@ -30,7 +30,7 @@ import javax.swing.border.TitledBorder
 class ButtonTitledBorder(title: String, val parent: Component, val statusChange: (close: Boolean) -> Any) : TitledBorder(title), MouseListener {
   companion object {
     private const val INDENT = 20
-    private val Insets = Insets(IdeBorderFactory.TITLED_BORDER_TOP_INSET, IdeBorderFactory.TITLED_BORDER_LEFT_INSET, IdeBorderFactory.TITLED_BORDER_BOTTOM_INSET, IdeBorderFactory.TITLED_BORDER_RIGHT_INSET)
+    private val Insets = Insets(TITLED_BORDER_TOP_INSET, TITLED_BORDER_LEFT_INSET, TITLED_BORDER_BOTTOM_INSET, TITLED_BORDER_RIGHT_INSET)
   }
 
   private val titledSeparator = ButtonTitledSeparator(title)

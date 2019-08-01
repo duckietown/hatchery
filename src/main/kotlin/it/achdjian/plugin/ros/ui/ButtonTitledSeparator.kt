@@ -48,12 +48,10 @@ class ButtonTitledSeparator constructor(val text: String) : JPanel() {
     button = createButton(imgSize)
   }
 
-  private fun createButton(imgSize: Int): JButton {
-    val button = JButton(closeImg)
-    button.border = BorderFactory.createEmptyBorder()
-    button.isContentAreaFilled = false
-    button.size = Dimension(imgSize, imgSize)
-    return button
+  private fun createButton(imgSize: Int) = JButton(closeImg).apply {
+    border = BorderFactory.createEmptyBorder()
+    isContentAreaFilled = false
+    size = Dimension(imgSize, imgSize)
   }
 
   override fun setEnabled(enabled: Boolean) {

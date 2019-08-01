@@ -29,5 +29,6 @@ class PackagesPanel() : JPanel() {
     revalidate()
   }
 
-  fun selected(): List<String> = status.entries.stream().filter { it.value }.map { it.key }.collect(Collectors.toList())
+  fun selected(): List<String> = status.entries.stream()
+    .filter { it.value }.map { it.key }.collect(Collectors.toList())
 }
