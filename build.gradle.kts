@@ -19,7 +19,7 @@ plugins {
   kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30" apply true
-  id("org.jetbrains.intellij") version "0.4.10" apply true
+  id("org.jetbrains.intellij") version "0.4.9" apply true
   id("org.jetbrains.grammarkit") version "2019.2" apply true
   id("org.ajoberstar.grgit") version "3.1.1" apply true
 //  id("org.jetbrains.gradle.plugin.idea-ext") version "0.3" apply true
