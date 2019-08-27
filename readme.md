@@ -123,13 +123,13 @@ It also supports refactoring and navigation in the following file types:
 - [ ] Integration with the Robot Operating System (ROS)
     - [x] ROS 1 support ([Kinetic Kame](http://wiki.ros.org/kinetic) recommended)
     - [ ] [ROS 2](https://github.com/ros2/ros2/wiki) support
-- [ ] Gazebo simulator integration
+- [x] Gazebo simulator integration
 - [ ] C/C++ support with build automation
 - [ ] Remote debugging and testing support
 - [ ] Docker integration
     - [x] Basic Docker support
     - [ ] Remote host and script support
-    - [ ] Docker hub namespace awareness
+    - [ ] Docker Hub namespace awareness
     - [ ] Support for platformio tooling
     - [ ] X11 forwarding and rqt support
 - [ ] Static analysis
@@ -140,7 +140,7 @@ It also supports refactoring and navigation in the following file types:
     - [x] [`rqt_img_view`](http://wiki.ros.org/rqt_image_view) - View images
     - [x] [`rqt_plot`](http://wiki.ros.org/rqt_plot) - Plot data visually
     - [x] [`rqt_graph`](http://wiki.ros.org/rqt_graph) - Graph messages
-    - [x] [`rqt_dep`](http://wiki.ros.org/rqt_dep) - Visualize dependecies
+    - [x] [`rqt_dep`](http://wiki.ros.org/rqt_dep) - Visualize dependencies
     - [x] [`rqt_bag`](http://wiki.ros.org/rqt_bag) - Replay and edit bag files
     - [ ] [rqt_common](http://wiki.ros.org/rqt_common_plugins) - Other common plugins
 
