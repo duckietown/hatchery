@@ -21,7 +21,7 @@ interface RosVersion {
   fun searchPackages(): List<RosPackage>
 }
 
-data class RosVersionImpl(var path: String, var name: String) : RosVersion {
+data class  RosVersionImpl(var path: String, var name: String) : RosVersion {
   companion object {
     private val LOG = Logger.getInstance(RosVersionImpl::class.java)
 

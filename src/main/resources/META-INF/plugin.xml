@@ -21,7 +21,10 @@
         <component>
             <implementation-class>edu.umontreal.hatchery.settings.RosConfig</implementation-class>
         </component>
-        <component>
+        <component>Catkin.kt
+            CMakeLists.kt
+            ProjectUtils.kt
+            RosCommonProgramRunConfigurationParameters
             <implementation-class>it.achdjian.plugin.ros.data.RosEnvironments</implementation-class>
         </component>
         <component>
@@ -64,10 +67,15 @@
         <moduleType id="DEMO_MODULE_TYPE" implementationClass="edu.umontreal.hatchery.modules.DemoModuleType"/>
 
         <applicationService serviceImplementation="edu.umontreal.hatchery.settings.RosConfig" overrides="false"/>
-        <applicationConfigurable groupId="tools" displayName="Hatchery" id="ROS.plugin.achdjian.it" instance="it.achdjian.plugin.ros.settings.RosSettings"/>
 
         <configurationType implementation="it.achdjian.plugin.ros.node.NodeConfigurationTypeCMake" id="it.achdjian.plugin.ros.node.conf.type"/>
-        <directoryProjectGenerator implementation="it.achdjian.plugin.ros.generator.RosNodeGenerator"/>
+
+        <applicationConfigurable order="last" id="ROS.plugin.achdjian.it"
+                                 instance="it.achdjian.plugin.ros.settings.RosSettings"
+                                 displayName="ROS config" groupId="build"/>
+        <configurationType implementation="it.achdjian.plugin.ros.launch.LaunchConfigurationType" id="it.achdjian.plugin.ros.launch.conf.type"/>
+        <directoryProjectGenerator  implementation="it.achdjian.plugin.ros.generator.RosNodeGenerator"/>
+
     </extensions>
 
     <actions>
