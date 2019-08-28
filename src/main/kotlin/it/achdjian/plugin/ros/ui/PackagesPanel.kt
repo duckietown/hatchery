@@ -9,26 +9,26 @@ import javax.swing.JCheckBox
 import javax.swing.JPanel
 
 class PackagesPanel() : JPanel() {
-  val status = HashMap<String, Boolean>()
+    val status = HashMap<String, Boolean>()
 
-  init {
-    layout = BoxLayout(this, BoxLayout.Y_AXIS)
-    border = IdeBorderFactory.createTitledBorder("Packages")
-  }
-
-  fun setPackages(data: List<RosPackage>) {
-    removeAll()
-    data.forEach {
-      val checkBox = CheckBox(it.name)
-      checkBox.addActionListener { action ->
-        val source = action.source as JCheckBox
-        status[it.name] = source.isSelected
-      }
-      add(checkBox)
+    init {
+        layout = BoxLayout(this, BoxLayout.Y_AXIS)
+        border = IdeBorderFactory.createTitledBorder("Packages")
     }
-    revalidate()
-  }
 
-  fun selected(): List<String> = status.entries.stream()
-    .filter { it.value }.map { it.key }.collect(Collectors.toList())
+    fun setPackages(data: List<RosPackage>) {
+        removeAll()
+        data.forEach {
+            val checkBox = CheckBox(it.name)
+            checkBox.addActionListener { action ->
+                val source = action.source as JCheckBox
+                status[it.name] = source.isSelected
+            }
+            add(checkBox)
+        }
+        revalidate()
+    }
+
+    fun selected():List<String>  = status.entries.stream().filter { it.value }.map { it.key }.collect(Collectors.toList())
+
 }
