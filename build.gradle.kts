@@ -20,8 +20,8 @@ plugins {
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30" apply true
   id("org.jetbrains.intellij") version "0.4.10" apply true
-  id("org.jetbrains.grammarkit") version "2019.2" apply true
-  id("org.ajoberstar.grgit") version "3.1.1" apply true
+  id("org.jetbrains.grammarkit") version "2019.3" apply true
+  id("org.ajoberstar.grgit") version "4.0.0-rc.1" apply true
 //  id("org.jetbrains.gradle.plugin.idea-ext") version "0.3" apply true
 }
 
@@ -104,16 +104,15 @@ tasks {
 
 intellij {
   type = "CL"
-  version = "CL-192-EAP-SNAPSHOT"
+  version = "193.4697-EAP-CANDIDATE-SNAPSHOT"
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
 
-  setPlugins("name.kropp.intellij.makefile:1.6.1",          // Makefile support
-             "com.intellij.ideolog:192.0.12.0",             // Log file support
-             "BashSupport:1.7.12.192",                      // [Ba]sh   support
-             "Docker:192.5728.74",                          // Docker   support
-             "PsiViewer:192-SNAPSHOT",                      // PSI view support
+  setPlugins(//"com.intellij.ideolog:193.0.15.0",             // Log file support
+             //"BashSupport:1.7.13.192",                      // [Ba]sh   support
+             //"Docker:193.4386.10",                          // Docker   support
+             //"PsiViewer:201-SNAPSHOT",                      // PSI view support
              "IntelliLang",
              "yaml")
 }
@@ -137,14 +136,14 @@ dependencies {
   testCompile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
 
   // Python
-  testCompile("org.python:jython-standalone:2.7.1")
+//  testCompile("org.python:jython-standalone:2.7.1")
 }
 
 envs {
   bootstrapDirectory = File(buildDir, "pythons")
   envsDirectory = File(buildDir, "envs")
 
-  conda("Miniconda2", "Miniconda2-latest", listOf("numpy", "pillow"))
+//  conda("Miniconda2", "Miniconda2-latest", listOf("numpy", "pillow"))
 // TODO: figure out how to setup conda inside the project structure
 }
 
