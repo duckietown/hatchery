@@ -3,6 +3,7 @@ import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.intellij.tasks.RunIdeTask
+import org.jetbrains.kotlin.contracts.model.structure.UNKNOWN_COMPUTATION.type
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val kotlinVersion = properties["kotlinVersion"] as String
@@ -54,6 +55,7 @@ fun prop(name: String): String = extra.properties[name] as? String
   ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
+
   withType<PublishTask> {
     username(prop("publishUsername"))
     password(prop("publishPassword"))
@@ -100,7 +102,22 @@ tasks {
       freeCompilerArgs = listOf("-progressive")
     }
   }
+
+  register("copyPlugin", Copy::class) {
+
+
+    from("${buildDir}/libs/hatchery.zip")
+
+    into("${project.gradle.gradleUserHomeDir}/../.CLion2019.2/config/plugins/hatchery/lib")
+  }
+
+  register("Exec clion debug suspend", Exec::class){
+      commandLine("/opt/clion/bin/clion-suspend.sh")
+  }
+
 }
+
+
 
 intellij {
   type = "CL"

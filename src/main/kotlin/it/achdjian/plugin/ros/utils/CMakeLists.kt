@@ -12,25 +12,46 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-fun getResourceAsString(resourceName: String) =
-  RosEnvironments::class.java.classLoader.getResourceAsStream(resourceName)
-    ?.let { FileUtil.loadTextAndClose(it) } ?: ""
+fun getResourceAsString(resourceName: String): String {
+    val resource = RosEnvironments::class.java.classLoader.getResourceAsStream(resourceName)
+    return resource?.let {
+        FileUtil.loadTextAndClose(resource)
+    } ?: ""
 
-fun createMainCMakeLists() = getResourceAsString("templates/CMakeLists.txt")
+}
 
-fun releaseProfile(version: RosVersion, baseDir: File): CMakeSettings.Profile =
-  CMakeSettings.Profile(
-    name = "Release",
-    buildType = "Release",
-    toolchainName = "",
-    generationOptions = "-DCATKIN_DEVEL_PREFIX=$baseDir/devel -DCMAKE_INSTALL_PREFIX=$baseDir/install",
-    passSystemEnvironment = true,
-    additionalEnvironment = version.env,
-    generationDir = File(baseDir, "build"),
-    buildOptions = "")
+fun createMainCMakeLists(): String {
+    return getResourceAsString("templates/CMakeLists.txt")
+}
 
-fun getRosVersionFromCMakeLists(file: VirtualFile): RosVersionImpl? =
-  getCMakeListsTarget(file)?.let { getRosEnvironment().getOwnerVersion(it) }
 
-fun getCMakeListsTarget(file: VirtualFile): Path? =
-  Paths.get(file.path).let { if (Files.isSymbolicLink(it)) Files.readSymbolicLink(it) else null }
+fun releaseProfile(version: RosVersion, baseDir: File): CMakeSettings.Profile {
+    val buildDir = File(baseDir, "build")
+    val options = "-DCATKIN_DEVEL_PREFIX=${baseDir}/devel -DCMAKE_INSTALL_PREFIX=${baseDir}/install"
+    return CMakeSettings.Profile(
+            "Release",
+            "Release",
+            "",
+            options,
+            true,
+            version.env,
+            buildDir,
+            "")
+}
+
+fun getRosVersionFromCMakeLists(file: VirtualFile): RosVersionImpl? {
+    val cMakeListsTarget = getCMakeListsTarget(file)
+    cMakeListsTarget?.let {
+        val state = getRosEnvironment()
+        return state.getOwnerVersion(it)
+    } ?: return null
+}
+
+
+fun getCMakeListsTarget(file: VirtualFile): Path? {
+    val path = Paths.get(file.path)
+    if (Files.isSymbolicLink(path)) {
+        return Files.readSymbolicLink(path)
+    }
+    return null
+}
