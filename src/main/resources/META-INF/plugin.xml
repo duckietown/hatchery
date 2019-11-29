@@ -10,7 +10,8 @@
 
     <description><![CDATA[<a href="https://github.com/duckietown/hatchery#hatchery">Hatchery</a> is plugin for developing applications for the <a href="https://ros.org">Robot Operating System</a> (ROS).]]></description>
 
-    <change-notes> Fixes the
+    <change-notes>
+        Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.
     </change-notes>
 
     <resource-bundle>HatcheryBundle</resource-bundle>

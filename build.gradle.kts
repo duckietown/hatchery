@@ -160,4 +160,4 @@ envs {
 }
 
 group = "edu.umontreal"
-version = "0.3.3"
+version = "0.3.4"
