@@ -5,5 +5,5 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
 object RosInterfaceSyntaxHighlighterFactory : SyntaxHighlighterFactory() {
-  override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?) = RosInterfaceSyntaxHighlighter
+  override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?) = RosInterfaceSyntaxHighlighter()
 }

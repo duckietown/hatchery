@@ -15,7 +15,7 @@ object RosInterfaceParserDefinition : ParserDefinition {
   val COMMENTS = TokenSet.create(RosInterfaceTypes.COMMENT)
   val FILE = IFileElementType(RosInterfaceLanguage)
 
-  override fun createLexer(project: Project) = RosInterfaceLexerAdapter
+  override fun createLexer(project: Project) = RosInterfaceLexerAdapter()
 
   override fun getWhitespaceTokens(): TokenSet = WHITE_SPACES
 
