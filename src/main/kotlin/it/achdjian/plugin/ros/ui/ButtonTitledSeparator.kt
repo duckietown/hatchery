@@ -24,7 +24,7 @@ import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.border.Border
 
-class ButtonTitledSeparator constructor(val text: String ) : JPanel() {
+class ButtonTitledSeparator constructor(val text: String) : JPanel() {
 
 
     val label: JBLabel = object : JBLabel() {
@@ -65,11 +65,16 @@ class ButtonTitledSeparator constructor(val text: String ) : JPanel() {
         super.setEnabled(enabled)
         label.isEnabled = enabled
         separator.isEnabled = enabled
-        button.isEnabled=enabled
+        button.isEnabled = enabled
     }
 
-    fun buttonOpen() { button.icon = openImg}
-    fun buttonClose() { button.icon = closeImg}
+    fun buttonOpen() {
+        button.icon = openImg
+    }
+
+    fun buttonClose() {
+        button.icon = closeImg
+    }
 
     companion object {
         val TOP_INSET = 7

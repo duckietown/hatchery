@@ -12,14 +12,15 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import javax.swing.*
 
-class NameKeyListener(val action :() ->Unit) : KeyListener {
+class NameKeyListener(val action: () -> Unit) : KeyListener {
     override fun keyTyped(p0: KeyEvent?) = action()
     override fun keyPressed(p0: KeyEvent?) = action()
     override fun keyReleased(p0: KeyEvent?) = action()
 }
 
-class AddROSVersionDialog(startName:String, startPath:String) : DialogWrapper(null, true) {
-    constructor():this("","")
+class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(null, true) {
+    constructor() : this("", "")
+
     private var versionName = JTextField()
     private val versionPath = TextFieldWithHistoryWithBrowseButton()
     val name: String
@@ -44,15 +45,15 @@ class AddROSVersionDialog(startName:String, startPath:String) : DialogWrapper(nu
 
         val pathLabel = JLabel("Path")
 
-        versionName.addKeyListener(NameKeyListener{
+        versionName.addKeyListener(NameKeyListener {
             if (versionPath.text.isNotEmpty() && versionName.text.isNotEmpty())
-                isOKActionEnabled=true
+                isOKActionEnabled = true
         })
 
 
-        versionPath.childComponent.textEditor.addKeyListener(NameKeyListener{
+        versionPath.childComponent.textEditor.addKeyListener(NameKeyListener {
             if (versionPath.text.isNotEmpty() && versionName.text.isNotEmpty())
-                isOKActionEnabled=true
+                isOKActionEnabled = true
         })
 
         val editor = versionPath.childComponent.textEditor

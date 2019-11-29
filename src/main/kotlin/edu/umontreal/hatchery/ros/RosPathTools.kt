@@ -2,7 +2,6 @@
 
 package edu.umontreal.hatchery.ros
 
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import edu.umontreal.hatchery.ros.BuildSystem.*
 import edu.umontreal.hatchery.ros.RosEnv.*
@@ -65,13 +64,13 @@ private val ROS_ROOT_PATH =
 
 val defaultRosSetupScript =
   ROS_ROOT_PATH ?: if (File(defaultRosInstallPath).isDirectory)
-    File(defaultRosInstallPath).listFiles { distroDir: File? ->
+    (File(defaultRosInstallPath).listFiles { distroDir: File? ->
       distroDir?.isDirectory ?: false
-    }.map { dir ->
-      dir.listFiles { setupScript ->
+    } ?: arrayOf<File>()).map { dir ->
+      dir?.listFiles { setupScript ->
         setupScript.nameWithoutExtension == "setup" &&
-          setupScript.extension in Shell.values().map { it.name }
-      }.toList()
+                setupScript.extension in Shell.values().map { it.name }
+      }?.toList() ?: listOf()
     }.flatten().minBy { it.extension != "sh" }?.absolutePath
   else null
 

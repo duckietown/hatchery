@@ -25,7 +25,7 @@ class NodeLauncherCMake(private val nodeConfiguration: NodeConfiguration, privat
     override fun createProcess(state: CommandLineState): ProcessHandler {
         val packages = getPackages(project)
         val node = packages
-                .filter { it.name==nodeConfiguration.rosPackageName }
+                .filter { it.name == nodeConfiguration.rosPackageName }
                 .flatMap { it.getNodes() }
                 .firstOrNull { it.name == nodeConfiguration.rosNodeName }
 //        node?.let {
@@ -39,24 +39,22 @@ class NodeLauncherCMake(private val nodeConfiguration: NodeConfiguration, privat
     override fun createCommandLine(state: CommandLineState, runFile: File, environment: CPPEnvironment, usePty: Boolean): GeneralCommandLine {
 
 
-
         return super.createCommandLine(state, runFile, environment, usePty)
     }
 
 
-        @Throws(ExecutionException::class)
+    @Throws(ExecutionException::class)
     override fun createDebugProcess(state: CommandLineState, session: XDebugSession): CidrDebugProcess {
         val packages = getPackages(project)
         val node = packages
-                .filter { it.name==nodeConfiguration.rosPackageName }
+                .filter { it.name == nodeConfiguration.rosPackageName }
                 .flatMap { it.getNodes() }
                 .firstOrNull { it.name == nodeConfiguration.rosNodeName }
 //        node?.let {
 //            configuration.executableData = ExecutableData(it.path.toString() )
 //        }
-        return super.createDebugProcess(state,session)
+        return super.createDebugProcess(state, session)
     }
-
 
 
     override fun getProject() = prj

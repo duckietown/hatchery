@@ -89,7 +89,7 @@ class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHe
         configuration.programParameters = programParametersPanel.programParametersComponent.component.text
 
         val targetData = BuildTargetData(allTarget)
-        configuration.targetAndConfigurationData = BuildTargetAndConfigurationData(targetData,"Release")
+        configuration.targetAndConfigurationData = BuildTargetAndConfigurationData(targetData, "Release")
         this.syncBuildAndExecute(cmakeConfiguration, targetData)
         configuration.setExplicitBuildTargetName("all")
     }

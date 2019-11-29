@@ -3,9 +3,9 @@ package it.achdjian.plagin.ros.ui
 import com.intellij.ui.IdeBorderFactory
 import javax.swing.JPanel
 
-fun panel(title: String? = null, init : LayoutBuilder.()->Any): JPanel {
+fun panel(title: String? = null, init: LayoutBuilder.() -> Any): JPanel {
     val panel = JPanel()
-    title?.let{ addTitleBorder(it, panel) }
+    title?.let { addTitleBorder(it, panel) }
     val layoutBuilder = LayoutBuilder()
     layoutBuilder.init()
     layoutBuilder.build(panel)

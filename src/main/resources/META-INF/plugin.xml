@@ -10,8 +10,7 @@
 
     <description><![CDATA[<a href="https://github.com/duckietown/hatchery#hatchery">Hatchery</a> is plugin for developing applications for the <a href="https://ros.org">Robot Operating System</a> (ROS).]]></description>
 
-    <change-notes>
-        Integration with ROS-JetBrains-Plugin and lots of little bug fixes.
+    <change-notes> Fixes the
     </change-notes>
 
     <resource-bundle>HatcheryBundle</resource-bundle>
@@ -58,9 +57,9 @@
         <iconProvider implementation="edu.umontreal.hatchery.ros.WorkspaceIconProvider" order="first"/>
         <iconProvider implementation="edu.umontreal.hatchery.ros.LaunchDirIconProvider" order="first"/>
 
-        <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigType"/>
-        <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunLineMarkerContributor"/>
-        <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigProducer"/>
+<!--        <configurationType implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigType"/>-->
+<!--        <runLineMarkerContributor language="XML" implementationClass="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunLineMarkerContributor"/>-->
+<!--        <runConfigurationProducer implementation="edu.umontreal.hatchery.roslaunch.runconfig.RosLaunchRunConfigProducer"/>-->
 
         <moduleType id="DEMO_MODULE_TYPE" implementationClass="edu.umontreal.hatchery.modules.DemoModuleType"/>
 

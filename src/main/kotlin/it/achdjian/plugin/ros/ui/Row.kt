@@ -14,8 +14,8 @@ import javax.swing.*
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
-class Row(val text:String? = null) {
-    var component: JComponent?=null
+class Row(val text: String? = null) {
+    var component: JComponent? = null
 
     fun checkBox(text: String, actionListener: (event: ItemEvent) -> Unit) {
         val checkBox = JCheckBox(BundleBase.replaceMnemonicAmpersand(text))
@@ -35,7 +35,7 @@ class Row(val text:String? = null) {
         comboBox(options.toTypedArray(), selected, actionListener)
     }
 
-    fun textArea(text: String?, changeUpdate: (doc: DocumentEvent?) -> Unit){
+    fun textArea(text: String?, changeUpdate: (doc: DocumentEvent?) -> Unit) {
         val textArea = JTextArea()
         textArea.text = text
         textArea.document.addDocumentListener(RowDocumentListener(changeUpdate))
@@ -44,10 +44,10 @@ class Row(val text:String? = null) {
 
     fun textFieldWithHistoryWithBrowseButton(project: Project?,
                                              value: String?,
-                                                 browseDialogTitle: String,
-                                                 fileChooserDescriptor: FileChooserDescriptor,
-                                                 historyProvider: (() -> List<String>)? = null,
-                                                 fileChosen: ((chosenFile: VirtualFile) -> String)? = null){
+                                             browseDialogTitle: String,
+                                             fileChooserDescriptor: FileChooserDescriptor,
+                                             historyProvider: (() -> List<String>)? = null,
+                                             fileChosen: ((chosenFile: VirtualFile) -> String)? = null) {
         val textWithBrowserButton = TextFieldWithHistoryWithBrowseButton()
         val textFieldWithHistory = textWithBrowserButton.childComponent
         textFieldWithHistory.setHistorySize(-1)
@@ -64,7 +64,7 @@ class Row(val text:String? = null) {
                 TextComponentAccessor.TEXT_FIELD_WITH_HISTORY_WHOLE_TEXT,
                 fileChosen
         )
-        textWithBrowserButton.let{textWithBrowserButton.text = value}
+        textWithBrowserButton.let { textWithBrowserButton.text = value }
         component = textWithBrowserButton
     }
 
@@ -76,7 +76,7 @@ class Row(val text:String? = null) {
     }
 }
 
-class RowDocumentListener(val changeUpdate: (doc: DocumentEvent?) -> Unit ) : DocumentListener{
+class RowDocumentListener(val changeUpdate: (doc: DocumentEvent?) -> Unit) : DocumentListener {
     override fun changedUpdate(doc: DocumentEvent?) {
         changeUpdate(doc)
     }

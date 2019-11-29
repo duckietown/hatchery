@@ -14,6 +14,7 @@ class LaunchLauncher(private val launchConfiguration: LaunchConfiguration, envir
     companion object {
         private val LOG = Logger.getInstance(LaunchLauncher::class.java)
     }
+
     override fun startProcess() = launchConfiguration.path?.let { launchFile ->
         val rosVersion = getVersion(environment.project)
         rosVersion?.let {

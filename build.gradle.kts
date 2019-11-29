@@ -62,7 +62,7 @@ tasks {
     channels(prop("publishChannel"))
   }
 
-//  named("buildPlugin") { dependsOn("test") }
+  named("buildPlugin") { dependsOn("test") }
 
   withType<Zip> {
     archiveFileName.set("hatchery.zip")
@@ -104,8 +104,6 @@ tasks {
   }
 
   register("copyPlugin", Copy::class) {
-
-
     from("${buildDir}/libs/hatchery.zip")
 
     into("${project.gradle.gradleUserHomeDir}/../.CLion2019.2/config/plugins/hatchery/lib")
@@ -114,10 +112,7 @@ tasks {
   register("Exec clion debug suspend", Exec::class){
       commandLine("/opt/clion/bin/clion-suspend.sh")
   }
-
 }
-
-
 
 intellij {
   type = "CL"

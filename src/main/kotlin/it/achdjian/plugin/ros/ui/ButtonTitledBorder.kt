@@ -30,15 +30,15 @@ import javax.swing.border.TitledBorder
 class ButtonTitledBorder(title: String, val parent: Component, val statusChange: (close: Boolean) -> Any) : TitledBorder(title), MouseListener {
 
     companion object {
-        private const val INDENT=20
+        private const val INDENT = 20
         private val Insets = Insets(IdeBorderFactory.TITLED_BORDER_TOP_INSET, IdeBorderFactory.TITLED_BORDER_LEFT_INSET, IdeBorderFactory.TITLED_BORDER_BOTTOM_INSET, IdeBorderFactory.TITLED_BORDER_RIGHT_INSET)
     }
 
-    private val titledSeparator =  ButtonTitledSeparator(title)
+    private val titledSeparator = ButtonTitledSeparator(title)
     private val insideInsets: Insets
     private val outsideInsets: Insets
     private var myShowLine = true
-    private var deltaButtonY=0
+    private var deltaButtonY = 0
     private var close = true
 
     init {
@@ -58,20 +58,20 @@ class ButtonTitledBorder(title: String, val parent: Component, val statusChange:
         val labelSize = label.preferredSize
         label.size = labelSize
 
-        deltaButtonY = labelSize.height/2-button.height/2
-        val buttonX = x +outsideInsets.left
-        val buttonY = y + outsideInsets.top+deltaButtonY
+        deltaButtonY = labelSize.height / 2 - button.height / 2
+        val buttonX = x + outsideInsets.left
+        val buttonY = y + outsideInsets.top + deltaButtonY
 
         g.translate(buttonX, buttonY)
         button.paint(g)
 
         val labelX = buttonX + button.width
-        g.translate(labelX, -(labelSize.height/2-button.height/2))
+        g.translate(labelX, -(labelSize.height / 2 - button.height / 2))
         label.paint(g)
 
         val separatorX = labelX + labelSize.width + ButtonTitledSeparator.SEPARATOR_LEFT_INSET
-        val separatorY = labelY + if (UIUtil.isUnderAquaLookAndFeel()) 2 else labelSize.height / 2 - 1
-        val separatorW = Math.max(0, width - separatorX - ButtonTitledSeparator.SEPARATOR_RIGHT_INSET)
+        val separatorY = labelY + if (UIUtil.isUnderAquaBasedLookAndFeel()) 2 else labelSize.height / 2 - 1
+        val separatorW = 0.coerceAtLeast(width - separatorX - ButtonTitledSeparator.SEPARATOR_RIGHT_INSET)
         val separatorH = 2
 
         val separator = titledSeparator.separator
@@ -92,7 +92,7 @@ class ButtonTitledBorder(title: String, val parent: Component, val statusChange:
         val insets = getBorderInsets(c)
         val minSize = Dimension(insets.right + insets.left, insets.top + insets.bottom)
         val separatorSize = getTitledSeparator(c).preferredSize
-        minSize.width = Math.max(minSize.width, separatorSize.width + outsideInsets.left + outsideInsets.right)
+        minSize.width = minSize.width.coerceAtLeast(separatorSize.width + outsideInsets.left + outsideInsets.right)
         return minSize
     }
 
@@ -114,7 +114,7 @@ class ButtonTitledBorder(title: String, val parent: Component, val statusChange:
 
         val button = titledSeparator.button
 
-        if (button.visibleRect.contains(Point(event.point.x-outsideInsets.left, event.point.y-(deltaButtonY+outsideInsets.top)))){
+        if (button.visibleRect.contains(Point(event.point.x - outsideInsets.left, event.point.y - (deltaButtonY + outsideInsets.top)))) {
             if (close) {
                 titledSeparator.buttonOpen()
                 close = false
@@ -131,5 +131,5 @@ class ButtonTitledBorder(title: String, val parent: Component, val statusChange:
     override fun mouseEntered(event: MouseEvent) {}
     override fun mouseClicked(event: MouseEvent) = dispatchMouseEvent(event)
     override fun mouseExited(event: MouseEvent) {}
-    override fun mousePressed(event: MouseEvent){}
+    override fun mousePressed(event: MouseEvent) {}
 }
