@@ -1,15 +1,15 @@
 {
-  parserClass="edu.umontreal.hatchery.rosinterface.RosInterfaceParser"
+  parserClass="org.duckietown.hatchery.rosinterface.RosInterfaceParser"
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiImplClassSuffix="Impl"
   psiClassPrefix="RosInterface"
-  psiPackage="edu.umontreal.hatchery.psi"
-  psiImplPackage="edu.umontreal.hatchery.psi.impl"
+  psiPackage="org.duckietown.hatchery.psi"
+  psiImplPackage="org.duckietown.hatchery.psi.impl"
 
-  elementTypeHolderClass="edu.umontreal.hatchery.psi.RosInterfaceTypes"
-  elementTypeClass="edu.umontreal.hatchery.psi.RosInterfaceElementType"
-  tokenTypeClass="edu.umontreal.hatchery.psi.RosInterfaceTokenType"
+  elementTypeHolderClass="org.duckietown.hatchery.psi.RosInterfaceTypes"
+  elementTypeClass="org.duckietown.hatchery.psi.RosInterfaceElementType"
+  tokenTypeClass="org.duckietown.hatchery.psi.RosInterfaceTokenType"
 }
 
 rosInterfaceFile ::= (property|COMMENT|CRLF)*
@@ -17,8 +17,8 @@ rosInterfaceFile ::= (property|COMMENT|CRLF)*
 property ::= (TYPE KEY SEPARATOR VALUE)|(TYPE KEY) {
     pin=3
     recoverWhile="recover_property"
-    mixin="edu.umontreal.hatchery.psi.impl.RosInterfaceNamedElementImpl"
-    implements="edu.umontreal.hatchery.psi.RosInterfaceNamedElement"
+    mixin="org.duckietown.hatchery.psi.impl.RosInterfaceNamedElementImpl"
+    implements="org.duckietown.hatchery.psi.RosInterfaceNamedElement"
 //    methods=[getType getKey getValue getName setName getNameIdentifier]
 }
 

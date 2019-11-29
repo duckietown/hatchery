@@ -80,7 +80,7 @@ tasks {
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
     source = "src/main/grammars/ROSInterface.flex"
-    targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
+    targetDir = "src/main/java/org/duckietown/hatchery/rosinterface"
     targetClass = "ROSInterfaceLexer"
     purgeOldFiles = true
   }
@@ -88,8 +88,8 @@ tasks {
   val generateROSInterfaceParser by creating(GenerateParser::class) {
     source = "src/main/grammars/ROSInterface.bnf"
     targetRoot = "src/main/java"
-    pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
-    pathToPsiRoot = "/edu/umontreal/hatchery/psi"
+    pathToParser = "/org/duckietown/hatchery/parser/ROSInterfaceParser.java"
+    pathToPsiRoot = "/org/duckietown/hatchery/psi"
     purgeOldFiles = true
   }
 
@@ -159,5 +159,5 @@ envs {
 // TODO: figure out how to setup conda inside the project structure
 }
 
-group = "edu.umontreal"
+group = "org.duckietown"
 version = "0.3.4"

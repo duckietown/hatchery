@@ -4,8 +4,8 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.xmlb.annotations.Transient
-import edu.umontreal.hatchery.ros.Ros
-import edu.umontreal.hatchery.settings.RosSettings
+import org.duckietown.hatchery.ros.Ros
+import org.duckietown.hatchery.settings.RosSettings
 import it.achdjian.plugin.ros.settings.CreatePackage
 import it.achdjian.plugin.ros.settings.createPackageFactory
 import it.achdjian.plugin.ros.settings.diffEnvironment
