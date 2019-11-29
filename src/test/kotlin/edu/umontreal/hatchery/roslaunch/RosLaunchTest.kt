@@ -1,6 +1,6 @@
 package edu.umontreal.hatchery.roslaunch
 
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.python.core.PyInteger
 import org.python.util.PythonInterpreter
 import java.util.*
@@ -9,7 +9,7 @@ import java.util.*
  * Tests roslaunch functionality.
  */
 
-class RosLaunchTest : LightPlatformCodeInsightFixtureTestCase() {
+class RosLaunchTest : BasePlatformTestCase() {
   fun `test launch file detected`() {
     myFixture.configureByText(RosLaunchFileType, """
         <launch>

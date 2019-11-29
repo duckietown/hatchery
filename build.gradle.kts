@@ -20,7 +20,7 @@ plugins {
   kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30" apply true
-  id("org.jetbrains.intellij") version "0.4.13" apply true
+  id("org.jetbrains.intellij") version "0.4.14" apply true
   id("org.jetbrains.grammarkit") version "2019.3" apply true
   id("org.ajoberstar.grgit") version "4.0.0" apply true
 //  id("org.jetbrains.gradle.plugin.idea-ext") version "0.3" apply true
@@ -121,7 +121,7 @@ tasks {
 
 intellij {
   type = "CL"
-  version = "193.4697-EAP-CANDIDATE-SNAPSHOT"
+  version = "2019.3"
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
@@ -148,12 +148,12 @@ dependencies {
 //  compile("com.jcraft:jzlib:1.1.3")
 
   // Useful ROS Dependencies
-  testCompile("org.ros.rosjava_core:rosjava:[0.3,)")
-  testCompile("org.ros.rosjava_messages:std_msgs:[0.5,)")
-  testCompile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
+  testImplementation("org.ros.rosjava_core:rosjava:[0.3,)")
+  testImplementation("org.ros.rosjava_messages:std_msgs:[0.5,)")
+  testImplementation("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
 
   // Python
-//  testCompile("org.python:jython-standalone:2.7.1")
+  testImplementation("org.python:jython-standalone:2.7.1")
 }
 
 envs {
