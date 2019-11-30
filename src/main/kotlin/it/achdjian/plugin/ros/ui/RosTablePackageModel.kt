@@ -2,8 +2,7 @@ package it.achdjian.plugin.ros.ui
 
 import com.intellij.openapi.diagnostic.Logger
 import it.achdjian.plugin.ros.data.RosVersionImpl
-import javax.swing.event.TableModelEvent
-import javax.swing.event.TableModelListener
+import javax.swing.event.*
 import javax.swing.table.TableModel
 
 class RosTablePackageModel : TableModel {

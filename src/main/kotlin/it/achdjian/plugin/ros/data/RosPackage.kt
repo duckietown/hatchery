@@ -2,14 +2,10 @@ package it.achdjian.plugin.ros.data
 
 import com.intellij.openapi.diagnostic.Logger
 import it.achdjian.plugin.ros.utils.catkinFindLibexec
-import org.w3c.dom.Document
-import org.w3c.dom.NodeList
-import java.nio.file.Files
-import java.nio.file.Path
+import org.w3c.dom.*
+import java.nio.file.*
 import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.xpath.XPath
-import javax.xml.xpath.XPathConstants
-import javax.xml.xpath.XPathFactory
+import javax.xml.xpath.*
 
 class RosPackage(val path: Path, val env: Map<String, String>) {
     companion object {

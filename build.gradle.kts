@@ -55,11 +55,8 @@ fun prop(name: String): String = extra.properties[name] as? String
   ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
-
   withType<PublishTask> {
-    username(prop("publishUsername"))
-    password(prop("publishPassword"))
-    channels(prop("publishChannel"))
+    token(project.findProperty("jbr.token") as String? ?: System.getenv("JBR_TOKEN"))
   }
 
   named("buildPlugin") { dependsOn("test") }

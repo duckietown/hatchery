@@ -1,7 +1,6 @@
 package it.achdjian.plagin.ros.ui
 
-import javax.swing.JComponent
-import javax.swing.JPanel
+import javax.swing.*
 
 class LayoutBuilder {
     private val rows = ArrayList<Row>()

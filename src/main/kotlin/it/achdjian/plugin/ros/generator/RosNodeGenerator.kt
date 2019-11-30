@@ -6,22 +6,16 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Computable
-import com.intellij.openapi.vfs.VfsUtil
-import com.intellij.openapi.vfs.VfsUtilCore
-import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.*
 import com.jetbrains.cidr.cpp.cmake.projectWizard.generators.CMakeAbstractCPPProjectGenerator
 import com.jetbrains.cidr.cpp.cmake.projectWizard.generators.settings.CMakeProjectSettings
 import com.jetbrains.cidr.cpp.cmake.workspace.CMakeWorkspace
 import it.achdjian.plagin.ros.ui.panel
-import it.achdjian.plugin.ros.data.RosVersion
-import it.achdjian.plugin.ros.data.RosVersionNull
-import it.achdjian.plugin.ros.data.getRosEnvironment
+import it.achdjian.plugin.ros.data.*
 import it.achdjian.plugin.ros.ui.PackagesPanel
 import it.achdjian.plugin.ros.utils.releaseProfile
 import java.io.File
-import javax.swing.BoxLayout
-import javax.swing.JComponent
-import javax.swing.JPanel
+import javax.swing.*
 
 class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
     companion object {

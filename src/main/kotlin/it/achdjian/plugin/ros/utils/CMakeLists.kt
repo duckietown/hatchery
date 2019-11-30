@@ -3,14 +3,9 @@ package it.achdjian.plugin.ros.utils
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.jetbrains.cidr.cpp.cmake.CMakeSettings
-import it.achdjian.plugin.ros.data.RosEnvironments
-import it.achdjian.plugin.ros.data.RosVersion
-import it.achdjian.plugin.ros.data.RosVersionImpl
-import it.achdjian.plugin.ros.data.getRosEnvironment
+import it.achdjian.plugin.ros.data.*
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
+import java.nio.file.*
 
 fun getResourceAsString(resourceName: String): String {
     val resource = RosEnvironments::class.java.classLoader.getResourceAsStream(resourceName)

@@ -3,13 +3,9 @@ package it.achdjian.plugin.ros.utils
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import it.achdjian.plugin.ros.data.RosPackage
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.nio.file.FileSystems
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.attribute.PosixFilePermission
-import java.nio.file.attribute.PosixFilePermissions
+import java.io.*
+import java.nio.file.*
+import java.nio.file.attribute.*
 import java.util.*
 
 object CONST {

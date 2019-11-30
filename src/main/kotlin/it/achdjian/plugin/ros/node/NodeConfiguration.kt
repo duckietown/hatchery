@@ -2,18 +2,11 @@ package it.achdjian.plugin.ros.node
 
 import com.intellij.execution.Executor
 import com.intellij.execution.configurations.ConfigurationFactory
-import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.execution.runners.ExecutionEnvironment
-import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.InvalidDataException
-import com.intellij.openapi.util.WriteExternalException
-import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration
-import com.jetbrains.cidr.cpp.execution.CMakeRunConfigurationType
-import com.jetbrains.cidr.execution.BuildTargetAndConfigurationData
-import com.jetbrains.cidr.execution.CidrCommandLineState
-import com.jetbrains.cidr.execution.CidrExecutableDataHolder
-import com.jetbrains.cidr.execution.ExecutableData
+import com.intellij.openapi.util.*
+import com.jetbrains.cidr.cpp.execution.*
+import com.jetbrains.cidr.execution.*
 import it.achdjian.plugin.ros.utils.getPackages
 import org.jdom.Element
 

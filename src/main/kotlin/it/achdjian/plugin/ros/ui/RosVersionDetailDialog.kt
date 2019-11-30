@@ -2,17 +2,11 @@ package it.achdjian.plugin.ros.ui
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.ui.CollectionListModel
-import com.intellij.ui.ListSpeedSearch
-import com.intellij.ui.ToolbarDecorator
+import com.intellij.ui.*
 import com.intellij.ui.components.JBList
-import it.achdjian.plugin.ros.data.RosCustomVersion
-import it.achdjian.plugin.ros.data.RosVersionImpl
-import it.achdjian.plugin.ros.data.getRosEnvironment
+import it.achdjian.plugin.ros.data.*
 import java.awt.Dimension
-import javax.swing.JComponent
-import javax.swing.JPanel
-import javax.swing.ListSelectionModel
+import javax.swing.*
 
 class RosVersionDetailDialog : DialogWrapper(null, true) {
     private var versionList = JBList<RosVersionImpl>()

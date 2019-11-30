@@ -1,10 +1,8 @@
 package it.achdjian.plugin.ros.utils
 
 import com.intellij.openapi.diagnostic.Logger
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.nio.file.FileSystems
-import java.nio.file.Path
+import java.io.*
+import java.nio.file.*
 
 fun catkinFindLibexec(packageName: String, env: Map<String, String>): List<Path> {
     val log = Logger.getInstance("#it.achdjian.plugin.ros.utils.Catkin.catkinFindLibexec")

@@ -7,16 +7,10 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.components.fields.IntegerField
 import com.intellij.ui.layout.panel
-import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration
-import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfigurationSettingsEditor
-import com.jetbrains.cidr.cpp.execution.CMakeBuildConfigurationHelper
-import com.jetbrains.cidr.execution.BuildTargetAndConfigurationData
-import com.jetbrains.cidr.execution.BuildTargetData
-import com.jetbrains.cidr.execution.ExecutableData
-import it.achdjian.plugin.ros.data.RosNode
-import it.achdjian.plugin.ros.data.RosPackage
-import it.achdjian.plugin.ros.ui.RosNodeListCellRenderer
-import it.achdjian.plugin.ros.ui.RosPackageListCellRenderer
+import com.jetbrains.cidr.cpp.execution.*
+import com.jetbrains.cidr.execution.*
+import it.achdjian.plugin.ros.data.*
+import it.achdjian.plugin.ros.ui.*
 import it.achdjian.plugin.ros.utils.getPackages
 
 class NodeRunEditorCMake(val project: Project, helper: CMakeBuildConfigurationHelper) : CMakeAppRunConfigurationSettingsEditor(project, helper) {

@@ -17,8 +17,7 @@
 package it.achdjian.plagin.ros.ui
 
 import com.intellij.ui.components.JBLabel
-import com.intellij.util.ui.JBUI
-import com.intellij.util.ui.UIUtil
+import com.intellij.util.ui.*
 import java.awt.*
 import javax.imageio.ImageIO
 import javax.swing.*

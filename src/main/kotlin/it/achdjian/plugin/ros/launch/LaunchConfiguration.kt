@@ -1,16 +1,11 @@
 package it.achdjian.plugin.ros.launch
 
 import com.intellij.execution.Executor
-import com.intellij.execution.configurations.ConfigurationFactory
-import com.intellij.execution.configurations.LocatableConfigurationBase
-import com.intellij.execution.configurations.RunConfigurationWithSuppressedDefaultDebugAction
-import com.intellij.execution.configurations.RunProfileState
+import com.intellij.execution.configurations.*
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.InvalidDataException
-import com.intellij.openapi.util.WriteExternalException
-import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.openapi.vfs.VirtualFileManager
+import com.intellij.openapi.util.*
+import com.intellij.openapi.vfs.*
 import org.jdom.Element
 
 class LaunchConfiguration(project: Project, configurationFactory: ConfigurationFactory, targetName: String) :

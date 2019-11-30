@@ -1,15 +1,12 @@
 package it.achdjian.plugin.ros.ui
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
-import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.openapi.ui.TextComponentAccessor
+import com.intellij.openapi.ui.*
 import com.intellij.ui.TextFieldWithHistoryWithBrowseButton
 import com.intellij.ui.components.installFileCompletionAndBrowseDialog
 import com.intellij.util.ui.JBUI
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
+import java.awt.*
+import java.awt.event.*
 import javax.swing.*
 
 class NameKeyListener(val action: () -> Unit) : KeyListener {

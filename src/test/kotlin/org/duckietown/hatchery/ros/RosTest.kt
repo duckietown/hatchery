@@ -1,12 +1,10 @@
 package org.duckietown.hatchery.ros
 
-import org.duckietown.hatchery.ros.nodes.Listener
-import org.duckietown.hatchery.ros.nodes.Talker
+import org.duckietown.hatchery.ros.nodes.*
 import org.ros.RosCore
-import org.ros.node.DefaultNodeMainExecutor
-import org.ros.node.NodeConfiguration
+import org.ros.node.*
 import java.net.Inet4Address
-import java.util.concurrent.TimeUnit.*
+import java.util.concurrent.TimeUnit.SECONDS
 
 fun main() {
   System.setProperty("javax.net.debug", "all")

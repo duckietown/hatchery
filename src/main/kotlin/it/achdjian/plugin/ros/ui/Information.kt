@@ -3,8 +3,7 @@ package it.achdjian.plagin.ros.ui
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.MessageType
-import com.intellij.openapi.wm.ToolWindowId
-import com.intellij.openapi.wm.ToolWindowManager
+import com.intellij.openapi.wm.*
 
 fun showMessage(project: Project, messageType: MessageType, message: String) {
     ApplicationManager.getApplication().invokeLater {

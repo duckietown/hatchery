@@ -4,23 +4,15 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.BaseComponent
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.options.Configurable
-import com.intellij.openapi.ui.ComboBox
-import com.intellij.openapi.ui.FixedSizeButton
+import com.intellij.openapi.ui.*
 import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.ComboboxSpeedSearch
 import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.JBUI
 import it.achdjian.plugin.ros.data.getRosEnvironment
-import it.achdjian.plugin.ros.ui.RosTablePackageModel
-import it.achdjian.plugin.ros.ui.RosVersionDetailDialog
-import it.achdjian.plugin.ros.ui.VersionSelector
-import java.awt.Dimension
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
-import javax.swing.JComponent
-import javax.swing.JLabel
-import javax.swing.JPanel
-import javax.swing.JScrollPane
+import it.achdjian.plugin.ros.ui.*
+import java.awt.*
+import javax.swing.*
 
 
 class RosSettings : BaseComponent, Configurable {

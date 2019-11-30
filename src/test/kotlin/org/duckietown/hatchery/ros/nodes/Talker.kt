@@ -2,8 +2,7 @@ package org.duckietown.hatchery.ros.nodes
 
 import org.ros.concurrent.CancellableLoop
 import org.ros.namespace.GraphName
-import org.ros.node.AbstractNodeMain
-import org.ros.node.ConnectedNode
+import org.ros.node.*
 
 class Talker: AbstractNodeMain() {
   override fun getDefaultNodeName() = GraphName.of("Talker")!!

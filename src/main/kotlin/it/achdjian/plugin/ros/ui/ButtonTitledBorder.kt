@@ -16,12 +16,9 @@
 package it.achdjian.plagin.ros.ui
 
 import com.intellij.ui.IdeBorderFactory
-import com.intellij.util.ui.DialogUtil
-import com.intellij.util.ui.JBInsets
-import com.intellij.util.ui.UIUtil
+import com.intellij.util.ui.*
 import java.awt.*
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
+import java.awt.event.*
 import javax.swing.border.TitledBorder
 
 /**

@@ -3,20 +3,15 @@ package it.achdjian.plugin.ros.importer
 import com.intellij.icons.AllIcons
 import com.intellij.ide.impl.ProjectUtil
 import com.intellij.ide.util.PropertiesComponent
-import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.fileChooser.FileChooserDescriptor
-import com.intellij.openapi.fileChooser.FileChooserFactory
-import com.intellij.openapi.project.DumbAware
-import com.intellij.openapi.project.Project
+import com.intellij.openapi.actionSystem.*
+import com.intellij.openapi.fileChooser.*
+import com.intellij.openapi.project.*
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.IconLoader
-import com.intellij.openapi.vfs.LocalFileSystem
-import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.*
 import com.jetbrains.cidr.cpp.cmake.projectWizard.CLionProjectWizardUtils
 import com.jetbrains.cidr.cpp.cmake.workspace.CMakeWorkspace
-import it.achdjian.plugin.ros.utils.getRosVersionFromCMakeLists
-import it.achdjian.plugin.ros.utils.releaseProfile
+import it.achdjian.plugin.ros.utils.*
 import java.io.File
 import javax.swing.Icon
 

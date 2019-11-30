@@ -1,8 +1,7 @@
 package it.achdjian.plugin.ros.ui
 
 import com.intellij.openapi.util.IconLoader
-import com.intellij.ui.ColoredListCellRenderer
-import com.intellij.ui.SimpleTextAttributes
+import com.intellij.ui.*
 import it.achdjian.plugin.ros.data.RosVersionImpl
 import javax.swing.JList
 

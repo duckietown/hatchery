@@ -3,16 +3,14 @@ package it.achdjian.plagin.ros.ui
 import com.intellij.BundleBase
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.ComboBox
-import com.intellij.openapi.ui.TextComponentAccessor
+import com.intellij.openapi.ui.*
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.TextFieldWithHistoryWithBrowseButton
 import com.intellij.ui.components.installFileCompletionAndBrowseDialog
 import com.intellij.util.ui.SwingHelper
 import java.awt.event.ItemEvent
 import javax.swing.*
-import javax.swing.event.DocumentEvent
-import javax.swing.event.DocumentListener
+import javax.swing.event.*
 
 class Row(val text: String? = null) {
     var component: JComponent? = null

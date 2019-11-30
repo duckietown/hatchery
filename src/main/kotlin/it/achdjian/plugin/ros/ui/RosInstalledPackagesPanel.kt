@@ -2,8 +2,7 @@ package it.achdjian.plugin.ros.ui
 
 import com.intellij.openapi.project.Project
 import com.intellij.ui.table.JBTable
-import com.intellij.webcore.packaging.InstalledPackagesPanel
-import com.intellij.webcore.packaging.PackagesNotificationPanel
+import com.intellij.webcore.packaging.*
 
 class RosInstalledPackagesPanel(val project: Project, val area: PackagesNotificationPanel) : InstalledPackagesPanel(project, area) {
 

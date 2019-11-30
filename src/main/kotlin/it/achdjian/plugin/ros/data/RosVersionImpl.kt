@@ -1,17 +1,10 @@
 package it.achdjian.plugin.ros.data
 
 import com.intellij.openapi.diagnostic.Logger
-import com.intellij.openapi.vfs.VfsUtil
-import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.*
 import com.intellij.util.xmlb.annotations.Transient
-import org.duckietown.hatchery.ros.Ros
-import org.duckietown.hatchery.settings.RosSettings
-import it.achdjian.plugin.ros.settings.CreatePackage
-import it.achdjian.plugin.ros.settings.createPackageFactory
-import it.achdjian.plugin.ros.settings.diffEnvironment
-import it.achdjian.plugin.ros.settings.findInitCmd
-import java.nio.file.Files
-import java.nio.file.Paths
+import it.achdjian.plugin.ros.settings.*
+import java.nio.file.*
 
 interface RosVersion {
     val env: Map<String, String>

@@ -1,8 +1,7 @@
 package it.achdjian.plugin.ros.node
 
 import com.intellij.execution.ExecutionException
-import com.intellij.execution.configurations.CommandLineState
-import com.intellij.execution.configurations.GeneralCommandLine
+import com.intellij.execution.configurations.*
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.diagnostic.Logger
@@ -10,7 +9,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.xdebugger.XDebugSession
 import com.jetbrains.cidr.cpp.execution.CMakeLauncher
 import com.jetbrains.cidr.cpp.toolchains.CPPEnvironment
-import com.jetbrains.cidr.execution.ExecutableData
 import com.jetbrains.cidr.execution.debugger.CidrDebugProcess
 import it.achdjian.plugin.ros.utils.getPackages
 import java.io.File

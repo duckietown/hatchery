@@ -2,9 +2,7 @@ package it.achdjian.plugin.ros.data
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.diagnostic.Logger
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
+import java.nio.file.*
 import kotlin.streams.toList
 
 class RosEnvironments(customVerison: RosCustomVersion) {

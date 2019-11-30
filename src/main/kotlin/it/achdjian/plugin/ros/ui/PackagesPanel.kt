@@ -4,9 +4,7 @@ import com.intellij.ui.IdeBorderFactory
 import com.intellij.ui.components.CheckBox
 import it.achdjian.plugin.ros.data.RosPackage
 import java.util.stream.Collectors
-import javax.swing.BoxLayout
-import javax.swing.JCheckBox
-import javax.swing.JPanel
+import javax.swing.*
 
 class PackagesPanel() : JPanel() {
     val status = HashMap<String, Boolean>()

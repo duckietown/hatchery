@@ -1,8 +1,7 @@
 package it.achdjian.plugin.ros.ui
 
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.util.IconLoader
-import com.intellij.openapi.util.NotNullLazyValue
+import com.intellij.openapi.util.*
 import javax.swing.Icon
 
 object ICON_NODE : NotNullLazyValue<Icon>() {
