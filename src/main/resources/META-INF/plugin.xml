@@ -1,6 +1,6 @@
 <idea-plugin>
     <name>Hatchery</name>
-    <id>org.duckietown.hatchery</id>
+    <id>edu.umontreal.hatchery</id>
     <vendor email="bre@ndan.co" url="http://www.duckietown.org">Duckietown</vendor>
     <idea-version since-build="143.379"/>
 
@@ -23,13 +23,13 @@
             CMakeLists.kt
             ProjectUtils.kt
             RosCommonProgramRunConfigurationParameters
-            <implementation-class>it.achdjian.plugin.ros.data.RosEnvironments</implementation-class>
+            <implementation-class>org.duckietown.hatchery.achdjian.data.RosEnvironments</implementation-class>
         </component>
         <component>
-            <implementation-class>it.achdjian.plugin.ros.data.RosCustomVersion</implementation-class>
+            <implementation-class>org.duckietown.hatchery.achdjian.data.RosCustomVersion</implementation-class>
         </component>
         <component>
-            <implementation-class>it.achdjian.plugin.ros.settings.RosSettings</implementation-class>
+            <implementation-class>org.duckietown.hatchery.achdjian.settings.RosSettings</implementation-class>
         </component>
     </application-components>
 
@@ -66,13 +66,13 @@
 
         <applicationService serviceImplementation="org.duckietown.hatchery.settings.RosConfig" overrides="false"/>
 
-        <configurationType implementation="it.achdjian.plugin.ros.node.NodeConfigurationTypeCMake" id="it.achdjian.plugin.ros.node.conf.type"/>
+        <configurationType implementation="org.duckietown.hatchery.achdjian.node.NodeConfigurationTypeCMake" id="org.duckietown.hatchery.achdjian.node.conf.type"/>
 
         <applicationConfigurable order="last" id="ROS.plugin.achdjian.it"
-                                 instance="it.achdjian.plugin.ros.settings.RosSettings"
+                                 instance="org.duckietown.hatchery.achdjian.settings.RosSettings"
                                  displayName="ROS config" groupId="build"/>
-        <configurationType implementation="it.achdjian.plugin.ros.launch.LaunchConfigurationType" id="it.achdjian.plugin.ros.launch.conf.type"/>
-        <directoryProjectGenerator  implementation="it.achdjian.plugin.ros.generator.RosNodeGenerator"/>
+        <configurationType implementation="org.duckietown.hatchery.achdjian.launch.LaunchConfigurationType" id="org.duckietown.hatchery.achdjian.launch.conf.type"/>
+        <directoryProjectGenerator  implementation="org.duckietown.hatchery.achdjian.generator.RosNodeGenerator"/>
 
     </extensions>
 
@@ -81,42 +81,42 @@
         <group id="org.duckietown.hatchery.RosActions" text="ROS" popup="true">
             <add-to-group group-id="MainMenu" relative-to-action="HelpMenu" anchor="before"/>
         </group>
-        <action id="rqt_msg" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__msg" description="rqt_msg" icon="/icons/rqtmsg.svg">
+        <action id="rqt_msg" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__msg" description="rqt_msg" icon="/org/duckietown/hatchery/icons/rqtmsg.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="org.duckietown.hatchery.RosActions"/>
         </action>
-        <action id="rqt_bag" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__bag" description="rqt_bag" icon="/icons/rqtbag.svg">
+        <action id="rqt_bag" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__bag" description="rqt_bag" icon="/org/duckietown/hatchery/icons/rqtbag.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="org.duckietown.hatchery.RosActions"/>
         </action>
-        <action id="rqt_dep" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__dep" description="rqt_dep" icon="/icons/links.svg">
+        <action id="rqt_dep" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__dep" description="rqt_dep" icon="/org/duckietown/hatchery/icons/links.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="org.duckietown.hatchery.RosActions"/>
         </action>
-        <action id="rqt_graph" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__graph" description="rqt_graph" icon="/icons/rqtgraph.svg">
+        <action id="rqt_graph" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__graph" description="rqt_graph" icon="/org/duckietown/hatchery/icons/rqtgraph.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="org.duckietown.hatchery.RosActions"/>
         </action>
-        <action id="rqt_image_view" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__image__view" description="rqt_image_view" icon="/icons/rqtimage.svg">
+        <action id="rqt_image_view" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__image__view" description="rqt_image_view" icon="/org/duckietown/hatchery/icons/rqtimage.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="org.duckietown.hatchery.RosActions"/>
         </action>
-        <action id="rqt_plot" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__plot" description="rqt_plot" icon="/icons/rqtbar.svg">
+        <action id="rqt_plot" class="org.duckietown.hatchery.rqt.RqtAction" text="rqt__plot" description="rqt_plot" icon="/org/duckietown/hatchery/icons/rqtbar.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="org.duckietown.hatchery.RosActions"/>
         </action>
-        <action id="gazebo" class="org.duckietown.hatchery.rqt.RqtAction" text="gazebo" description="gazebo" icon="/icons/gazebo.svg">
+        <action id="gazebo" class="org.duckietown.hatchery.rqt.RqtAction" text="gazebo" description="gazebo" icon="/org/duckietown/hatchery/icons/gazebo.svg">
             <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
             <add-to-group group-id="org.duckietown.hatchery.RosActions"/>
         </action>
 
         <group id="ROS.WelcomeScreen.Actions">
-            <action id="ImportROSWorkspace" class="it.achdjian.plugin.ros.importer.ImporterRosWorkspaceAction" text="Import ROS Workspace"/>
+            <action id="ImportROSWorkspace" class="org.duckietown.hatchery.achdjian.importer.ImporterRosWorkspaceAction" text="Import ROS Workspace"/>
             <add-to-group group-id="WelcomeScreen.QuickStart" anchor="after" relative-to-action="ImportCMakeProject"/>
         </group>
 
         <group id="ROS.FileMenu.Before">
-            <action id="CPP.ImportROSWorkspace" class="it.achdjian.plugin.ros.importer.ImporterRosWorkspaceAction" text="Import ROS Workspace ... "/>
+            <action id="CPP.ImportROSWorkspace" class="org.duckietown.hatchery.achdjian.importer.ImporterRosWorkspaceAction" text="Import ROS Workspace ... "/>
             <add-to-group group-id="FileOpenGroup" anchor="after" relative-to-action="CPP.ImportCMakeProject"/>
         </group>
     </actions>
