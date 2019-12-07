@@ -36,9 +36,9 @@ On first launch, you may need to setup a Python SDK. From **File | Project Struc
 </details>
 
 <details>
-<summary><b>CLion users</b> should follow the <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html">ROS Setup Tutorial</a> to configure build paths...</summary> 
+<summary><b>CLion users</b> should follow the <a href="https://www.jetbrains.com/help/clion/2019.3/ros-setup-tutorial.html">ROS Setup Tutorial</a> to configure build paths...</summary> 
 
-and access CLion-specific features such as <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#43578262">linking Catkin libraries</a>, <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#80196d29">running a ROS node from the IDE</a> and <a href="https://www.jetbrains.com/help/clion/2018.3/ros-setup-tutorial.html#931260ab">attaching a debugger to a running node</a>. The Hatchery plugin can be <a href="https://www.jetbrains.com/help/idea/managing-plugins.html#install">installed</a> in the usual way from the settings menu.
+and access CLion-specific features such as <a href="https://www.jetbrains.com/help/clion/2019.3/ros-setup-tutorial.html#43578262">linking Catkin libraries</a>, <a href="https://www.jetbrains.com/help/clion/2019.3/ros-setup-tutorial.html#80196d29">running a ROS node from the IDE</a> and <a href="https://www.jetbrains.com/help/clion/2019.3/ros-setup-tutorial.html#931260ab">attaching a debugger to a running node</a>. The Hatchery plugin can be <a href="https://www.jetbrains.com/help/idea/managing-plugins.html#install">installed</a> in the usual way from the settings menu.
 </details>
 
 <details>

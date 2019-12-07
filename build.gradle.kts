@@ -3,8 +3,8 @@ import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.intellij.tasks.RunIdeTask
-import org.jetbrains.kotlin.contracts.model.structure.UNKNOWN_COMPUTATION.type
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.intellij.tasks.PatchPluginXmlTask
 
 val kotlinVersion = properties["kotlinVersion"] as String
 
@@ -59,6 +59,11 @@ tasks {
     token(project.findProperty("jbr.token") as String? ?: System.getenv("JBR_TOKEN"))
   }
 
+  withType<PatchPluginXmlTask> {
+    sinceBuild("193.*")
+    changeNotes("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
+  }
+
   named("buildPlugin") { dependsOn("test") }
 
   withType<Zip> {
@@ -100,6 +105,7 @@ tasks {
     }
   }
 
+  // Use unversioned filename for stable URL of CI build artifact
   register("copyPlugin", Copy::class) {
     from("${buildDir}/libs/hatchery.zip")
 
@@ -114,14 +120,15 @@ tasks {
 intellij {
   type = "CL"
   version = "2019.3"
+
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
 
-  setPlugins(//"com.intellij.ideolog:193.0.15.0",             // Log file support
-             //"BashSupport:1.7.13.192",                      // [Ba]sh   support
-             //"Docker:193.4386.10",                          // Docker   support
-             //"PsiViewer:201-SNAPSHOT",                      // PSI view support
+  setPlugins(//"com.intellij.ideolog:193.0.15.0",  // Log file support
+             //"BashSupport:1.7.13.192",           // [Ba]sh   support
+             //"Docker:193.4386.10",               // Docker   support
+             //"PsiViewer:201-SNAPSHOT",           // PSI view support
              "IntelliLang",
              "yaml")
 }
