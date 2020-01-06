@@ -20,10 +20,10 @@ plugins {
   kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30" apply true
-  id("org.jetbrains.intellij") version "0.4.14" apply true
+  id("org.jetbrains.intellij") version "0.4.15" apply true
   id("org.jetbrains.grammarkit") version "2019.3" apply true
-  id("org.ajoberstar.grgit") version "4.0.0" apply true
-//  id("org.jetbrains.gradle.plugin.idea-ext") version "0.3" apply true
+  id("org.ajoberstar.grgit") version "4.0.1" apply true
+//  id("org.jetbrains.gradle.plugin.idea-ext") version "0.7" apply true
 }
 
 idea {
@@ -152,7 +152,7 @@ dependencies {
   testImplementation("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
 
   // Python
-  testImplementation("org.python:jython-standalone:2.7.1")
+  testImplementation("org.python:jython-standalone:2.7.2b")
 }
 
 envs {
