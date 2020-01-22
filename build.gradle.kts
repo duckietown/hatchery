@@ -54,7 +54,7 @@ tasks {
   }
 
   withType<PatchPluginXmlTask> {
-    sinceBuild("193.*")
+    sinceBuild("192.*")
     changeNotes("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
   }
 
@@ -103,7 +103,7 @@ tasks {
   register("copyPlugin", Copy::class) {
     from("${buildDir}/libs/hatchery.zip")
 
-    into("${project.gradle.gradleUserHomeDir}/../.CLion2019.2/config/plugins/hatchery/lib")
+    into("${project.gradle.gradleUserHomeDir}/../.CLion2020.1/config/plugins/hatchery/lib")
   }
 
   register("Exec clion debug suspend", Exec::class){
