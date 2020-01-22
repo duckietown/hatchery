@@ -1,0 +1,17 @@
+name: 'Build plugin'
+description: 'Builds Hatchery plugin'
+
+on:
+  push:
+    paths:
+      - '**.kt'
+      - '**.kts'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Docker Build
+        run: docker build .
