@@ -1,8 +1,7 @@
 package org.duckietown.hatchery.roslaunch
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import org.python.core.PyInteger
-import org.python.util.PythonInterpreter
+import org.graalvm.polyglot.Context
 import java.util.*
 
 /**
@@ -20,20 +19,12 @@ class RosLaunchTest : BasePlatformTestCase() {
   }
 
   fun testPythonInterpreter() {
-    val props = Properties().apply {
-      setProperty("python.path", "/home/modules:scripts")
-    }
-    PythonInterpreter.initialize(System.getProperties(), props, arrayOf(""))
-    PythonInterpreter().run {
-      exec("import sys")
-      exec("print sys")
-
-      set("a", PyInteger(42))
-      exec("print a")
-      exec("x = 2+2")
-      val x = get("x")
-
-      println("x: $x")
-    }
+    Context.create().use { it.eval("python", """
+      import sys
+      import os
+      print(os.environ)
+      a = 2+2
+      print(a)
+    """.trimIndent()) }
   }
 }
