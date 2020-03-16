@@ -13,7 +13,7 @@ plugins {
   kotlin("jvm")
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30"
-  id("org.jetbrains.intellij") version "0.4.15"
+  id("org.jetbrains.intellij") version "0.4.16"
   id("org.jetbrains.grammarkit") version "2019.3"
   id("org.ajoberstar.grgit") version "4.0.1"
   id("de.fayard.refreshVersions") version "0.8.6"
