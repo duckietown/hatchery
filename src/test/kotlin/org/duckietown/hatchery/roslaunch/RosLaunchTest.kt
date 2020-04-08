@@ -17,13 +17,13 @@ class RosLaunchTest : BasePlatformTestCase() {
       """.trimIndent())
   }
 
-  fun testPythonInterpreter() {
-    Context.create().use { it.eval("python", """
-      import sys
-      import os
-      print(os.environ)
-      a = 2+2
-      print(a)
-    """.trimIndent()) }
-  }
+//  fun testPythonInterpreter() {
+//    Context.create().use { it.eval("python", """
+//      import sys
+//      import os
+//      print(os.environ)
+//      a = 2+2
+//      print(a)
+//    """.trimIndent()) }
+//  }
 }
