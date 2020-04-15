@@ -10,13 +10,12 @@ val kotlinVersion = properties["kotlinVersion"] as String
 
 plugins {
   idea apply true
-  kotlin("jvm")
+  kotlin("jvm") version "1.3.71"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30"
   id("org.jetbrains.intellij") version "0.4.16"
-  id("org.jetbrains.grammarkit") version "2019.3"
+  id("org.jetbrains.grammarkit") version "2020.1.2"
   id("org.ajoberstar.grgit") version "4.0.1"
-  id("de.fayard.refreshVersions") version "0.8.6"
 }
 
 idea {
@@ -113,7 +112,7 @@ tasks {
 
 intellij {
   type = "CL"
-  version = "2019.3"
+  version = "2020.1"
 
   pluginName = "hatchery"
   updateSinceUntilBuild = false
@@ -141,9 +140,9 @@ dependencies {
 //  compile("com.jcraft:jzlib:1.1.3")
 
   // Useful ROS Dependencies
-  testImplementation("org.ros.rosjava_core:rosjava:_")
-  testImplementation("org.ros.rosjava_messages:std_msgs:_")
-  testImplementation("org.ros.rosjava_bootstrap:message_generation:_")
+  testImplementation("org.ros.rosjava_core:rosjava:0.3+")
+  testImplementation("org.ros.rosjava_messages:std_msgs:0.5+")
+  testImplementation("org.ros.rosjava_bootstrap:message_generation:0.3+")
 }
 
 envs {
