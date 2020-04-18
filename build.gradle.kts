@@ -10,10 +10,10 @@ val kotlinVersion = properties["kotlinVersion"] as String
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.3.71"
+  kotlin("jvm") version "1.3.72"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30"
-  id("org.jetbrains.intellij") version "0.4.16"
+  id("org.jetbrains.intellij") version "0.4.18"
   id("org.jetbrains.grammarkit") version "2020.1.2"
   id("org.ajoberstar.grgit") version "4.0.1"
 }
