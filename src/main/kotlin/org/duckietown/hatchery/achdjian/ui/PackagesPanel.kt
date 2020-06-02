@@ -6,7 +6,7 @@ import org.duckietown.hatchery.achdjian.data.RosPackage
 import java.util.stream.Collectors
 import javax.swing.*
 
-class PackagesPanel() : JPanel() {
+class PackagesPanel: JPanel() {
     val status = HashMap<String, Boolean>()
 
     init {
@@ -27,6 +27,6 @@ class PackagesPanel() : JPanel() {
         revalidate()
     }
 
-    fun selected(): List<String> = status.entries.stream().filter { it.value }.map { it.key }.collect(Collectors.toList())
-
+    fun selected(): List<String> = status.entries.stream()
+      .filter { it.value }.map { it.key }.collect(Collectors.toList())
 }
