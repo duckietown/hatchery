@@ -3,31 +3,24 @@ import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.intellij.tasks.RunIdeTask
-import org.jetbrains.kotlin.contracts.model.structure.UNKNOWN_COMPUTATION.type
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.intellij.tasks.PatchPluginXmlTask
 
 val kotlinVersion = properties["kotlinVersion"] as String
 
-buildscript {
-  dependencies {
-    val kotlinVersion = properties["kotlinVersion"] as String
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-  }
-}
-
 plugins {
   idea apply true
-  kotlin("jvm")
+  kotlin("jvm") version "1.3.72"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
-  id("com.jetbrains.python.envs") version "0.0.30" apply true
-  id("org.jetbrains.intellij") version "0.4.13" apply true
-  id("org.jetbrains.grammarkit") version "2019.3" apply true
-  id("org.ajoberstar.grgit") version "4.0.0" apply true
-//  id("org.jetbrains.gradle.plugin.idea-ext") version "0.3" apply true
+  id("com.jetbrains.python.envs") version "0.0.30"
+  id("org.jetbrains.intellij") version "0.4.21"
+  id("org.jetbrains.grammarkit") version "2020.1.2"
+  id("org.ajoberstar.grgit") version "4.0.1"
 }
 
 idea {
   module {
+    isDownloadJavadoc = true
     isDownloadSources = true
     generatedSourceDirs.add(file("src/main/java"))
     excludeDirs.add(file(intellij.sandboxDirectory))
@@ -55,14 +48,16 @@ fun prop(name: String): String = extra.properties[name] as? String
   ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
-
   withType<PublishTask> {
-    username(prop("publishUsername"))
-    password(prop("publishPassword"))
-    channels(prop("publishChannel"))
+    token(project.findProperty("jbr.token") as String? ?: System.getenv("JBR_TOKEN"))
   }
 
-//  named("buildPlugin") { dependsOn("test") }
+  withType<PatchPluginXmlTask> {
+    sinceBuild("192.*")
+    changeNotes("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
+  }
+
+  named("buildPlugin") { dependsOn("test") }
 
   withType<Zip> {
     archiveFileName.set("hatchery.zip")
@@ -80,7 +75,7 @@ tasks {
 
   val generateROSInterfaceLexer by creating(GenerateLexer::class) {
     source = "src/main/grammars/ROSInterface.flex"
-    targetDir = "src/main/java/edu/umontreal/hatchery/rosinterface"
+    targetDir = "src/main/java/org/duckietown/hatchery/rosinterface"
     targetClass = "ROSInterfaceLexer"
     purgeOldFiles = true
   }
@@ -88,8 +83,8 @@ tasks {
   val generateROSInterfaceParser by creating(GenerateParser::class) {
     source = "src/main/grammars/ROSInterface.bnf"
     targetRoot = "src/main/java"
-    pathToParser = "/edu/umontreal/hatchery/parser/ROSInterfaceParser.java"
-    pathToPsiRoot = "/edu/umontreal/hatchery/psi"
+    pathToParser = "/org/duckietown/hatchery/parser/ROSInterfaceParser.java"
+    pathToPsiRoot = "/org/duckietown/hatchery/psi"
     purgeOldFiles = true
   }
 
@@ -103,33 +98,30 @@ tasks {
     }
   }
 
+  // Use unversioned filename for stable URL of CI build artifact
   register("copyPlugin", Copy::class) {
-
-
     from("${buildDir}/libs/hatchery.zip")
 
-    into("${project.gradle.gradleUserHomeDir}/../.CLion2019.2/config/plugins/hatchery/lib")
+    into("${project.gradle.gradleUserHomeDir}/../.CLion2020.1/config/plugins/hatchery/lib")
   }
 
   register("Exec clion debug suspend", Exec::class){
       commandLine("/opt/clion/bin/clion-suspend.sh")
   }
-
 }
-
-
 
 intellij {
   type = "CL"
-  version = "193.4697-EAP-CANDIDATE-SNAPSHOT"
+  version = "2020.1"
+
   pluginName = "hatchery"
   updateSinceUntilBuild = false
   if (hasProperty("roject")) downloadSources = false
 
-  setPlugins(//"com.intellij.ideolog:193.0.15.0",             // Log file support
-             //"BashSupport:1.7.13.192",                      // [Ba]sh   support
-             //"Docker:193.4386.10",                          // Docker   support
-             //"PsiViewer:201-SNAPSHOT",                      // PSI view support
+  setPlugins(//"com.intellij.ideolog:193.0.15.0",  // Log file support
+             //"BashSupport:1.7.13.192",           // [Ba]sh   support
+             //"Docker:193.4386.10",               // Docker   support
+             //"PsiViewer:201-SNAPSHOT",           // PSI view support
              "IntelliLang",
              "yaml")
 }
@@ -148,12 +140,9 @@ dependencies {
 //  compile("com.jcraft:jzlib:1.1.3")
 
   // Useful ROS Dependencies
-  testCompile("org.ros.rosjava_core:rosjava:[0.3,)")
-  testCompile("org.ros.rosjava_messages:std_msgs:[0.5,)")
-  testCompile("org.ros.rosjava_bootstrap:message_generation:[0.3,)")
-
-  // Python
-//  testCompile("org.python:jython-standalone:2.7.1")
+  testImplementation("org.ros.rosjava_core:rosjava:0.3+")
+  testImplementation("org.ros.rosjava_messages:std_msgs:0.5+")
+  testImplementation("org.ros.rosjava_bootstrap:message_generation:0.3+")
 }
 
 envs {
@@ -164,5 +153,5 @@ envs {
 // TODO: figure out how to setup conda inside the project structure
 }
 
-group = "edu.umontreal"
-version = "0.3.3"
+group = "org.duckietown"
+version = "0.3.4"

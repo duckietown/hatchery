@@ -1,8 +1,8 @@
-package edu.umontreal.hatchery.rosinterface;
+package org.duckietown.hatchery.rosinterface;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import edu.umontreal.hatchery.psi.RosInterfaceTypes;
+import org.duckietown.hatchery.psi.RosInterfaceTypes;
 import com.intellij.psi.TokenType;
 
 %%
