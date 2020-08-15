@@ -11,7 +11,7 @@ import org.duckietown.hatchery.rosmanifest.RosManifestReferenceContributor.DEPEN
 object RosManifestLineMarkerProvider : RelatedItemLineMarkerProvider() {
   private const val TOOLTIP_TEXT = "ROS Package Dependency"
 
-  override fun collectNavigationMarkers(element: PsiElement, results: MutableCollection<in RelatedItemLineMarkerInfo<PsiElement>>) {
+  override fun collectNavigationMarkers(element: PsiElement, results: MutableCollection<in RelatedItemLineMarkerInfo<*>>) {
     if (element !is XmlTag || element.name !in DEPEND_TAG_NAMES) return
 
     val scope = GlobalSearchScope.allScope(element.project)
