@@ -1,22 +1,20 @@
 import org.ajoberstar.grgit.Grgit
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
-import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.intellij.tasks.PatchPluginXmlTask
 
 val kotlinVersion = properties["kotlinVersion"] as String
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.4.20"
+  kotlin("jvm") version "1.5.20-M1"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.30"
-  id("org.jetbrains.intellij") version "0.6.5"
-  id("org.jetbrains.grammarkit") version "2020.2.1"
+  id("org.jetbrains.intellij") version "1.0"
+  id("org.jetbrains.grammarkit") version "2021.1.3"
   id("org.ajoberstar.grgit") version "4.1.0"
-  id("com.github.ben-manes.versions") version "0.36.0"
+  id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 idea {
@@ -24,7 +22,7 @@ idea {
     isDownloadJavadoc = true
     isDownloadSources = true
     generatedSourceDirs.add(file("src/main/java"))
-    excludeDirs.add(file(intellij.sandboxDirectory))
+//    excludeDirs.add(file(intellij.sandboxDirectory))
   }
 }
 
@@ -49,13 +47,13 @@ fun prop(name: String): String = extra.properties[name] as? String
   ?: error("Property `$name` is not defined in gradle.properties")
 
 tasks {
-  withType<PublishTask> {
-    token(project.findProperty("jbr.token") as String? ?: System.getenv("JBR_TOKEN"))
+  publishPlugin {
+    token.set(project.findProperty("jbr.token") as String? ?: System.getenv("JBR_TOKEN"))
   }
 
-  withType<PatchPluginXmlTask> {
-    sinceBuild("192.*")
-    changeNotes("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
+  patchPluginXml {
+    sinceBuild.set("192.*")
+    changeNotes.set("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
   }
 
   named("buildPlugin") { dependsOn("test") }
@@ -112,19 +110,22 @@ tasks {
 }
 
 intellij {
-  type = "CL"
-  version = "2020.2"
+  type.set("CL")
+  version.set("2020.2")
 
-  pluginName = "hatchery"
-  updateSinceUntilBuild = false
-  if (hasProperty("roject")) downloadSources = false
+  pluginName.set("hatchery")
+  updateSinceUntilBuild.set(false)
+  if (hasProperty("roject")) downloadSources.set(false)
 
-  setPlugins(//"com.intellij.ideolog:193.0.15.0",  // Log file support
-             //"BashSupport:1.7.13.192",           // [Ba]sh   support
-             //"Docker:193.4386.10",               // Docker   support
-             //"PsiViewer:201-SNAPSHOT",           // PSI view support
-             "IntelliLang",
-             "yaml")
+  plugins.set(listOf(
+    //"com.intellij.ideolog:193.0.15.0",  // Log file support
+    //"BashSupport:1.7.13.192",           // [Ba]sh   support
+    //"Docker:193.4386.10",               // Docker   support
+    //"PsiViewer:201-SNAPSHOT",           // PSI view support
+    "clion-embedded",
+    "IntelliLang",
+    "yaml"
+  ))
 }
 
 repositories {
