@@ -1,20 +1,16 @@
 import org.ajoberstar.grgit.Grgit
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
-import org.jetbrains.intellij.tasks.RunIdeTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val kotlinVersion = properties["kotlinVersion"] as String
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.5.20-M1"
+  kotlin("jvm") version "1.7.10"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
-  id("com.jetbrains.python.envs") version "0.0.30"
-  id("org.jetbrains.intellij") version "1.0"
-  id("org.jetbrains.grammarkit") version "2021.1.3"
-  id("org.ajoberstar.grgit") version "4.1.0"
-  id("com.github.ben-manes.versions") version "0.39.0"
+  id("com.jetbrains.python.envs") version "0.0.31"
+  id("org.jetbrains.intellij") version "1.6.0"
+  id("org.jetbrains.grammarkit") version "2021.2.2"
+  id("org.ajoberstar.grgit") version "5.0.0"
+  id("com.github.ben-manes.versions") version "0.42.0"
 }
 
 idea {
@@ -27,7 +23,7 @@ idea {
 }
 
 val userHomeDir = System.getProperty("user.home")!!
-val sampleRepo = "https://github.com/duckietown/Software.git"
+val sampleRepo = "https://github.com/duckietown/dt-core.git"
 val samplePath = "${project.buildDir}/Software"
 
 val defaultProjectPath = samplePath.let {
@@ -62,7 +58,7 @@ tasks {
     archiveFileName.set("hatchery.zip")
   }
 
-  withType<RunIdeTask> {
+  runIde {
 //    dependsOn("test")
 
     if (!isPluginDev && !isCIBuild) dependsOn(":build_envs")
@@ -72,23 +68,23 @@ tasks {
 
   findByName("buildSearchableOptions")?.enabled = false
 
-  val generateROSInterfaceLexer by creating(GenerateLexer::class) {
-    source = "src/main/grammars/ROSInterface.flex"
-    targetDir = "src/main/java/org/duckietown/hatchery/rosinterface"
-    targetClass = "ROSInterfaceLexer"
-    purgeOldFiles = true
+  generateLexer {
+    source.set("src/main/grammars/ROSInterface.flex")
+    targetDir.set("src/main/java/org/duckietown/hatchery/rosinterface")
+    targetClass.set("ROSInterfaceLexer")
+    purgeOldFiles.set(true)
   }
 
-  val generateROSInterfaceParser by creating(GenerateParser::class) {
-    source = "src/main/grammars/ROSInterface.bnf"
-    targetRoot = "src/main/java"
-    pathToParser = "/org/duckietown/hatchery/parser/ROSInterfaceParser.java"
-    pathToPsiRoot = "/org/duckietown/hatchery/psi"
-    purgeOldFiles = true
+  generateParser {
+    source.set("src/main/grammars/ROSInterface.bnf")
+    targetRoot.set("src/main/java")
+    pathToParser.set("/org/duckietown/hatchery/parser/ROSInterfaceParser.java")
+    pathToPsiRoot.set("/org/duckietown/hatchery/psi")
+    purgeOldFiles.set(true)
   }
 
-  withType<KotlinCompile> {
-    dependsOn(generateROSInterfaceLexer, generateROSInterfaceParser)
+  compileKotlin {
+    dependsOn(generateLexer, generateParser)
     kotlinOptions {
       jvmTarget = JavaVersion.VERSION_1_8.toString()
       languageVersion = kotlinVersion.substringBeforeLast('.')
@@ -112,6 +108,8 @@ tasks {
 intellij {
   type.set("CL")
   version.set("2020.2")
+//  version.set("2022.1.3") // TODO: migrate to new API
+
 
   pluginName.set("hatchery")
   updateSinceUntilBuild.set(false)
@@ -129,7 +127,6 @@ intellij {
 }
 
 repositories {
-  jcenter()
   maven("https://raw.githubusercontent.com/rosjava/rosjava_mvn_repo/master")
 }
 
