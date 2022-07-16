@@ -7,7 +7,7 @@ plugins {
   kotlin("jvm") version "1.7.10"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.31"
-  id("org.jetbrains.intellij") version "1.6.0"
+  id("org.jetbrains.intellij") version "1.7.0"
   id("org.jetbrains.grammarkit") version "2021.2.2"
   id("org.ajoberstar.grgit") version "5.0.0"
   id("com.github.ben-manes.versions") version "0.42.0"
