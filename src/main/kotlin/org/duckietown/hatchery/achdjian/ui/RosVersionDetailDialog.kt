@@ -45,7 +45,8 @@ class RosVersionDetailDialog : DialogWrapper(null, true) {
     private fun removeSdk() {
         val selectedVersion = versionList.selectedValue
         selectedVersion?.let {
-            val customVersion = ApplicationManager.getApplication().getComponent(org.duckietown.hatchery.achdjian.data.RosCustomVersion::class.java, org.duckietown.hatchery.achdjian.data.RosCustomVersion(HashMap()))
+            val customVersion =
+                ApplicationManager.getApplication().getComponent(RosCustomVersion::class.java)
             if (customVersion.contains(it)) {
                 customVersion.remove(it)
             }
@@ -65,7 +66,7 @@ class RosVersionDetailDialog : DialogWrapper(null, true) {
             addDialog.show()
 
             if (addDialog.isOK) {
-                val customVersion = ApplicationManager.getApplication().getComponent(org.duckietown.hatchery.achdjian.data.RosCustomVersion::class.java, org.duckietown.hatchery.achdjian.data.RosCustomVersion(HashMap()))
+                val customVersion = ApplicationManager.getApplication().getComponent(RosCustomVersion::class.java)
                 customVersion.versions[addDialog.name] = addDialog.path
                 val state = getRosEnvironment()
                 state.add(RosVersionImpl(addDialog.path, addDialog.name))
@@ -83,7 +84,7 @@ class RosVersionDetailDialog : DialogWrapper(null, true) {
 
                 if (addDialog.isOK) {
                     val state = getRosEnvironment()
-                    val customVersion = ApplicationManager.getApplication().getComponent(org.duckietown.hatchery.achdjian.data.RosCustomVersion::class.java, org.duckietown.hatchery.achdjian.data.RosCustomVersion(HashMap()))
+                    val customVersion = ApplicationManager.getApplication().getComponent(RosCustomVersion::class.java)
                     if (state.isDefaultVersion(it.name)) {
                         customVersion.removeDefault(it.name)
                     }

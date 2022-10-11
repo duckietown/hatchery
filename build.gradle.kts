@@ -16,7 +16,7 @@ plugins {
 idea {
   module {
     isDownloadJavadoc = false
-    isDownloadSources = false
+    isDownloadSources = true
     generatedSourceDirs.add(file("src/main/java"))
 //    excludeDirs.add(file(intellij.sandboxDirectory))
   }
@@ -86,7 +86,7 @@ tasks {
   compileKotlin {
     dependsOn(generateLexer, generateParser)
     kotlinOptions {
-      jvmTarget = JavaVersion.VERSION_1_8.toString()
+      jvmTarget = JavaVersion.VERSION_16.toString()
       languageVersion = kotlinVersion.substringBeforeLast('.')
       apiVersion = languageVersion
       freeCompilerArgs = listOf("-progressive")
@@ -122,7 +122,10 @@ intellij {
     //"PsiViewer:201-SNAPSHOT",           // PSI view support
     "clion-embedded",
     "IntelliLang",
-    "yaml"
+    "yaml",
+    "com.intellij.clion",
+    "com.intellij.cidr.base"
+
   ))
 }
 

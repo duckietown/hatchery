@@ -62,15 +62,15 @@ class RosNodeGenerator : CMakeAbstractCPPProjectGenerator() {
 
     override fun getCMakeFileContent(p0: String) = ""
 
-    override fun createCMakeFile(name: String, dir: VirtualFile): VirtualFile = createStructure(name, dir)
+    override fun createCMakeFile(project: Project, name: String, dir: VirtualFile): VirtualFile? = createStructure(name, dir)
 
     override fun generateProject(project: Project, baseDir: VirtualFile, cmakeSetting: CMakeProjectSettings, module: Module) {
         //super.generateProject(project, path, cmakeSetting, module)
-        val cmakeFile = createCMakeFile(project.name, baseDir)
+        val cmakeFile = createCMakeFile(project,project.name, baseDir)
         val srcDir = VfsUtil.createDirectoryIfMissing(baseDir, "src")
         CMakeWorkspace.getInstance(project).selectProjectDir(VfsUtilCore.virtualToIoFile(srcDir))
         if (!ApplicationManager.getApplication().isHeadlessEnvironment) {
-            PsiNavigationSupport.getInstance().createNavigatable(project, cmakeFile, -1).navigate(false)
+            PsiNavigationSupport.getInstance().createNavigatable(project, cmakeFile!!, -1).navigate(false)
         }
         val cMakeWorkspace = CMakeWorkspace.getInstance(project)
         val settings = cMakeWorkspace.settings
