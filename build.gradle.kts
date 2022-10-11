@@ -4,10 +4,10 @@ val kotlinVersion = properties["kotlinVersion"] as String
 
 plugins {
   idea apply true
-  kotlin("jvm") version "1.7.10"
+  kotlin("jvm") version "1.7.20"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.31"
-  id("org.jetbrains.intellij") version "1.7.0"
+  id("org.jetbrains.intellij") version "1.9.0"
   id("org.jetbrains.grammarkit") version "2021.2.2"
   id("org.ajoberstar.grgit") version "5.0.0"
   id("com.github.ben-manes.versions") version "0.42.0"
@@ -15,8 +15,8 @@ plugins {
 
 idea {
   module {
-    isDownloadJavadoc = true
-    isDownloadSources = true
+    isDownloadJavadoc = false
+    isDownloadSources = false
     generatedSourceDirs.add(file("src/main/java"))
 //    excludeDirs.add(file(intellij.sandboxDirectory))
   }
@@ -107,8 +107,8 @@ tasks {
 
 intellij {
   type.set("CL")
-  version.set("2020.2")
-//  version.set("2022.1.3") // TODO: migrate to new API
+  //version.set("2020.2")
+  version.set("2022.2") // TODO: migrate to new API
 
 
   pluginName.set("hatchery")
@@ -127,6 +127,8 @@ intellij {
 }
 
 repositories {
+  jcenter()
+  mavenCentral()
   maven("https://raw.githubusercontent.com/rosjava/rosjava_mvn_repo/master")
 }
 
@@ -139,9 +141,12 @@ dependencies {
 //  compile("com.jcraft:jzlib:1.1.3")
 
   // Useful ROS Dependencies
-  testImplementation("org.ros.rosjava_core:rosjava:0.3+")
-  testImplementation("org.ros.rosjava_messages:std_msgs:0.5+")
-  testImplementation("org.ros.rosjava_bootstrap:message_generation:0.3+")
+  // https://mvnrepository.com/artifact/org.apache.commons/com.springsource.org.apache.commons.codec
+  testImplementation("org.apache.commons:com.springsource.org.apache.commons.codec:1.6.0")
+
+  testImplementation("org.ros.rosjava_core:rosjava:0.3.6")
+  testImplementation("org.ros.rosjava_messages:std_msgs:0.5.11")
+  testImplementation("org.ros.rosjava_bootstrap:message_generation:0.3.3")
 }
 
 envs {
@@ -153,4 +158,4 @@ envs {
 }
 
 group = "org.duckietown"
-version = "0.3.4"
+version = "0.3.5"
