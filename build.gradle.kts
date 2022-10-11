@@ -48,7 +48,7 @@ tasks {
   }
 
   patchPluginXml {
-    sinceBuild.set("192.*")
+    sinceBuild.set("222.*")
     changeNotes.set("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
   }
 
@@ -137,7 +137,7 @@ repositories {
 
 dependencies {
   // gradle-intellij-plugin doesn't attach sources properly for Kotlin :(
-  compileOnly(kotlin("stdlib-jdk8"))
+  // compileOnly(kotlin("stdlib-jdk8"))
   // Share ROS libraries for identifying the ROS home directory
   // Used for remote deployment over SCP
 //  compile("com.hierynomus:sshj:0.27.0")
