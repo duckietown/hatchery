@@ -48,7 +48,7 @@ tasks {
   }
 
   patchPluginXml {
-    sinceBuild.set("222.*")
+    //sinceBuild.set("222.*")
     changeNotes.set("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
   }
 
