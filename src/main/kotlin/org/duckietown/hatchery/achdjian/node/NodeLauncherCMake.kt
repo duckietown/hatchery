@@ -6,6 +6,7 @@ import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
+import com.intellij.xdebugger.XDebugProcess
 import com.intellij.xdebugger.XDebugSession
 import com.jetbrains.cidr.cpp.execution.CMakeLauncher
 import com.jetbrains.cidr.cpp.toolchains.CPPEnvironment
@@ -42,7 +43,7 @@ class NodeLauncherCMake(private val nodeConfiguration: NodeConfiguration, privat
 
 
     @Throws(ExecutionException::class)
-    override fun createDebugProcess(state: CommandLineState, session: XDebugSession): CidrDebugProcess {
+    override fun createDebugProcess(state: CommandLineState, session: XDebugSession): XDebugProcess {
         val packages = getPackages(project)
         val node = packages
                 .filter { it.name == nodeConfiguration.rosPackageName }

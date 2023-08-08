@@ -61,7 +61,7 @@ class AddROSVersionDialog(startName: String, startPath: String) : DialogWrapper(
                 editor,
                 "ROS version versionPath",
                 FileChooserDescriptorFactory.createSingleFolderDescriptor(),
-                TextComponentAccessor.TEXT_FIELD_WITH_HISTORY_WHOLE_TEXT) {
+            TextComponentAccessors.TEXT_FIELD_WITH_HISTORY_WHOLE_TEXT) {
             if (it.path.isNotEmpty() && versionName.text.isNotEmpty())
                 isOKActionEnabled = true
             it.path

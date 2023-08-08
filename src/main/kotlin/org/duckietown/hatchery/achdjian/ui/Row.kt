@@ -59,7 +59,7 @@ class Row(val text: String? = null) {
                 textWithBrowserButton.childComponent.textEditor,
                 browseDialogTitle,
                 fileChooserDescriptor,
-                TextComponentAccessor.TEXT_FIELD_WITH_HISTORY_WHOLE_TEXT,
+                TextComponentAccessors.TEXT_FIELD_WITH_HISTORY_WHOLE_TEXT,
                 fileChosen
         )
         textWithBrowserButton.let { textWithBrowserButton.text = value }

@@ -2,10 +2,10 @@
     <name>Hatchery</name>
     <id>edu.umontreal.hatchery</id>
     <vendor email="bre@ndan.co" url="http://www.duckietown.org">Duckietown</vendor>
-    <idea-version since-build="143.379"/>
+    <idea-version since-build="213.5744.223"/>
 
     <depends>com.intellij.modules.lang</depends>
-<!--    <depends>com.intellij.modules.clion</depends>-->
+   <depends>com.intellij.modules.clion</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
 
     <description><![CDATA[<a href="https://github.com/duckietown/hatchery#hatchery">Hatchery</a> is plugin for developing applications for the <a href="https://ros.org">Robot Operating System</a> (ROS).]]></description>
