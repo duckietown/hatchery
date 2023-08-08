@@ -1,16 +1,14 @@
 import org.ajoberstar.grgit.Grgit
 
-val kotlinVersion = properties["kotlinVersion"] as String
-
 plugins {
   idea apply true
-  kotlin("jvm") version "1.7.20"
+  kotlin("jvm") version "1.9.0"
   // TODO: https://github.com/JetBrains/gradle-python-envs#usage
   id("com.jetbrains.python.envs") version "0.0.31"
-  id("org.jetbrains.intellij") version "1.9.0"
-  id("org.jetbrains.grammarkit") version "2021.2.2"
-  id("org.ajoberstar.grgit") version "5.0.0"
-  id("com.github.ben-manes.versions") version "0.42.0"
+  id("org.jetbrains.intellij") version "1.15.0"
+  id("org.jetbrains.grammarkit") version "2022.3.1"
+  id("org.ajoberstar.grgit") version "5.2.0"
+  id("com.github.ben-manes.versions") version "0.47.0"
 }
 
 idea {
@@ -44,18 +42,18 @@ fun prop(name: String): String = extra.properties[name] as? String
 
 tasks {
   publishPlugin {
-    token.set(project.findProperty("jbr.token") as String? ?: System.getenv("JBR_TOKEN"))
+    token = project.findProperty("jbr.token") as String? ?: System.getenv("JBR_TOKEN")
   }
 
   patchPluginXml {
-    //sinceBuild.set("222.*")
-    changeNotes.set("Fixes an error parsing .msg/.srv files and run configuration issue on older platform versions.")
+    sinceBuild = "223.*"
+    changeNotes = "Updates Hatchery to work on 2023+. Mostly in maintenance mode now."
   }
 
   named("buildPlugin") { dependsOn("test") }
 
   withType<Zip> {
-    archiveFileName.set("hatchery.zip")
+    archiveFileName = "hatchery.zip"
   }
 
   runIde {
@@ -69,25 +67,24 @@ tasks {
   findByName("buildSearchableOptions")?.enabled = false
 
   generateLexer {
-    source.set("src/main/grammars/ROSInterface.flex")
-    targetDir.set("src/main/java/org/duckietown/hatchery/rosinterface")
-    targetClass.set("ROSInterfaceLexer")
-    purgeOldFiles.set(true)
+    sourceFile = File("src/main/grammars/ROSInterface.flex")
+    targetDir = "src/main/java/org/duckietown/hatchery/rosinterface"
+    targetClass = "ROSInterfaceLexer"
+    purgeOldFiles = true
   }
 
   generateParser {
-    source.set("src/main/grammars/ROSInterface.bnf")
-    targetRoot.set("src/main/java")
-    pathToParser.set("/org/duckietown/hatchery/parser/ROSInterfaceParser.java")
-    pathToPsiRoot.set("/org/duckietown/hatchery/psi")
-    purgeOldFiles.set(true)
+    sourceFile = File("src/main/grammars/ROSInterface.bnf")
+    targetRoot = "src/main/java"
+    pathToParser = "/org/duckietown/hatchery/parser/ROSInterfaceParser.java"
+    pathToPsiRoot = "/org/duckietown/hatchery/psi"
+    purgeOldFiles = true
   }
 
   compileKotlin {
     dependsOn(generateLexer, generateParser)
     kotlinOptions {
-      jvmTarget = JavaVersion.VERSION_16.toString()
-      languageVersion = kotlinVersion.substringBeforeLast('.')
+      jvmTarget = JavaVersion.VERSION_17.toString()
       apiVersion = languageVersion
       freeCompilerArgs = listOf("-progressive")
     }
@@ -100,33 +97,32 @@ tasks {
     into("${project.gradle.gradleUserHomeDir}/../.CLion2020.1/config/plugins/hatchery/lib")
   }
 
-  register("Exec clion debug suspend", Exec::class){
+  register("Exec clion debug suspend", Exec::class) {
       commandLine("/opt/clion/bin/clion-suspend.sh")
   }
 }
 
 intellij {
-  type.set("CL")
-  //version.set("2020.2")
-  version.set("2022.2") // TODO: migrate to new API
+  type = "CL"
+  //version = "2020.2"
+  version = "2023.2" // TODO: migrate to new API
 
 
-  pluginName.set("hatchery")
-  updateSinceUntilBuild.set(false)
-  if (hasProperty("roject")) downloadSources.set(false)
+  pluginName = "hatchery"
+  updateSinceUntilBuild = false
+  if (hasProperty("roject")) downloadSources = false
 
-  plugins.set(listOf(
+  plugins = listOf(
     //"com.intellij.ideolog:193.0.15.0",  // Log file support
     //"BashSupport:1.7.13.192",           // [Ba]sh   support
     //"Docker:193.4386.10",               // Docker   support
     //"PsiViewer:201-SNAPSHOT",           // PSI view support
-    "clion-embedded",
-    "IntelliLang",
+//    "clion-embedded",
+//    "IntelliLang",
     "yaml",
     "com.intellij.clion",
     "com.intellij.cidr.base"
-
-  ))
+  )
 }
 
 repositories {
@@ -161,4 +157,4 @@ envs {
 }
 
 group = "org.duckietown"
-version = "0.3.5"
+version = "0.3.6"

@@ -4,7 +4,7 @@ import com.intellij.ide.IconProvider
 import com.intellij.psi.*
 import org.duckietown.hatchery.filesystem.Icons
 
-object CatkinIconProvider : IconProvider() {
+class CatkinIconProvider : IconProvider() {
   override fun getIcon(element: PsiElement, flags: Int) =
     if (element is PsiDirectory && element.hasPackageXml()) Icons.catkin_file else null
 

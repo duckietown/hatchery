@@ -12,6 +12,7 @@ import com.intellij.openapi.vfs.*
 import com.jetbrains.cidr.cpp.cmake.projectWizard.CLionProjectWizardUtils
 import com.jetbrains.cidr.cpp.cmake.workspace.CMakeWorkspace
 import org.duckietown.hatchery.achdjian.utils.*
+import org.duckietown.hatchery.filesystem.Icons
 import java.io.File
 import javax.swing.Icon
 
@@ -22,7 +23,7 @@ class ImporterRosWorkspaceAction : AnAction(AllIcons.ToolbarDecorator.Import), D
 class RosWorkspaceChooserDescriptor :
         FileChooserDescriptor(false, true, false, false, false, false) {
     override fun getIcon(file: VirtualFile): Icon? =
-            if (isRosWS(file)) IconLoader.getIcon("/org/duckietown/hatchery/icons/rosFolder.svg") else super.getIcon(file)
+            if (isRosWS(file)) Icons.ros_folder else super.getIcon(file)
 
     override fun isFileSelectable(file: VirtualFile?) =
             file != null && (!file.isDirectory || file.children.isNotEmpty())

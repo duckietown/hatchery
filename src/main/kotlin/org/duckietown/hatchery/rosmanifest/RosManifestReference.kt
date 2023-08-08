@@ -10,7 +10,7 @@ class RosManifestReference(private val psiElement: XmlTag) : PsiReferenceBase<Xm
     psiElement.let { tag ->
       val packageName = tag.value.text
       getProjectLocalRosPackages().firstOrNull { it.containingDirectory.name == packageName }
-        ?: if (RosConfig.settings.localRos.packages.containsKey(packageName)) psiElement else null
+        ?: if (RosConfig.rosSettings.localRos.packages.containsKey(packageName)) psiElement else null
     }
 
   override fun getVariants() =

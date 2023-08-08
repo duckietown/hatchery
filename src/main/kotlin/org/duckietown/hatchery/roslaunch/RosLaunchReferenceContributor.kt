@@ -5,12 +5,12 @@ import com.intellij.psi.*
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.util.ProcessingContext
 
-object RosLaunchReferenceContributor : PsiReferenceContributor() {
+class RosLaunchReferenceContributor : PsiReferenceContributor() {
   // http://wiki.ros.org/roslaunch/XML#substitution_args
-  private const val findSubstitution = "\\\$\\(find [\\w]*\\)[\\w/\\.]*"
-  private const val argSubstitution = "\\\$\\(arg [\\w]*\\)"
-  private const val dirnameSubstitution = "\\\$\\(dirname\\)[\\w/\\.]*"
-  private const val pythonFileSubstitution = "[A-Za-z0-9_]*\\.py"
+  private val findSubstitution = "\\\$\\(find [\\w]*\\)[\\w/\\.]*"
+  private val argSubstitution = "\\\$\\(arg [\\w]*\\)"
+  private val dirnameSubstitution = "\\\$\\(dirname\\)[\\w/\\.]*"
+  private val pythonFileSubstitution = "[A-Za-z0-9_]*\\.py"
 
   private fun matcher(pattern: String) = XmlPatterns.xmlAttributeValue().withValue(StandardPatterns.string().matches(pattern))!!
 

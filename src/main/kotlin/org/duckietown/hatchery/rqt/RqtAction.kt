@@ -5,6 +5,8 @@ import org.duckietown.hatchery.settings.RosConfig
 
 class RqtAction : AnAction() {
   override fun actionPerformed(e: AnActionEvent) {
-    RosConfig.settings.localRos.runInBackground(e.actionManager.getId(this))
+    e.actionManager.getId(this)?.let {
+      RosConfig.rosSettings.localRos.runInBackground(it)
+    }
   }
 }

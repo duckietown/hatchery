@@ -7,7 +7,7 @@ import com.intellij.psi.*
 import com.intellij.psi.tree.*
 import org.duckietown.hatchery.psi.*
 
-object RosInterfaceParserDefinition : ParserDefinition {
+class RosInterfaceParserDefinition : ParserDefinition {
   val WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE)
   val COMMENTS = TokenSet.create(RosInterfaceTypes.COMMENT)
   val FILE = IFileElementType(RosInterfaceLanguage)

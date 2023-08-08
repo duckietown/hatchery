@@ -11,6 +11,7 @@ import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.JBUI
 import org.duckietown.hatchery.achdjian.data.getRosEnvironment
 import org.duckietown.hatchery.achdjian.ui.*
+import org.duckietown.hatchery.filesystem.Icons
 import java.awt.*
 import javax.swing.*
 
@@ -48,7 +49,7 @@ class RosSettings : BaseComponent, Configurable {
 
 
         val detailsButton = FixedSizeButton()
-        detailsButton.icon = IconLoader.findIcon("/org/duckietown/hatchery/icons/ros.svg")
+        detailsButton.icon = Icons.ros
         detailsButton.preferredSize = Dimension(preferredSize.height, preferredSize.height)
         detailsButton.addActionListener {
             ApplicationManager.getApplication().invokeLater {

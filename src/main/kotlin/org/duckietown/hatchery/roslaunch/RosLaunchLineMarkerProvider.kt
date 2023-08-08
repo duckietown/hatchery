@@ -8,7 +8,7 @@ import org.duckietown.hatchery.filesystem.Icons
 import org.duckietown.hatchery.util.findFilesByRelativePath
 
 
-object RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
+class RosLaunchLineMarkerProvider : RelatedItemLineMarkerProvider() {
   override fun collectNavigationMarkers(element: PsiElement, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>) {
     if (isRosLaunchFileSubstitution(element)) {
       val relPath = (element as XmlAttributeValue).value.substringAfter("$(find ").replace(")", "")

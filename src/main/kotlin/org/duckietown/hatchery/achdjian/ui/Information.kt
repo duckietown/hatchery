@@ -9,7 +9,7 @@ fun showMessage(project: Project, messageType: MessageType, message: String) {
     ApplicationManager.getApplication().invokeLater {
         val toolWindowManager = ToolWindowManager.getInstance(project)
         if (toolWindowManager.canShowNotification(ToolWindowId.RUN)) {
-            toolWindowManager.notifyByBalloon(ToolWindowId.DEPENDENCIES, messageType, message, null, null)
+            toolWindowManager.notifyByBalloon(ToolWindowId.MESSAGES_WINDOW, messageType, message, null, null)
         }
     }
 }

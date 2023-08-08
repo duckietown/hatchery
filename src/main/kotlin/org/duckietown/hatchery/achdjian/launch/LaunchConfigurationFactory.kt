@@ -22,7 +22,6 @@ class LaunchConfigurationFactory(val configurationType: LaunchConfigurationType)
 class LaunchConfigurationType : ConfigurationTypeBase(IDs.ID, IDs.DISPLAY_NAME, IDs.DESCRIPTION, ICON_LAUNCH) {
     var confFactory = LaunchConfigurationFactory(this)
 
-
     init {
         addFactory(object : ConfigurationFactory(this) {
             override fun createTemplateConfiguration(project: Project): RunConfiguration =
@@ -30,5 +29,4 @@ class LaunchConfigurationType : ConfigurationTypeBase(IDs.ID, IDs.DISPLAY_NAME, 
 
         })
     }
-
 }

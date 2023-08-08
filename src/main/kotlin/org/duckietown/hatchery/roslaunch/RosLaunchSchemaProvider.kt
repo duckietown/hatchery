@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NonNls
  * Schema from: https://github.com/ros/ros_comm/issues/455#issuecomment-355625591
  */
 
-object RosLaunchSchemaProvider : XmlSchemaProvider() {
-  private const val schemaName = "roslaunch.xsd"
+class RosLaunchSchemaProvider : XmlSchemaProvider() {
+  private val schemaName = "roslaunch.xsd"
 
   val xsdFile by lazy { VfsUtil.findFileByURL(javaClass.getResource(schemaName))!! }
 

@@ -17,7 +17,7 @@ class RosCommandLineState : CommandLineState {
 
   private fun createCommandLine(vararg commands: String) =
     GeneralCommandLine(*commands)
-      .withEnvironment(RosConfig.settings.localRos.env)
+      .withEnvironment(RosConfig.rosSettings.localRos.env)
       .withParentEnvironmentType(SYSTEM)
 
   override fun startProcess() =

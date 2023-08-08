@@ -10,7 +10,7 @@ class DemoModuleBuilder : ModuleBuilder() {
   @Throws(ConfigurationException::class)
   override fun setupRootModel(model: ModifiableRootModel) = TODO("not yet")
 
-  override fun getModuleType() = DemoModuleType
+  override fun getModuleType() = DemoModuleType()
 
   override fun getCustomOptionsStep(context: WizardContext, parentDisposable: Disposable) = DemoModuleWizardStep
 }

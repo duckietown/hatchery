@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NonNls
  * Schema is taken from: http://www.ros.org/reps/rep-0140.html
  */
 
-object RosManifestSchemaProvider : XmlSchemaProvider() {
-  private const val schemaName = "rosmanifest.xsd"
+class RosManifestSchemaProvider : XmlSchemaProvider() {
+  private val schemaName = "rosmanifest.xsd"
 
   private val xsdFile by lazy { VfsUtil.findFileByURL(javaClass.getResource(schemaName))!! }
 

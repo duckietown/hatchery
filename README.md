@@ -4,6 +4,8 @@
 [![][plugin-repo-svg]][plugin-repo-page]
 [![][plugin-download-svg]][plugin-repo-page]
 
+**Note**: This project is currently unmaintained and seeking a maintainer. We will try to keep it running on the latest version of the IntelliJ Platform, but no guarantees. If you are interested in contributing, please contact [Duckietown](https://duckietown.org).
+
 An open source IDE for the [Robot Operating System](http://www.ros.org/).
 
 Provides language support and code assistance for developing ROS applications, with tools for deploying and monitoring live applications.

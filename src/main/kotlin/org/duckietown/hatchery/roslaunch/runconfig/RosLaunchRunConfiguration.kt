@@ -25,7 +25,7 @@ class RosLaunchRunConfiguration(project: Project, configurationFactory: Configur
   }
 
   var path: VirtualFile? = null
-  var rosMasterAddr = RosConfig.settings.localRos.env["ROS_MASTER_URI"] ?: "localhost"
+  var rosMasterAddr = RosConfig.rosSettings.localRos.env["ROS_MASTER_URI"] ?: "localhost"
   var rosMasterPort = 11311
   var screen = false
   var log = false
@@ -36,8 +36,8 @@ class RosLaunchRunConfiguration(project: Project, configurationFactory: Configur
   override fun getConfigurationEditor() = RosLaunchRunConfigEditor(project)
 
   override fun getState(executor: Executor, exeEnv: ExecutionEnvironment) =
-    RosCommandLineState(exeEnv, RosConfig.settings.localRos.shell.name, "-c",
-      RosConfig.settings.localRos.launch(launchFile = path?.path ?: "",
+    RosCommandLineState(exeEnv, RosConfig.rosSettings.localRos.shell.name, "-c",
+      RosConfig.rosSettings.localRos.launch(launchFile = path?.path ?: "",
         customEnv = mapOf("ROS_MASTER_URI" to "http://$rosMasterAddr:$rosMasterPort",
           "PYTHONUNBUFFERED" to "1"), options = getParameters(), args = "").toString())
 

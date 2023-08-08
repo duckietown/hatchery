@@ -5,19 +5,17 @@ import com.intellij.openapi.diagnostic.Logger
 import java.nio.file.*
 import kotlin.streams.toList
 
-class RosEnvironments(customVerison: org.duckietown.hatchery.achdjian.data.RosCustomVersion) {
-    companion object {
-        val LOG = Logger.getInstance(RosEnvironments::class.java.name)
+class RosEnvironments {
+    var versions: MutableList<RosVersionImpl> = ArrayList()
+
+    val customVerison: RosCustomVersion by lazy {
+        ApplicationManager.getApplication().getComponent(RosCustomVersion::class.java)
     }
 
-    var versions: MutableList<RosVersionImpl> = ArrayList()
-    private val defaultVersionsName: List<String>
-
-    init {
+    private val defaultVersionsName: List<String> by lazy {
+        val LOG = Logger.getInstance(RosEnvironments::class.java.name)
         if (Files.exists(Paths.get("/opt/ros"))) {
             val defaultVersions = Files.list(Paths.get("/opt/ros")).toList()
-            defaultVersionsName = defaultVersions.map { it.fileName.toString() }
-
             LOG.trace("defaultVersionsName: " + defaultVersionsName.joinToString(","))
 
             val versions = HashMap<String, String>()
@@ -31,8 +29,10 @@ class RosEnvironments(customVerison: org.duckietown.hatchery.achdjian.data.RosCu
 
             LOG.trace("ROS versions:" + customVerison.versions)
             this.versions.addAll(versions.map { RosVersionImpl(it.value, it.key) }.toList())
+
+            defaultVersions.map { it.fileName.toString() }
         } else {
-            defaultVersionsName = listOf()
+            listOf()
         }
     }
 

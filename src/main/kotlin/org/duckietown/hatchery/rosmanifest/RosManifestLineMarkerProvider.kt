@@ -6,13 +6,12 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.search.*
 import com.intellij.psi.xml.XmlTag
 import org.duckietown.hatchery.filesystem.Icons
-import org.duckietown.hatchery.rosmanifest.RosManifestReferenceContributor.DEPEND_TAG_NAMES
 
-object RosManifestLineMarkerProvider : RelatedItemLineMarkerProvider() {
-  private const val TOOLTIP_TEXT = "ROS Package Dependency"
+class RosManifestLineMarkerProvider : RelatedItemLineMarkerProvider() {
+  private val TOOLTIP_TEXT = "ROS Package Dependency"
 
   override fun collectNavigationMarkers(element: PsiElement, results: MutableCollection<in RelatedItemLineMarkerInfo<*>>) {
-    if (element !is XmlTag || element.name !in DEPEND_TAG_NAMES) return
+    if (element !is XmlTag || element.name !in RosManifestReferenceContributor.DEPEND_TAG_NAMES) return
 
     val scope = GlobalSearchScope.allScope(element.project)
     val files = FilenameIndex.getFilesByName(element.project, RosManifestFileType.filename, scope).map { it.containingDirectory }

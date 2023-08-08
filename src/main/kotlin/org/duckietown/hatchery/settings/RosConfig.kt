@@ -9,8 +9,14 @@ import com.intellij.openapi.options.Configurable
  */
 
 @State(name = "RosConfig", storages = [(Storage("hatchery.xml"))])
-object RosConfig : Configurable, PersistentStateComponent<RosSettings> {
+class RosConfig : Configurable, PersistentStateComponent<RosSettings> {
   private val logger = Logger.getInstance(RosConfig::class.java)
+
+  companion object {
+    val rosSettings: RosSettings
+      get() = ServiceManager.getService(RosConfig::class.java).settings
+  }
+
   var settings: RosSettings = RosSettings()
     private set
 

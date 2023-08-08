@@ -6,7 +6,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.*
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceHelper
 
-object RosManifestFileReferenceHelper : FileReferenceHelper() {
+class RosManifestFileReferenceHelper : FileReferenceHelper() {
   override fun isMine(project: Project, file: VirtualFile) = file.fileType === RosManifestFileType
 
   override fun getContexts(project: Project, file: VirtualFile) = getRoots(project)
